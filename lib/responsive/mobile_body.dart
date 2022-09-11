@@ -15,8 +15,8 @@ class _MobileScaffoldState extends State<MobileScaffold> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: defaultBackgroundColor,
-      appBar: myAppBar,
-      drawer: myDrawer,
+      appBar: topBar,
+      drawer: menu,
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
