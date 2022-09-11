@@ -16,17 +16,16 @@ class _DesktopScaffoldState extends State<DesktopScaffold> {
     return Scaffold(
       backgroundColor: defaultBackgroundColor,
       appBar: topBar,
+      drawer: menu,
       body: Padding(
         padding: const EdgeInsets.all(0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // open drawer
-            menu,
             // first half of page
             Expanded(
               flex: 2,
-              child: migrid,
+              child: gridButtons,
             ),
           ],
         ),

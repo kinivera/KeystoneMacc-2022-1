@@ -1,7 +1,10 @@
+// ignore_for_file: unnecessary_new
+
 import 'package:flutter/material.dart';
 
 // Colores
-const defaultBackgroundColor = Color.fromARGB(255, 161, 44, 44);
+const defaultBackgroundColor = Color(0XFFFFFFFF);
+const defaultBackgroundColorSecondary = Color(0XFF627583);
 const menuColorText =  Color(0XFF576271);
 const menuColorBackgr = Color(0XFFA9BF5A);
 const drawerTextColor = TextStyle(
@@ -79,42 +82,89 @@ var menu = Drawer(
     ],
   ),
 );
-var migrid = GridView.count(
+var gridButtons = GridView.count(
   primary: false,
   padding: const EdgeInsets.all(20),
-  crossAxisSpacing: 10,
+  crossAxisSpacing: 80,
   mainAxisSpacing: 10,
-  crossAxisCount: 2,
+  crossAxisCount: 4,
   children: <Widget>[
-    Container(
+    GestureDetector(
+    child: Container(
       padding: const EdgeInsets.all(8),
-      color: Colors.teal[100],
-      child: const Text("He'd have you all unravel at the"),
-    ),
-    Container(
+      decoration: BoxDecoration(
+        borderRadius: new BorderRadius.circular(16.0),
+        color: defaultBackgroundColorSecondary,
+        image: const DecorationImage(
+              image: AssetImage("/images/presion.png"),
+              fit: BoxFit.fill),
+      ),
+    ),onTap: (){debugPrint('Diste click en presion');}),
+    GestureDetector(
+    child: Container(
       padding: const EdgeInsets.all(8),
-      color: Colors.teal[200],
-      child: const Text('Heed not the rabble'),
-    ),
-    Container(
+      decoration: BoxDecoration(
+        borderRadius: new BorderRadius.circular(16.0),
+        color: defaultBackgroundColorSecondary,
+        image: const DecorationImage(
+              image: AssetImage("/images/temperatura.png"),
+              fit: BoxFit.fill),
+      ),
+    ),onTap: (){debugPrint('Diste click en temperatura');}),
+    GestureDetector(
+    child: Container(
       padding: const EdgeInsets.all(8),
-      color: Colors.teal[300],
-      child: const Text('Sound of screams but the'),
-    ),
-    Container(
+      decoration: BoxDecoration(
+        borderRadius: new BorderRadius.circular(16.0),
+        color: defaultBackgroundColorSecondary,
+        image: const DecorationImage(
+              image: AssetImage("/images/poder.png"),
+              fit: BoxFit.fill),
+      ),
+    ),onTap: (){debugPrint('Diste click en bateria');}),
+    GestureDetector(
+    child: Container(
       padding: const EdgeInsets.all(8),
-      color: Colors.teal[400],
-      child: const Text('Who scream'),
-    ),
-    Container(
+      decoration: BoxDecoration(
+        borderRadius: new BorderRadius.circular(16.0),
+        color: defaultBackgroundColorSecondary,
+        image: const DecorationImage(
+              image: AssetImage("/images/humedad.png"),
+              fit: BoxFit.fill),
+      ),
+    ),onTap: (){debugPrint('Diste click en humedad');}),
+    GestureDetector(
+    child: Container(
       padding: const EdgeInsets.all(8),
-      color: Colors.teal[500],
-      child: const Text('Revolution is coming...'),
-    ),
-    Container(
+      decoration: BoxDecoration(
+        borderRadius: new BorderRadius.circular(16.0),
+        color: defaultBackgroundColorSecondary,
+        image: const DecorationImage(
+              image: AssetImage("/images/idea-fresca.png"),
+              fit: BoxFit.fill),
+      ),
+    ),onTap: (){debugPrint('Diste click en bombillo');}),
+    GestureDetector(
+    child: Container(
       padding: const EdgeInsets.all(8),
-      color: Colors.teal[600],
-      child: const Text('Revolution, they...'),
-    ),
+      decoration: BoxDecoration(
+        borderRadius: new BorderRadius.circular(16.0),
+        color: defaultBackgroundColorSecondary,
+        image: const DecorationImage(
+              image: AssetImage("/images/voltaje.png"),
+              fit: BoxFit.fill),
+      ),
+    ),onTap: (){debugPrint('Diste click en voltaje');}),
+    GestureDetector(
+    child: Container(
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        borderRadius: new BorderRadius.circular(16.0),
+        color: defaultBackgroundColorSecondary,
+        image: const DecorationImage(
+              image: AssetImage("/images/mas.png"),
+              fit: BoxFit.fill),
+      ),
+    ),onTap: (){debugPrint('Diste click en mas');}),
   ],
 );
