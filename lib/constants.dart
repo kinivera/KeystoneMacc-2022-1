@@ -34,7 +34,7 @@ var menu = Drawer(
         child: const ListTile(
           leading: Icon(Icons.add_task, color:menuColorText),
           title: Text(
-            'E X P O R T   S E L E C T E D  D A T A ',
+            'E X P O R T   S E L E C T E D\nD A T A ',
             style: drawerTextColor,
           ),
         ),
@@ -88,6 +88,94 @@ var gridButtons = GridView.count(
   crossAxisSpacing: 80,
   mainAxisSpacing: 10,
   crossAxisCount: 4,
+  children: <Widget>[
+    GestureDetector(
+    child: Container(
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        borderRadius: new BorderRadius.circular(16.0),
+        color: defaultBackgroundColorSecondary,
+        image: const DecorationImage(
+              image: AssetImage("/images/presion.png"),
+              fit: BoxFit.fill),
+      ),
+    ),onTap: (){debugPrint('Diste click en presion');}),
+    GestureDetector(
+    child: Container(
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        borderRadius: new BorderRadius.circular(16.0),
+        color: defaultBackgroundColorSecondary,
+        image: const DecorationImage(
+              image: AssetImage("/images/temperatura.png"),
+              fit: BoxFit.fill),
+      ),
+    ),onTap: (){debugPrint('Diste click en temperatura');}),
+    GestureDetector(
+    child: Container(
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        borderRadius: new BorderRadius.circular(16.0),
+        color: defaultBackgroundColorSecondary,
+        image: const DecorationImage(
+              image: AssetImage("/images/poder.png"),
+              fit: BoxFit.fill),
+      ),
+    ),onTap: (){debugPrint('Diste click en bateria');}),
+    GestureDetector(
+    child: Container(
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        borderRadius: new BorderRadius.circular(16.0),
+        color: defaultBackgroundColorSecondary,
+        image: const DecorationImage(
+              image: AssetImage("/images/humedad.png"),
+              fit: BoxFit.fill),
+      ),
+    ),onTap: (){debugPrint('Diste click en humedad');}),
+    GestureDetector(
+    child: Container(
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        borderRadius: new BorderRadius.circular(16.0),
+        color: defaultBackgroundColorSecondary,
+        image: const DecorationImage(
+              image: AssetImage("/images/idea-fresca.png"),
+              fit: BoxFit.fill),
+      ),
+    ),onTap: (){debugPrint('Diste click en bombillo');}),
+    GestureDetector(
+    child: Container(
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        borderRadius: new BorderRadius.circular(16.0),
+        color: defaultBackgroundColorSecondary,
+        image: const DecorationImage(
+              image: AssetImage("/images/voltaje.png"),
+              fit: BoxFit.fill),
+      ),
+    ),onTap: (){debugPrint('Diste click en voltaje');}),
+    GestureDetector(
+    child: Container(
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        borderRadius: new BorderRadius.circular(16.0),
+        color: defaultBackgroundColorSecondary,
+        image: const DecorationImage(
+              image: AssetImage("/images/mas.png"),
+              fit: BoxFit.fill),
+      ),
+    ),onTap: (){debugPrint('Diste click en mas');}),
+  ],
+);
+
+
+var gridButtons2 = GridView.count(
+  primary: false,
+  padding: const EdgeInsets.all(20),
+  crossAxisSpacing: 80,
+  mainAxisSpacing: 10,
+  crossAxisCount: 2,
   children: <Widget>[
     GestureDetector(
     child: Container(
