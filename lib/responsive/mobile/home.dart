@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:responsivedashboard/constants.dart';
 import 'package:responsivedashboard/util/gridButtons.dart';
-import 'package:responsivedashboard/util/my_tile.dart';
 
-class MobileScaffold extends StatefulWidget {
-  const MobileScaffold({Key? key}) : super(key: key);
+class HomeMenuMobile extends StatefulWidget {
+  const HomeMenuMobile({Key? key}) : super(key: key);
 
   @override
-  State<MobileScaffold> createState() => _MobileScaffoldState();
+  State<HomeMenuMobile> createState() => _HomeMenuMobileState();
 }
 
-class _MobileScaffoldState extends State<MobileScaffold> {
+class _HomeMenuMobileState extends State<HomeMenuMobile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

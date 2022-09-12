@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:responsivedashboard/responsive/desktop_body.dart';
-import 'responsive/mobile_body.dart';
 import 'responsive/responsive_layout.dart';
+
+// Mobile Views
+import 'responsive/mobile/example_routing.dart';
+import 'responsive/mobile/home.dart';
+
+// Web Views
+import 'responsive/web/example_routing.dart';
+import 'responsive/web/home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,10 +21,20 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.green),
-      home: const ResponsiveLayout(
-        mobileBody: MobileScaffold(),
-        desktopBody: DesktopScaffold(),
-      ),
+      routes: {
+        '/': (context) => const ResponsiveLayout(
+          mobileBody: HomeMenuMobile(),
+          desktopBody: HomeMenuDesktop(),
+        ),
+        '/home': (context) => const ResponsiveLayout(
+          mobileBody: HomeMenuMobile(),
+          desktopBody: HomeMenuDesktop(),
+        ),
+        '/ex-rout': (context) => const ResponsiveLayout(
+          mobileBody: ExampleRoutingMobile(),
+          desktopBody: ExampleRoutingDesktop(),
+        )
+      },
     );
   }
 }

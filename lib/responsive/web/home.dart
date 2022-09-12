@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import '../constants.dart';
-import '../util/gridButtons.dart';
-import '../util/my_tile.dart';
+import '../../constants.dart';
+import '../../util/gridButtons.dart';
 
-class DesktopScaffold extends StatefulWidget {
-  const DesktopScaffold({Key? key}) : super(key: key);
+class HomeMenuDesktop extends StatefulWidget {
+  const HomeMenuDesktop({Key? key}) : super(key: key);
 
   @override
-  State<DesktopScaffold> createState() => _DesktopScaffoldState();
+  State<HomeMenuDesktop> createState() => _HomeMenuDesktopState();
 }
 
-class _DesktopScaffoldState extends State<DesktopScaffold> {
+class _HomeMenuDesktopState extends State<HomeMenuDesktop> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
