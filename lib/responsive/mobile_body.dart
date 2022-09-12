@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:responsivedashboard/constants.dart';
-import 'package:responsivedashboard/util/my_box.dart';
+import 'package:responsivedashboard/util/gridButtons.dart';
 import 'package:responsivedashboard/util/my_tile.dart';
 
 class MobileScaffold extends StatefulWidget {
@@ -20,10 +20,10 @@ class _MobileScaffoldState extends State<MobileScaffold> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
-          children: [
+          children: const [
             Expanded(
               flex: 2,
-              child: gridButtons2,
+              child: GridButtons(mode: mobileMode),
             ),
           ],
         ),

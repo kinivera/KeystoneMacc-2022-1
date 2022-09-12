@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../constants.dart';
-import '../util/my_box.dart';
+import '../util/gridButtons.dart';
 import '../util/my_tile.dart';
 
 class DesktopScaffold extends StatefulWidget {
@@ -21,11 +21,11 @@ class _DesktopScaffoldState extends State<DesktopScaffold> {
         padding: const EdgeInsets.all(0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          children: const [
             // first half of page
             Expanded(
               flex: 2,
-              child: gridButtons,
+              child: GridButtons(mode: desktopMode),
             ),
           ],
         ),

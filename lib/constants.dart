@@ -2,11 +2,16 @@
 
 import 'package:flutter/material.dart';
 
+// General constants
+const desktopMode = "Desktop";
+const mobileMode = "Mobile";
+
 // Colores
 const defaultBackgroundColor = Color(0XFFFFFFFF);
 const defaultBackgroundColorSecondary = Color(0XFF627583);
-const menuColorText =  Color(0XFF576271);
+const menuColorText =  defaultBackgroundColorSecondary;
 const menuColorBackgr = Color(0XFFA9BF5A);
+const paddingBackgroundImages = 30.0;
 const drawerTextColor = TextStyle(
   color: menuColorText
 );
@@ -23,12 +28,12 @@ var menu = Drawer(
   child: Column(
     children: [
       const DrawerHeader(
-        child: Icon(
-          Icons.compost,
-          color:menuColorText,
-          size: 64,
-        ),
-      ),
+        child: null,
+        decoration: BoxDecoration(
+                color: menuColorBackgr,
+                image: DecorationImage(
+                  image: AssetImage("/images/logoApp.png")),
+      )),
       Padding(
         padding: tilePadding,
         child: const ListTile(
@@ -81,178 +86,4 @@ var menu = Drawer(
       ),
     ],
   ),
-);
-var gridButtons = GridView.count(
-  primary: false,
-  padding: const EdgeInsets.all(20),
-  crossAxisSpacing: 80,
-  mainAxisSpacing: 10,
-  crossAxisCount: 4,
-  children: <Widget>[
-    GestureDetector(
-    child: Container(
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        borderRadius: new BorderRadius.circular(16.0),
-        color: defaultBackgroundColorSecondary,
-        image: const DecorationImage(
-              image: AssetImage("/images/presion.png"),
-              fit: BoxFit.fill),
-      ),
-    ),onTap: (){debugPrint('Diste click en presion');}),
-    GestureDetector(
-    child: Container(
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        borderRadius: new BorderRadius.circular(16.0),
-        color: defaultBackgroundColorSecondary,
-        image: const DecorationImage(
-              image: AssetImage("/images/temperatura.png"),
-              fit: BoxFit.fill),
-      ),
-    ),onTap: (){debugPrint('Diste click en temperatura');}),
-    GestureDetector(
-    child: Container(
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        borderRadius: new BorderRadius.circular(16.0),
-        color: defaultBackgroundColorSecondary,
-        image: const DecorationImage(
-              image: AssetImage("/images/poder.png"),
-              fit: BoxFit.fill),
-      ),
-    ),onTap: (){debugPrint('Diste click en bateria');}),
-    GestureDetector(
-    child: Container(
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        borderRadius: new BorderRadius.circular(16.0),
-        color: defaultBackgroundColorSecondary,
-        image: const DecorationImage(
-              image: AssetImage("/images/humedad.png"),
-              fit: BoxFit.fill),
-      ),
-    ),onTap: (){debugPrint('Diste click en humedad');}),
-    GestureDetector(
-    child: Container(
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        borderRadius: new BorderRadius.circular(16.0),
-        color: defaultBackgroundColorSecondary,
-        image: const DecorationImage(
-              image: AssetImage("/images/idea-fresca.png"),
-              fit: BoxFit.fill),
-      ),
-    ),onTap: (){debugPrint('Diste click en bombillo');}),
-    GestureDetector(
-    child: Container(
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        borderRadius: new BorderRadius.circular(16.0),
-        color: defaultBackgroundColorSecondary,
-        image: const DecorationImage(
-              image: AssetImage("/images/voltaje.png"),
-              fit: BoxFit.fill),
-      ),
-    ),onTap: (){debugPrint('Diste click en voltaje');}),
-    GestureDetector(
-    child: Container(
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        borderRadius: new BorderRadius.circular(16.0),
-        color: defaultBackgroundColorSecondary,
-        image: const DecorationImage(
-              image: AssetImage("/images/mas.png"),
-              fit: BoxFit.fill),
-      ),
-    ),onTap: (){debugPrint('Diste click en mas');}),
-  ],
-);
-
-
-var gridButtons2 = GridView.count(
-  primary: false,
-  padding: const EdgeInsets.all(20),
-  crossAxisSpacing: 80,
-  mainAxisSpacing: 10,
-  crossAxisCount: 2,
-  children: <Widget>[
-    GestureDetector(
-    child: Container(
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        borderRadius: new BorderRadius.circular(16.0),
-        color: defaultBackgroundColorSecondary,
-        image: const DecorationImage(
-              image: AssetImage("/images/presion.png"),
-              fit: BoxFit.fill),
-      ),
-    ),onTap: (){debugPrint('Diste click en presion');}),
-    GestureDetector(
-    child: Container(
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        borderRadius: new BorderRadius.circular(16.0),
-        color: defaultBackgroundColorSecondary,
-        image: const DecorationImage(
-              image: AssetImage("/images/temperatura.png"),
-              fit: BoxFit.fill),
-      ),
-    ),onTap: (){debugPrint('Diste click en temperatura');}),
-    GestureDetector(
-    child: Container(
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        borderRadius: new BorderRadius.circular(16.0),
-        color: defaultBackgroundColorSecondary,
-        image: const DecorationImage(
-              image: AssetImage("/images/poder.png"),
-              fit: BoxFit.fill),
-      ),
-    ),onTap: (){debugPrint('Diste click en bateria');}),
-    GestureDetector(
-    child: Container(
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        borderRadius: new BorderRadius.circular(16.0),
-        color: defaultBackgroundColorSecondary,
-        image: const DecorationImage(
-              image: AssetImage("/images/humedad.png"),
-              fit: BoxFit.fill),
-      ),
-    ),onTap: (){debugPrint('Diste click en humedad');}),
-    GestureDetector(
-    child: Container(
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        borderRadius: new BorderRadius.circular(16.0),
-        color: defaultBackgroundColorSecondary,
-        image: const DecorationImage(
-              image: AssetImage("/images/idea-fresca.png"),
-              fit: BoxFit.fill),
-      ),
-    ),onTap: (){debugPrint('Diste click en bombillo');}),
-    GestureDetector(
-    child: Container(
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        borderRadius: new BorderRadius.circular(16.0),
-        color: defaultBackgroundColorSecondary,
-        image: const DecorationImage(
-              image: AssetImage("/images/voltaje.png"),
-              fit: BoxFit.fill),
-      ),
-    ),onTap: (){debugPrint('Diste click en voltaje');}),
-    GestureDetector(
-    child: Container(
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        borderRadius: new BorderRadius.circular(16.0),
-        color: defaultBackgroundColorSecondary,
-        image: const DecorationImage(
-              image: AssetImage("/images/mas.png"),
-              fit: BoxFit.fill),
-      ),
-    ),onTap: (){debugPrint('Diste click en mas');}),
-  ],
 );
