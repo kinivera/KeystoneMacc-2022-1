@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../constants.dart';
+import '../../util/Menu.dart';
 import '../../util/gridButtons.dart';
 
 class HomeMenuDesktop extends StatefulWidget {
@@ -15,7 +16,7 @@ class _HomeMenuDesktopState extends State<HomeMenuDesktop> {
     return Scaffold(
       backgroundColor: defaultBackgroundColor,
       appBar: topBar,
-      drawer: menu,
+      drawer: const Menu(),
       body: Padding(
         padding: const EdgeInsets.all(0),
         child: Row(

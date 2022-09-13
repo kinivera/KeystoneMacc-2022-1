@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../constants.dart';
 import '../../util/my_tile.dart';
+import '../../util/Menu.dart';
 
 class ExampleRoutingDesktop extends StatefulWidget {
   const ExampleRoutingDesktop({Key? key}) : super(key: key);
@@ -21,7 +22,7 @@ class _ExampleRoutingDesktopState extends State<ExampleRoutingDesktop> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // open drawer
-            menu,
+            const Menu(),
 
             // first half of page
             Expanded(

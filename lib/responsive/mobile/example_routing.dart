@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../constants.dart';
 import '../../util/my_tile.dart';
+import '../../util/Menu.dart';
 
 class ExampleRoutingMobile extends StatefulWidget {
   const ExampleRoutingMobile({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class _ExampleRoutingMobileState extends State<ExampleRoutingMobile> {
     return Scaffold(
       backgroundColor: defaultBackgroundColor,
       appBar: topBar,
-      drawer: menu,
+      drawer: const Menu(),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
