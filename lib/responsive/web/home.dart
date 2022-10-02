@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:responsivedashboard/util/indicatorChart.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 import '../../constants.dart';
 import '../../util/Menu.dart';
@@ -29,14 +30,7 @@ class _HomeMenuDesktopState extends State<HomeMenuDesktop> {
             () => SliverList(
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
-                  return Container(
-                    height: 400,
-                    width: 10,
-                    padding: const EdgeInsets.all(10),
-                    alignment: Alignment.center,
-                    color: Colors.lightBlue[100 * (index % 9)],
-                    child: Text('List Item ${dashboardState.actual[index]}'),
-                  );
+                  return IndicatorChart(mode: desktopMode, indicator: index);
                 },
                 childCount: dashboardState.actual.length,
               ),
