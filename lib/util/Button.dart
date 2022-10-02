@@ -1,7 +1,6 @@
-// ignore: file_names
 import 'package:flutter/material.dart';
 import '../constants.dart';
-
+import '../../states/indicatorStates.dart';
 
 class Button extends StatefulWidget{
   final String mode;

@@ -9,23 +9,18 @@ class ButtonMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-       child: Padding(
-            padding: tilePadding,
-            child: ListTile(
-              leading: Icon(icono , color:menuColorText),
-              title: Text(
-                texto,
-                style: drawerTextColor,
-              ),
-            ),
+    return InkWell(
+      child: Padding(
+        padding: tilePadding,
+        child: ListTile(
+          leading: Icon(icono , color:menuColorText),
+          title: Text(
+            texto,
+            style: drawerTextColor,
           ),
+        ),
+      ),
       onTap: (){answer();},
     );
   }
 }
-         
-          
-          
-          
-         
