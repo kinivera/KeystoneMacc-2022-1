@@ -1,6 +1,5 @@
-// ignore_for_file: unnecessary_new
-
 import 'package:flutter/material.dart';
+import 'package:states_rebuilder/states_rebuilder.dart';
 
 // General constants
 const desktopMode = "Desktop";
@@ -22,3 +21,34 @@ var topBar = AppBar(
   centerTitle: false,
 );
 var tilePadding = const EdgeInsets.only(left: 8.0, right: 8, top: 8);
+
+
+var dashboard = RM.inject(() => Dashboard());
+var dashboardState = dashboard.state;
+
+class Dashboard {
+  List<String> actual = [];
+  var indicators = [
+    {  "name":"temperatura", "isSelected":false },
+    {  "name":"poder", "isSelected":false},
+    {  "name":"humedad", "isSelected":false },
+    {  "name":"idea-fresca", "isSelected":false },
+    {  "name":"voltaje", "isSelected":false },
+    {  "name":"mas", "isSelected":false },
+  ];
+
+  void addIndicator(String element) {
+    actual.add(element);
+    dashboard.notify();
+  }
+
+  void removeIndicator(String element) {
+    actual.remove(element);
+    dashboard.notify();
+  }
+
+  void selectIndicator(int index){
+    indicators[index]["isSelected"] = !(indicators[index]["isSelected"] as bool);
+    dashboard.notify();
+  }
+}

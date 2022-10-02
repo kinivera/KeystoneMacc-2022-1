@@ -9,21 +9,18 @@ class GridButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.count(
-  primary: false,
-  padding: const EdgeInsets.all(20),
-  crossAxisSpacing: 80,
-  mainAxisSpacing: mode == desktopMode ? 80 : 20,
-  crossAxisCount: mode == desktopMode ? 4 : 2,
-  children: <Widget>[
-    Button(mode: mode, fn: (){debugPrint('Diste click en presion');}, img: "/images/presion.png" ),
-    Button(mode: mode, fn: (){debugPrint('Diste click en temperatura');}, img: "/images/temperatura.png" ),
-    Button(mode: mode, fn: (){debugPrint('Diste click en bateria');}, img: "/images/poder.png" ),
-    Button(mode: mode, fn: (){debugPrint('Diste click en humedad');}, img: "/images/humedad.png" ),
-    Button(mode: mode, fn: (){debugPrint('Diste click en bombillo');}, img:"/images/idea-fresca.png" ),
-    Button(mode: mode, fn: (){debugPrint('Diste click en voltaje');}, img: "/images/voltaje.png" ),
-    Button(mode: mode, fn: (){debugPrint('Diste click en mas');}, img: "/images/mas.png" )
-  ],
-);
-  }
-}
+    return 
+    SliverGrid(
+        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+        maxCrossAxisExtent: 200.0,
+        mainAxisSpacing: 30.0,
+        crossAxisSpacing: 30.0,
+        childAspectRatio: 1.0,
+      ),
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) {
+          return Button(mode: mode, indicator: index);
+        },
+        childCount: 6,
+      ),
+);}}
