@@ -2,9 +2,12 @@ import 'dart:core';
 import 'package:charts_flutter/flutter.dart';
 import 'package:flutter/material.dart';
 
+import 'package:graphic/graphic.dart';
+import '../constants.dart';
+
 class IndicatorChart extends StatefulWidget{
   final String mode;
-  final int indicator;
+  final int indicator; 
 
   const IndicatorChart({super.key, required this.mode, required this.indicator});
 
@@ -35,14 +38,54 @@ class IndicatorChartState extends State<IndicatorChart> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-              height: 500,
-              width: 320,
-              child: TimeSeriesChart(
-                animationDuration: const Duration(seconds: 1),
-                animate: true,
-                chartData 
-              )
+    return  Container(
+                margin: const EdgeInsets.only(top: 10),
+                width: 350,
+                height: 300,
+                child: Chart(
+                  data: invalidData,
+                  variables: {
+                    'Date': Variable(
+                      accessor: (Map map) => map['Date'] as String,
+                      scale: OrdinalScale(tickCount: 5),
+                    ),
+                    'Close': Variable(
+                      accessor: (Map map) =>
+                          (map['Close'] ?? double.nan) as num,
+                    ),
+                  },
+                  elements: [
+                    AreaElement(
+                      shape: ShapeAttr(value: BasicAreaShape(smooth: true)),
+                      color: ColorAttr(
+                          value: Defaults.colors10.first.withAlpha(80)),
+                    ),
+                    LineElement(
+                      shape: ShapeAttr(value: BasicLineShape(smooth: true)),
+                      size: SizeAttr(value: 0.5),
+                    ),
+                  ],
+                  axes: [
+                    Defaults.horizontalAxis,
+                    Defaults.verticalAxis,
+                  ],
+                  selections: {
+                    'touchMove': PointSelection(
+                      on: {
+                        GestureType.scaleUpdate,
+                        GestureType.tapDown,
+                        GestureType.longPressMoveUpdate
+                      },
+                      dim: Dim.x,
+                    )
+                  },
+                  tooltip: TooltipGuide(
+                    followPointer: [false, true],
+                    align: Alignment.topLeft,
+                    offset: const Offset(-20, -20),
+                  ),
+                  crosshair: CrosshairGuide(followPointer: [false, true]),
+                ),
               );
   }
 }
