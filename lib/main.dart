@@ -4,10 +4,12 @@ import 'responsive/responsive_layout.dart';
 // Mobile Views
 import 'responsive/mobile/example_routing.dart';
 import 'responsive/mobile/home.dart';
+import 'package:responsivedashboard/responsive/mobile/settings.dart';
 
 // Web Views
 import 'responsive/web/example_routing.dart';
 import 'responsive/web/home.dart';
+import 'package:responsivedashboard/responsive/web/settings.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,8 +35,13 @@ class MyApp extends StatelessWidget {
         '/ex-rout': (context) => const ResponsiveLayout(
           mobileBody: ExampleRoutingMobile(),
           desktopBody: ExampleRoutingDesktop(),
+        ),
+        '/settings': (context) => const ResponsiveLayout(
+          mobileBody: SettingsMobile(),
+          desktopBody: SettingsDesktop(),
         )
       },
+
     );
   }
 }

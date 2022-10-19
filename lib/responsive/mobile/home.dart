@@ -4,6 +4,8 @@ import 'package:responsivedashboard/util/gridButtons.dart';
 import '../../states/indicatorStates.dart';
 import '../../util/Menu.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
+import 'package:responsivedashboard/util/indicatorChart.dart';
+
 
 class HomeMenuMobile extends StatefulWidget {
   const HomeMenuMobile({Key? key}) : super(key: key);
@@ -29,14 +31,7 @@ class _HomeMenuMobileState extends State<HomeMenuMobile> {
             () => SliverList(
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
-                  return Container(
-                    height: 400,
-                    width: 10,
-                    padding: const EdgeInsets.all(10),
-                    alignment: Alignment.center,
-                    color: Colors.lightBlue[100 * (index % 9)],
-                    child: Text('Mobile List Item ${dashboardState.actual[index]}'),
-                  );
+                  return IndicatorChart(mode: desktopMode, indicator: index);
                 },
                 childCount: dashboardState.actual.length,
               ),
