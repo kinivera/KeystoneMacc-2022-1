@@ -55,6 +55,19 @@ class AuthCheck {
   }
 }
 
+class AV {
+  final Map<String, dynamic> time;
+  final Map<String, dynamic> varname;
+  final Map<String, dynamic> value;
+  const AV({required this.time, required this.varname, required this.value});
+  factory AV.fromJson(Map<String, dynamic> json) {
+    return AV(
+        time: jsonDecode(correctJson2(json['time'])),
+        varname: jsonDecode(correctJson2(json['varname'])),
+        value: jsonDecode(correctJson2(json['value'])));
+  }
+}
+
 class AVI {
   final Map<String, dynamic> time;
   final Map<String, dynamic> variable;
@@ -108,6 +121,33 @@ class ApiService {
             jsonDecode(correctJson2(temp2['authUserByUsername'])));
       } else {
         throw Exception('none');
+      }
+    } catch (e) {
+      log(e.toString());
+      throw Exception(e.toString());
+    }
+  }
+  //Función para las variables ambientales
+  Future<AV> getAV(String user, String apiKey, String vars, String timeStart,
+      String timeFinish) async {
+    try {
+      String query =
+          '${ApiConstants.baseUrl}{ambientalVariableIntervals(username: "${user}", apiKey: "${apiKey}", var: "${vars}", timestart: "${timeStart}", timefinish: "${timeFinish}")}';
+      String encodedQuery = Uri.encodeFull(query);
+      // ignore: avoid_print
+      print(encodedQuery);
+      print('---');
+      var url = Uri.parse(encodedQuery);
+      var response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        // ignore: avoid_print
+        print(response.body);
+        Map<String, dynamic> temp = json.decode(response.body);
+        Map<String, dynamic> temp2 = temp['data'];
+        return AV.fromJson(jsonDecode(correctJson2(temp2['ambientVariable'])));
+      } else {
+        throw Exception(response.statusCode.toString());
       }
     } catch (e) {
       log(e.toString());
