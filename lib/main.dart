@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'responsive/responsive_layout.dart';
+import 'Login/login_screen.dart';
+import 'Signup/signup_screen.dart';
+import 'Welcome/welcome_screen.dart';
 
 // Mobile Views
 import 'responsive/mobile/example_routing.dart';
@@ -25,9 +28,21 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.green),
       routes: {
         '/': (context) => const ResponsiveLayout(
+          mobileBody: WelcomeScreen(),
+          desktopBody: WelcomeScreen(),
+        ),
+        '/Login': (context) => const ResponsiveLayout(
+          mobileBody: LoginScreen(),
+          desktopBody: LoginScreen(),
+        ),
+        '/Signup': (context) => const ResponsiveLayout(
+          mobileBody: SignUpScreen(),
+          desktopBody: SignUpScreen(),
+        ),
+       /* '/': (context) => const ResponsiveLayout(
           mobileBody: HomeMenuMobile(),
           desktopBody: HomeMenuDesktop(),
-        ),
+        ),*/
         '/home': (context) => const ResponsiveLayout(
           mobileBody: HomeMenuMobile(),
           desktopBody: HomeMenuDesktop(),
@@ -40,6 +55,7 @@ class MyApp extends StatelessWidget {
           mobileBody: SettingsMobile(),
           desktopBody: SettingsDesktop(),
         )
+       
       },
 
     );
