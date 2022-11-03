@@ -6,7 +6,6 @@ import '../../util/Menu.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
 
-
 class SettingsMobile extends StatefulWidget {
   const SettingsMobile({Key? key}) : super(key: key);
 
