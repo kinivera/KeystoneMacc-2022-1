@@ -12,10 +12,6 @@ class WelcomeImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(
-          "SMART SENSOR",
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
         SizedBox(height: defaultPadding * 2),
         Row(
           children: [
@@ -23,7 +19,7 @@ class WelcomeImage extends StatelessWidget {
             Expanded(
               flex: 8,
               child: SvgPicture.asset(
-                "assets/logoApp.png",
+                "/icons/smart.svg",
               ),
             ),
             Spacer(),

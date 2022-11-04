@@ -31,7 +31,6 @@ class SignUpForm extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: defaultPadding),
             child: TextFormField(
               textInputAction: TextInputAction.done,
-              obscureText: true,
               cursorColor: kPrimaryColor,
               decoration: InputDecoration(
                 hintText: "Your username",
