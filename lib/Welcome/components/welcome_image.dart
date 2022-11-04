@@ -19,7 +19,7 @@ class WelcomeImage extends StatelessWidget {
             Expanded(
               flex: 8,
               child: SvgPicture.asset(
-                "/icons/smart.svg",
+                "/icons/Smart.svg",
               ),
             ),
             Spacer(),

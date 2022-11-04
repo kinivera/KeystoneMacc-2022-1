@@ -49,7 +49,7 @@ class _LoginAndSignupBtnState extends State<LoginAndSignupBtn > {
             );
           },
           style: ElevatedButton.styleFrom(
-              primary: kPrimaryLightColor, elevation: 0),
+              backgroundColor: kPrimaryLightColor, elevation: 0),
           child: Text(
             "Sign Up".toUpperCase(),
             style: TextStyle(color: Colors.black),
