@@ -16,7 +16,7 @@ class Menu extends StatelessWidget {
       child: Column(
         children: [
           InkWell(
-            onTap: (){Navigator.of(context).pushNamed('/');},
+            onTap: (){Navigator.of(context).pushNamed('/home');},
             child:const DrawerHeader(
             child: null,
             decoration: BoxDecoration(
@@ -29,7 +29,7 @@ class Menu extends StatelessWidget {
           ButtonMenu(icono: Icons.file_download, texto:'E X P O R T   A L L  D A T A ', answer: (){Navigator.of(context).pushNamed('/settings');}),
           ButtonMenu(icono: Icons.settings, texto:'S E T T I N G S', answer: (){Navigator.of(context).pushNamed('/settings');}),
           ButtonMenu(icono: Icons.info, texto:'A B O U T', answer: (){debugPrint('4');}),
-          ButtonMenu(icono: Icons.logout, texto:'L O G O U T', answer:(){debugPrint('5');}),
+          ButtonMenu(icono: Icons.logout, texto:'L O G O U T', answer:(){Navigator.of(context).pushNamed('/');}),
         ],
       ),
     );

@@ -14,6 +14,7 @@ const drawerTextColor = TextStyle(
   color: menuColorText
 );
 
+
 var topBar = AppBar(
   backgroundColor: menuColorBackgr,
   title: const Text('Smart Sensor', style:drawerTextColor),
@@ -21,6 +22,12 @@ var topBar = AppBar(
 );
 
 var tilePadding = const EdgeInsets.only(left: 8.0, right: 8, top: 8);
+
+//colores val
+const kPrimaryColor = Color(0xa8bb5b);
+const kPrimaryLightColor = Color(0xFFF1E6FF);
+
+const double defaultPadding = 16.0;
 
 const invalidData = [
     {
