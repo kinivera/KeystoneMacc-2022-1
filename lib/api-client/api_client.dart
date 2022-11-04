@@ -12,7 +12,7 @@ String correctJson2(String badJson) {
       r"(?<!\:\s)\'(?!\})"); //Busca las comillas simples que no tengan dos puntos y espacio (:" ") detras y corchete izquierdo (}) delante
   RegExp inBrackL = RegExp(
       r'\{(?!\")'); // Busca los corchetes { que no tengan una comilla doble al frente
-  RegExp exp3 = RegExp(
+  RegExp inBrackR = RegExp(
       r'(?<!\})\}'); //Busca los corchetes } que no tienen un segundo corchete después
   RegExp brackets = RegExp(r'(\{)|(\})'); //Busca todo los corchetes en el json
 
@@ -26,12 +26,13 @@ String correctJson2(String badJson) {
     if (jsonChecker.contains(mtBrackets)) {
       String newString2 = newString.replaceAll((inBrackL),
           "\"{0:"); //Reemplaza los corchetes por corchetes con comillas adelandte
-      final newString3 = newString2.replaceAll(exp3, "'ND'}\""); //exlude last
+      final newString3 =
+          newString2.replaceAll(inBrackR, "'ND'}\""); //exlude last
       return newString3;
     } else {
       String newString2 = newString.replaceAll((inBrackL),
           "\"{"); //Reemplaza los corchetes por corchetes con comillas adelandte
-      final newString3 = newString2.replaceAll(exp3, "}\""); //exlude last
+      final newString3 = newString2.replaceAll(inBrackR, "}\""); //exlude last
       return newString3;
     }
   } else if (badJson.contains(RegExp(r'(?<=\{)\d(?=\:)'))) {
@@ -39,10 +40,17 @@ String correctJson2(String badJson) {
         badJson.replaceAllMapped(RegExp(r'(?<=\{)\d(?=\:)'), ((match) {
       return '"${match.group(0)}"';
     }));
-
     RegExp exp = RegExp(r"\'");
-    final newString = temp1.replaceAll(exp, "\"");
-    return newString;
+    if (badJson.contains(RegExp(r'datetime\.time'))) {
+      final newString2 =
+          temp1.replaceAll(RegExp(r'datetime\.time'), "\"datetime.time");
+      final newString3 = newString2.replaceAll(RegExp(r'\)(?=(}||,))'), ")\"");
+      final newString = newString3.replaceAll(exp, "\"");
+      return newString;
+    } else {
+      final newString = temp1.replaceAll(exp, "\"");
+      return newString;
+    }
   } else {
     RegExp exp = RegExp(r"\'");
     final newString = badJson.replaceAll(exp, "\"");
@@ -213,9 +221,6 @@ class ApiService {
         Map<String, dynamic> temp = json.decode(response.body);
         Map<String, dynamic> temp2 = temp['data'];
         return AV.fromJson(jsonDecode(correctJson2(temp2['ambientVariable'])));
-        /*String salvame =
-            "{\"time\": \"{}\", \"varname\": \"{}\", \"value\": \"{}\"}";
-        return AV.fromJson(jsonDecode(salvame));*/
       } else {
         throw Exception(response.statusCode.toString());
       }
@@ -252,7 +257,7 @@ class ApiService {
     }
   }
 
-  /*Future<AC> getActConfig(String user, String apiKey, String actName) async {
+  Future<AC> getActConfig(String user, String apiKey, String actName) async {
     try {
       String query =
           '${ApiConstants.baseUrl}{actuatorsConfiguration(username: "${user}", apiKey: "${apiKey}", actuatorName: "${actName}")}';
@@ -278,7 +283,7 @@ class ApiService {
       print(e.toString());
       throw Exception(e.toString());
     }
-  }*/
+  }
 
   // Queries de Writing
   Future<String> writeAmbVarInterval(String user, String apiKey, String vars,
