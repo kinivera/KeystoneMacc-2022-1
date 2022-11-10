@@ -3,13 +3,13 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:ffi';
-import 'package:flutter/cupertino.dart';
+//import 'dart:ffi';
+//import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
 String correctJson2(String badJson) {
   RegExp simpleQ1 = RegExp(
-      r"(?<!\:\s)\'(?!\})"); //Busca las comillas simples que no tengan dos puntos y espacio (:" ") detras y corchete izquierdo (}) delante
+      r"(?<!\:\s)\'(?!(\}|\,))"); //Busca las comillas simples que no tengan dos puntos y espacio (:" ") detras y corchete izquierdo (}) delante
   RegExp inBrackL = RegExp(
       r'\{(?!\")'); // Busca los corchetes { que no tengan una comilla doble al frente
   RegExp inBrackR = RegExp(
@@ -35,9 +35,9 @@ String correctJson2(String badJson) {
       final newString3 = newString2.replaceAll(inBrackR, "}\""); //exlude last
       return newString3;
     }
-  } else if (badJson.contains(RegExp(r'(?<=\{)\d(?=\:)'))) {
+  } else if (badJson.contains(RegExp(r'(?<=(\{|\,\s?))\d+(?=\:)'))) {
     final temp1 =
-        badJson.replaceAllMapped(RegExp(r'(?<=\{)\d(?=\:)'), ((match) {
+        badJson.replaceAllMapped(RegExp(r'(?<=(\{|\,\s?))\d+(?=\:)'), ((match) {
       return '"${match.group(0)}"';
     }));
     RegExp exp = RegExp(r"\'");
@@ -230,6 +230,36 @@ class ApiService {
     }
   }
 
+  Future<AV> getAV2(
+    String user,
+    String apiKey,
+  ) async {
+    try {
+      String query =
+          '${ApiConstants.baseUrl}{allAmbientVariables(username: "${user}",apiKey: "${apiKey}")}';
+      String encodedQuery = Uri.encodeFull(query);
+      // ignore: avoid_print
+      print(encodedQuery);
+      var url = Uri.parse(encodedQuery);
+      var response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        // ignore: avoid_print
+        print(response.body);
+        Map<String, dynamic> temp = json.decode(response.body);
+        Map<String, dynamic> temp2 = temp['data'];
+
+        return AV
+            .fromJson(jsonDecode(correctJson2(temp2['allAmbientVariables'])));
+      } else {
+        throw Exception(response.statusCode.toString());
+      }
+    } catch (e) {
+      log(e.toString());
+      throw Exception(e.toString());
+    }
+  }
+
   //Función para tener los intervalos
   Future<AVI> getAmVarInt(String user, String apiKey, String vars) async {
     try {
@@ -257,6 +287,32 @@ class ApiService {
     }
   }
 
+  Future<AVI> getAmVarInt2(String user, String apiKey) async {
+    try {
+      String query =
+          '${ApiConstants.baseUrl}{allAmbientalVariablesIntervals(username: "${user}", apiKey: "${apiKey}")}';
+      String encodedQuery = Uri.encodeFull(query);
+      // ignore: avoid_print
+      print(encodedQuery);
+      var url = Uri.parse(encodedQuery);
+      var response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        // ignore: avoid_print
+        print(response.body);
+        Map<String, dynamic> temp = json.decode(response.body);
+        Map<String, dynamic> temp2 = temp['data'];
+        return AVI.fromJson(
+            jsonDecode(correctJson2(temp2['allAmbientalVariablesIntervals'])));
+      } else {
+        throw Exception(response.statusCode.toString());
+      }
+    } catch (e) {
+      log(e.toString());
+      throw Exception(e.toString());
+    }
+  }
+
   Future<AC> getActConfig(String user, String apiKey, String actName) async {
     try {
       String query =
@@ -275,6 +331,35 @@ class ApiService {
         print(temp2['actuatorsConfiguration']);
         return AC.fromJson(
             jsonDecode(correctJson2(temp2['actuatorsConfiguration'])));
+      } else {
+        throw Exception(response.statusCode.toString());
+      }
+    } catch (e) {
+      log(e.toString());
+      print(e.toString());
+      throw Exception(e.toString());
+    }
+  }
+
+  Future<AC> getActConfig2(String user, String apiKey) async {
+    try {
+      String query =
+          '${ApiConstants.baseUrl}{allActuatorConfiguration(username: "${user}", apiKey: "${apiKey}")}';
+      String encodedQuery = Uri.encodeFull(query);
+      // ignore: avoid_print
+      print(encodedQuery);
+      var url = Uri.parse(encodedQuery);
+      var response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        // ignore: avoid_print
+        print(response.body);
+        Map<String, dynamic> temp = json.decode(response.body);
+        Map<String, dynamic> temp2 = temp['data'];
+        print(temp2['allActuatorConfiguration']);
+        print(correctJson2(temp2['allActuatorConfiguration']));
+        return AC.fromJson(
+            jsonDecode(correctJson2(temp2['allActuatorConfiguration'])));
       } else {
         throw Exception(response.statusCode.toString());
       }
