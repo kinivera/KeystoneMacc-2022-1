@@ -5,8 +5,8 @@ class Background extends StatelessWidget {
   const Background({
     Key? key,
     required this.child,
-    this.topImage = "assets/images/main_top.png",
-    this.bottomImage = "assets/images/login_bottom.png",
+    this.topImage = "assets/images/main_topp.png",
+    this.bottomImage = "assets/images/login_bottomm.png",
   }) : super(key: key);
 
   final String topImage, bottomImage;
@@ -27,13 +27,13 @@ class Background extends StatelessWidget {
               left: 0,
               child: Image.asset(
                 topImage,
-                width: 120,
+                width: 200,
               ),
             ),
             Positioned(
               bottom: 0,
               right: 0,
-               child: Image.asset(bottomImage, width: 120),
+               child: Image.asset(bottomImage, width: 200),
              ),
             SafeArea(child: child),
           ],
