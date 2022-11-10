@@ -59,11 +59,11 @@ class SignUpForm extends StatelessWidget {
           const SizedBox(height: defaultPadding / 2),
           ElevatedButton(
             onPressed: () {Navigator.of(context).pushNamed('/Login');},
-            child: Text("Sign Up".toUpperCase()),
+            child: Text("S I G N  U P"),
           ),
           const SizedBox(height: defaultPadding),
           AlreadyHaveAnAccountCheck(
-            login: false,
+            login: true,
             press: () {
               Navigator.push(
                 context,

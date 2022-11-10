@@ -48,7 +48,7 @@ class LoginForm extends StatelessWidget {
             child: ElevatedButton(
               onPressed: () {Navigator.of(context).pushNamed('/home');},
               child: Text(
-                "Login".toUpperCase(),
+                "L O G I N",
               ),
             ),
           ),
