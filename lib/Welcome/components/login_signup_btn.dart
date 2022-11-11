@@ -32,7 +32,7 @@ class _LoginAndSignupBtnState extends State<LoginAndSignupBtn > {
               );
             },
             child: Text(
-              "Login".toUpperCase(),
+              "L O G I N",
             ),
           ),
         ),
@@ -49,9 +49,9 @@ class _LoginAndSignupBtnState extends State<LoginAndSignupBtn > {
             );
           },
           style: ElevatedButton.styleFrom(
-              primary: kPrimaryLightColor, elevation: 0),
+              backgroundColor: kPrimaryLightColor, elevation: 0),
           child: Text(
-            "Sign Up".toUpperCase(),
+            "S I G N  U P",
             style: TextStyle(color: Colors.black),
           ),
         ),
