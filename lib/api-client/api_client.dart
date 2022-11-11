@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
+import '../states/indicatorStates.dart';
+import 'dart:math' as m;
 
 String correctJson2(String badJson) {
   if (badJson
@@ -160,11 +162,20 @@ class ApiService {
           '${ApiConstants.baseUrl}{ambientalVariableIntervals(username: "${user}", apiKey: "${apiKey}" var: "${vars}")}';
       String encodedQuery = Uri.encodeFull(query);
       // ignore: avoid_print
-      print(encodedQuery);
-      print('---');
+      //print(encodedQuery);
+      print('---' + (vars as String));
       var url = Uri.parse(encodedQuery);
       var response = await http.get(url);
+      var respuestasimulada =  [   {
+        "Date": "21:41:38",
+        "Close": m.Random().nextInt(100)
+    },
+    {
+        "Date": "02:00:00",
+        "Close":  m.Random().nextInt(100)
+    }];
 
+      dashboardState.updateData(1,respuestasimulada);
       if (response.statusCode == 200) {
         // ignore: avoid_print
         print(response.body);

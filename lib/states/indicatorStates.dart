@@ -5,13 +5,75 @@ var dashboardState = dashboard.state;
 
 class Dashboard {
   List<String> actual = [];
-  var indicators = [
-    {  "name":"temperatura", "isSelected":false },
-    {  "name":"poder", "isSelected":false},
-    {  "name":"humedad", "isSelected":false },
-    {  "name":"idea-fresca", "isSelected":false },
-    {  "name":"voltaje", "isSelected":false },
-    {  "name":"mas", "isSelected":false },
+  List<Map<dynamic,dynamic>> indicators = [
+    {  "name":"temperatura", "isSelected":false , "data":[
+
+    {
+        "Date": "21:41:38",
+        "Close": 1
+    },
+    {
+        "Date": "02:00:00",
+        "Close": 7
+    },
+    ]},
+
+    {  "name":"poder", "isSelected":false, "data":[
+
+    {
+        "Date": "21:41:38",
+        "Close": 1
+    },
+    {
+        "Date": "02:00:00",
+        "Close": 7
+    },
+    ]},
+    {  "name":"humedad", "isSelected":false, "data":[
+
+    {
+        "Date": "21:41:38",
+        "Close": 1
+    },
+    {
+        "Date": "02:00:00",
+        "Close": 7
+    },
+    ] },
+    {  "name":"idea-fresca", "isSelected":false , "data":[
+
+    {
+        "Date": "21:41:38",
+        "Close": 1
+    },
+    {
+        "Date": "02:00:00",
+        "Close": 7
+    },
+    ]},
+    {  "name":"voltaje", "isSelected":false , "data":[
+
+    {
+        "Date": "21:41:38",
+        "Close": 1
+    },
+    {
+        "Date": "02:00:00",
+        "Close": 7
+    },
+    ]},
+    {  "name":"mas", "isSelected":false , "data":[
+
+    {
+        "Date": "21:41:38",
+        "Close": 1
+    },
+    {
+        "Date": "02:00:00",
+        "Close": 7
+    },
+    ]},
+  
   ];
 
   void addIndicator(String element) {
@@ -26,6 +88,11 @@ class Dashboard {
 
   void selectIndicator(int index){
     indicators[index]["isSelected"] = !(indicators[index]["isSelected"] as bool);
+    dashboard.notify();
+  }
+
+  void updateData(int index, List<Map<dynamic,dynamic>> dataList ){
+    indicators[index]["data"] = dataList;
     dashboard.notify();
   }
 }
