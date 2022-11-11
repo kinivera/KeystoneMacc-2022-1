@@ -35,7 +35,7 @@ class IndicatorChartState extends State<IndicatorChart> {
     String token ='46399ec9bb61442d6988d5daaf58e16cf58c4e03dfa75b1a00b99e567446293689ce24f6db220f02932561a408e8b15e29e06d6cb2b44c8032619a655da7ede8';
     String sensor =  indexIndicators[widget.indicator];
 
-    Timer.periodic(const Duration(seconds:5), ((Timer t) => api.getAV(user, token, sensor, '1600/10/02 00:00:00','2022/10/05 00:00:00')));
+    Timer.periodic(const Duration(seconds:5), ((Timer t) => api.getAV(user, token, sensor, "2012/12/12 10:00:00","2022/12/24 10:00:01")));
     //_checkingAuth = api.authUser("dave", "supertactica");
     //_ambientVariables = api.getAV( user, token, sensor, '2022/10/02 00:00:00','2022/10/05 00:00:00');
        

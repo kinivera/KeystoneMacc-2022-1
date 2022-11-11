@@ -132,7 +132,7 @@ class ApiService {
       String timeFinish) async {
     try {
       String query =
-          '${ApiConstants.baseUrl}{ambientalVariableIntervals(username: "${user}", apiKey: "${apiKey}", var: "${vars}", timestart: "${timeStart}", timefinish: "${timeFinish}")}';
+          '${ApiConstants.baseUrl}{ambientVariable(username: "${user}", apiKey: "${apiKey}", var: "${vars}", timestart: "${timeStart}", timefinish: "${timeFinish}")}';
       String encodedQuery = Uri.encodeFull(query);
       // ignore: avoid_print
       print(encodedQuery);
