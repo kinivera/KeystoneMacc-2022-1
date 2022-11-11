@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:ffi';
-import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
 String correctJson2(String badJson) {

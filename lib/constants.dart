@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'api-client/api_client.dart';
+
 // General constants
 const desktopMode = "Desktop";
 const mobileMode = "Mobile";
@@ -28,6 +30,7 @@ const kPrimaryColor = Color(0xa8bb5b);
 const kPrimaryLightColor = Color(0xFFF1E6FF);
 
 const double defaultPadding = 16.0;
+
 
 const invalidData = [
     {
