@@ -3,9 +3,12 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
+//import 'dart:async';
+//import 'dart:ffi';
+//import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
-import '../states/indicatorStates.dart';
-import 'dart:math' as m;
+import 'package:path_provider/path_provider.dart';
 
 String correctJson2(String badJson) {
   RegExp simpleQ1 = RegExp(
@@ -148,6 +151,19 @@ class AC {
 class ApiService {
   ApiConstants apiConstants = ApiConstants();
 
+  //Get the correct path
+  Future<String> get _localPath async {
+    final directory = await getApplicationDocumentsDirectory();
+    return directory.path;
+  }
+
+  //Create reference to the file location
+  Future<File> get _localFile async {
+    final path = await _localPath;
+    // Suele ser documents
+    return File('$path/daTa.json');
+  }
+
   //Autenticación
   Future<AuthCheck> authUserbyUsername(String user, String psswrd) async {
     try {
@@ -267,20 +283,10 @@ class ApiService {
           '${ApiConstants.baseUrl}{ambientalVariableIntervals(username: "${user}", apiKey: "${apiKey}", var: "${vars}")}';
       String encodedQuery = Uri.encodeFull(query);
       // ignore: avoid_print
-      //print(encodedQuery);
       print(encodedQuery);
       var url = Uri.parse(encodedQuery);
       var response = await http.get(url);
-      var respuestasimulada =  [   {
-        "Date": "21:41:38",
-        "Close": m.Random().nextInt(100)
-    },
-    {
-        "Date": "02:00:00",
-        "Close":  m.Random().nextInt(100)
-    }];
 
-      dashboardState.updateData(1,respuestasimulada);
       if (response.statusCode == 200) {
         // ignore: avoid_print
         print(response.body);
@@ -523,6 +529,177 @@ class ApiService {
       }
     } catch (e) {
       log(e.toString());
+      throw Exception(e.toString());
+    }
+  }
+
+  //Función para json de variables ambientales
+  Future<File> getAVasJson(String user, String apiKey, String vars,
+      String timeStart, String timeFinish) async {
+    try {
+      final file = await _localFile;
+      String query =
+          '${ApiConstants.baseUrl}{ambientVariable(username: "${user}",apiKey: "${apiKey}",var: "${vars}",timestart: "${timeStart}",timefinish: "${timeFinish}")}';
+      String encodedQuery = Uri.encodeFull(query);
+      // ignore: avoid_print
+      print(encodedQuery);
+      var url = Uri.parse(encodedQuery);
+      var response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        // ignore: avoid_print
+        print(response.body);
+        Map<String, dynamic> temp = json.decode(response.body);
+        Map<String, dynamic> temp2 = temp['data'];
+        return file.writeAsString(correctJson2(temp2['ambientVariable']));
+      } else {
+        throw Exception(response.statusCode.toString());
+      }
+    } catch (e) {
+      log(e.toString());
+      throw Exception(e.toString());
+    }
+  }
+
+  Future<File> getAllAVasJson(
+    String user,
+    String apiKey,
+  ) async {
+    try {
+      final file = await _localFile;
+      String query =
+          '${ApiConstants.baseUrl}{allAmbientVariables(username: "${user}",apiKey: "${apiKey}")}';
+      String encodedQuery = Uri.encodeFull(query);
+      // ignore: avoid_print
+      print(encodedQuery);
+      var url = Uri.parse(encodedQuery);
+      var response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        // ignore: avoid_print
+        print(response.body);
+        Map<String, dynamic> temp = json.decode(response.body);
+        Map<String, dynamic> temp2 = temp['data'];
+
+        return file.writeAsString(correctJson2(temp2['allAmbientVariables']));
+      } else {
+        throw Exception(response.statusCode.toString());
+      }
+    } catch (e) {
+      log(e.toString());
+      throw Exception(e.toString());
+    }
+  }
+
+  Future<File> getAVIasJson(String user, String apiKey, String vars) async {
+    try {
+      final file = await _localFile;
+      String query =
+          '${ApiConstants.baseUrl}{ambientalVariableIntervals(username: "${user}", apiKey: "${apiKey}", var: "${vars}")}';
+      String encodedQuery = Uri.encodeFull(query);
+      // ignore: avoid_print
+      print(encodedQuery);
+      var url = Uri.parse(encodedQuery);
+      var response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        // ignore: avoid_print
+        print(response.body);
+        Map<String, dynamic> temp = json.decode(response.body);
+        Map<String, dynamic> temp2 = temp['data'];
+        return file
+            .writeAsString(correctJson2(temp2['ambientalVariableIntervals']));
+      } else {
+        throw Exception(response.statusCode.toString());
+      }
+    } catch (e) {
+      log(e.toString());
+      throw Exception(e.toString());
+    }
+  }
+
+  Future<File> getAllAVIasJson(String user, String apiKey) async {
+    try {
+      final file = await _localFile;
+      String query =
+          '${ApiConstants.baseUrl}{allAmbientalVariablesIntervals(username: "${user}", apiKey: "${apiKey}")}';
+      String encodedQuery = Uri.encodeFull(query);
+      // ignore: avoid_print
+      print(encodedQuery);
+      var url = Uri.parse(encodedQuery);
+      var response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        // ignore: avoid_print
+        print(response.body);
+        Map<String, dynamic> temp = json.decode(response.body);
+        Map<String, dynamic> temp2 = temp['data'];
+        return file.writeAsString(
+            correctJson2(temp2['allAmbientalVariablesIntervals']));
+      } else {
+        throw Exception(response.statusCode.toString());
+      }
+    } catch (e) {
+      log(e.toString());
+      throw Exception(e.toString());
+    }
+  }
+
+  Future<File> getACasJson(String user, String apiKey, String actName) async {
+    try {
+      final file = await _localFile;
+      String query =
+          '${ApiConstants.baseUrl}{actuatorsConfiguration(username: "${user}", apiKey: "${apiKey}", actuatorName: "${actName}")}';
+      String encodedQuery = Uri.encodeFull(query);
+      // ignore: avoid_print
+      print(encodedQuery);
+      var url = Uri.parse(encodedQuery);
+      var response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        // ignore: avoid_print
+        print(response.body);
+        Map<String, dynamic> temp = json.decode(response.body);
+        Map<String, dynamic> temp2 = temp['data'];
+        print(temp2['actuatorsConfiguration']);
+        return file
+            .writeAsString(correctJson2(temp2['actuatorsConfiguration']));
+      } else {
+        throw Exception(response.statusCode.toString());
+      }
+    } catch (e) {
+      log(e.toString());
+      print(e.toString());
+      throw Exception(e.toString());
+    }
+  }
+
+  Future<File> getAllACasJson(String user, String apiKey) async {
+    try {
+      final file = await _localFile;
+      String query =
+          '${ApiConstants.baseUrl}{allActuatorConfiguration(username: "${user}", apiKey: "${apiKey}")}';
+      String encodedQuery = Uri.encodeFull(query);
+      // ignore: avoid_print
+      print(encodedQuery);
+      var url = Uri.parse(encodedQuery);
+      var response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        // ignore: avoid_print
+        print(response.body);
+        Map<String, dynamic> temp = json.decode(response.body);
+        Map<String, dynamic> temp2 = temp['data'];
+        print(temp2['allActuatorConfiguration']);
+        print(correctJson2(temp2['allActuatorConfiguration']));
+        return file
+            .writeAsString(correctJson2(temp2['allActuatorConfiguration']));
+      } else {
+        throw Exception(response.statusCode.toString());
+      }
+    } catch (e) {
+      log(e.toString());
+      print(e.toString());
       throw Exception(e.toString());
     }
   }
