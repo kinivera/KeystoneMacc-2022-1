@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'api_client.dart';
 
@@ -48,17 +49,19 @@ class _MyHomePageState extends State<MyHomePage> {
   late Future<String> _newMicro;
   late Future<String> _newTopic;
 
+  late Future<File> _writefile;
+
   @override
   void initState() {
     super.initState();
     //_checkingAuth = api.authUserbyUsername("dave", "supertactica");
     //_checkAuthbyEmail = api.authUserbyEmail('valid@email.com', 'supertactica');
-    /*_ambientVariables = api.getAV(
+    _ambientVariables = api.getAV(
         'dave',
         '46399ec9bb61442d6988d5daaf58e16cf58c4e03dfa75b1a00b99e567446293689ce24f6db220f02932561a408e8b15e29e06d6cb2b44c8032619a655da7ede8',
         'temperature',
         '2022/12/12 10:00:00',
-        '2022/12/24 10:00:01');*/
+        '2022/12/24 10:00:01');
     /*_ambVarInterval = api.getAmVarInt(
         'dave',
         '46399ec9bb61442d6988d5daaf58e16cf58c4e03dfa75b1a00b99e567446293689ce24f6db220f02932561a408e8b15e29e06d6cb2b44c8032619a655da7ede8',
@@ -94,8 +97,8 @@ class _MyHomePageState extends State<MyHomePage> {
         "10:00:01",
         0,
         1);*/
-    _ambientVariables2 = api.getAV2("dave",
-        "46399ec9bb61442d6988d5daaf58e16cf58c4e03dfa75b1a00b99e567446293689ce24f6db220f02932561a408e8b15e29e06d6cb2b44c8032619a655da7ede8");
+    /*_ambientVariables2 = api.getAV2("dave",
+        "46399ec9bb61442d6988d5daaf58e16cf58c4e03dfa75b1a00b99e567446293689ce24f6db220f02932561a408e8b15e29e06d6cb2b44c8032619a655da7ede8");*/
 
     /*_ambVarInterval2 = api.getAmVarInt2(
       "dave",
@@ -103,6 +106,10 @@ class _MyHomePageState extends State<MyHomePage> {
     );*/
     /*_actuatorConfig2 = api.getActConfig2("dave",
         "46399ec9bb61442d6988d5daaf58e16cf58c4e03dfa75b1a00b99e567446293689ce24f6db220f02932561a408e8b15e29e06d6cb2b44c8032619a655da7ede8");*/
+    _writefile = api.getACasJson(
+        "dave",
+        "46399ec9bb61442d6988d5daaf58e16cf58c4e03dfa75b1a00b99e567446293689ce24f6db220f02932561a408e8b15e29e06d6cb2b44c8032619a655da7ede8",
+        "water pump");
   }
 
   @override
@@ -113,10 +120,10 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: FutureBuilder<AV>(
-            future: _ambientVariables2,
+            future: _ambientVariables,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return Text("${snapshot.data!.varname['2']}");
+                return Text("${snapshot.data!.varname['0']}");
               } else if (snapshot.hasError) {
                 return Text('${snapshot.error}');
               }
