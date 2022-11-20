@@ -1,7 +1,7 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
-import '../constants.dart';
 import '../util/Button.dart';
+import '../../states/indicatorStates.dart';
 
 class GridButtons extends StatelessWidget {
   final String mode;
@@ -21,6 +21,6 @@ class GridButtons extends StatelessWidget {
         (BuildContext context, int index) {
           return Button(mode: mode, indicator: index);
         },
-        childCount: 6,
+        childCount: dashboardState.indicators.length,
       ),
 );}}

@@ -19,7 +19,7 @@ class _SettingsMobileState extends State<SettingsMobile> {
     return Scaffold(
       backgroundColor: defaultBackgroundColor,
       appBar: topBar,
-      drawer: const Menu(),
+      drawer: Menu(),
       body: Center(
           child: Padding(
             padding: const EdgeInsets.all(30.0),

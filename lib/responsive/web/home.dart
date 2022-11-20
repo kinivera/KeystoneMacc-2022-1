@@ -19,7 +19,7 @@ class _HomeMenuDesktopState extends State<HomeMenuDesktop> {
     return Scaffold(
       backgroundColor: defaultBackgroundColor,
       appBar: topBar,
-      drawer: const Menu(),
+      drawer: Menu(),
       body: CustomScrollView(
         slivers: <Widget>[
           const SliverPadding(
@@ -30,9 +30,7 @@ class _HomeMenuDesktopState extends State<HomeMenuDesktop> {
             () => SliverList(
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
-                  print(dashboardState.trans[dashboardState.actual[index]]);
                   return IndicatorChart(mode: desktopMode, indicator: dashboardState.trans[dashboardState.actual[index]] ?? 0);
-                  //return IndicatorChart(mode: desktopMode, indicator: index);
                 },
                 childCount: dashboardState.actual.length,
               ),

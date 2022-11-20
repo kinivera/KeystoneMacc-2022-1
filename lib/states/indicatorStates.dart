@@ -3,96 +3,59 @@ import 'package:states_rebuilder/states_rebuilder.dart';
 var dashboard = RM.inject(() => Dashboard());
 var dashboardState = dashboard.state;
 
+//'pressure', 4474: 
+//'hum', 4475: 
+//'lux', 4476: 
+//'temp', 4477: 
+
+List<Map<String,dynamic>> initialStateMetrics = [
+        {
+            "Date": "00:00:00",
+            "Close": 0
+        },
+      ];
 class Dashboard {
   List<String> actual = [];
   Map<String, int> trans = {
-    "temperatura":0,
-    "poder":1,
-    "humedad":2,
-    "idea-fresca":3,
-    "voltaje":4,
-    "mas":5
+    "temp":0,
+    //"battery_voltage":1,
+    "hum":1,
+    "pressure":2,
+    "lux":3,
+    "panel_voltage":4
   };
 
   List<Map<dynamic,dynamic>> indicators = [
-    { "name":"temperatura",
+    { "name":"temp",
+      "beautyName":"Temperatura",
       "isSelected":false ,
-      "data":[
-        {
-            "Date": "21:41:38",
-            "Close": 1
-        },
-        {
-            "Date": "02:00:00",
-            "Close": 7
-        },
-      ]
+      "data": initialStateMetrics
     },
-    { "name":"poder",
+    //{ "name":"battery_voltage",
+    //  "beautyName":"Voltaje de Bateria",
+    //  "isSelected":false,
+    //  "data":initialStateMetrics
+    //},
+    { "name":"hum",
+      "beautyName":"Humedad",
       "isSelected":false,
-      "data":[
-        {
-            "Date": "21:41:38",
-            "Close": 1
-        },
-        {
-            "Date": "02:00:00",
-            "Close": 7
-        },
-      ]
+      "data":initialStateMetrics
     },
-    { "name":"humedad",
+    { "name":"pressure",
+      "beautyName":"Presión",
       "isSelected":false,
-      "data":[
-        {
-            "Date": "21:41:38",
-            "Close": 1
-        },
-        {
-            "Date": "02:00:00",
-            "Close": 7
-        },
-      ]
+      "data":initialStateMetrics
     },
-    { "name":"idea-fresca",
+    { "name":"lux",
+      "beautyName":"Nivel de luz",
       "isSelected":false ,
-      "data":[
-        {
-            "Date": "21:41:38",
-            "Close": 1
-        },
-        {
-            "Date": "02:00:00",
-            "Close": 7
-        },
-      ]
+      "data":initialStateMetrics
     },
-    { "name":"voltaje",
+    { "name":"panel_voltage",
+      "beautyName":"Voltaje del Panel",
       "isSelected":false ,
-      "data":[
-        {
-            "Date": "21:41:38",
-            "Close": 1
-        },
-        {
-            "Date": "02:00:00",
-            "Close": 7
-        },
-      ]
+      "data":initialStateMetrics
     },
-    { "name":"mas",
-      "isSelected":false ,
-      "data":[
-        {
-            "Date": "21:41:38",
-            "Close": 1
-        },
-        {
-            "Date": "02:00:00",
-            "Close": 7
-        },
-      ]
-    }
   ];
 
   void addIndicator(String element) {
@@ -111,7 +74,8 @@ class Dashboard {
   }
 
   void updateData(int index, List<Map<dynamic,dynamic>> dataList ){
-    indicators[index]["data"] = dataList;
+    indicators[index]["data"] = dataList.isEmpty ? initialStateMetrics: dataList;
     dashboard.notify();
+    print("dashboartd $index updated");
   }
 }

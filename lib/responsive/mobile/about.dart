@@ -17,7 +17,7 @@ class _AboutMobileState extends State<AboutMobile> {
     return Scaffold(
       backgroundColor: defaultBackgroundColor,
       appBar: topBar,
-      drawer: const Menu(),
+      drawer: Menu(),
       body: Center(
           child: Padding(
             padding: const EdgeInsets.all(30.0),

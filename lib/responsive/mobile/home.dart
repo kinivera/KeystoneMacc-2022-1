@@ -20,7 +20,7 @@ class _HomeMenuMobileState extends State<HomeMenuMobile> {
     return Scaffold(
       backgroundColor: defaultBackgroundColor,
       appBar: topBar,
-      drawer: const Menu(),
+      drawer: Menu(),
       body: CustomScrollView(
         slivers: <Widget>[
           const SliverPadding(

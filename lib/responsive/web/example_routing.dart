@@ -22,7 +22,7 @@ class _ExampleRoutingDesktopState extends State<ExampleRoutingDesktop> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // open drawer
-            const Menu(),
+            Menu(),
 
             // first half of page
             Expanded(

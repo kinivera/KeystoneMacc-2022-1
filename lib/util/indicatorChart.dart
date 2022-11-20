@@ -1,13 +1,13 @@
+// ignore_for_file: file_names
+
 import 'dart:async';
 import 'dart:core';
-import 'package:charts_flutter/flutter.dart';
 import 'package:flutter/material.dart';
 
 import 'package:graphic/graphic.dart';
 import '../api-client/api_client.dart';
-import '../constants.dart';
 import '../../states/indicatorStates.dart';
-
+import '../../constants.dart';
 
 
 class IndicatorChart extends StatefulWidget{
@@ -34,11 +34,12 @@ class IndicatorChartState extends State<IndicatorChart> {
     
     String user ='dave';
     String token ='46399ec9bb61442d6988d5daaf58e16cf58c4e03dfa75b1a00b99e567446293689ce24f6db220f02932561a408e8b15e29e06d6cb2b44c8032619a655da7ede8';
-    String sensor =  indexIndicators[widget.indicator];
+    String sensor =  dashboardState.indicators[widget.indicator]["name"];
 
-    _timer = Timer.periodic(const Duration(seconds:1), ((Timer t) =>{
-      print(dashboardState.indicators[widget.indicator]["name"] + " " + (dashboardState.indicators[widget.indicator]["isSelected"] ? "selected" : "not selected")),
-      //api.getAV(user, token, sensor, "2012/12/12 10:00:00","2022/12/24 10:00:01")
+    api.getAV(user, token, sensor, searchIntervals["beginDate"] ?? "2022/11/10 00:00:01", searchIntervals["endDate"] ?? "2022/11/16 23:00:01");
+    _timer = Timer.periodic(const Duration(seconds:updateSeconds), ((Timer t) =>{
+      //print("$sensor ${dashboardState.indicators[widget.indicator]["isSelected"] ? "selected" : "not selected"}"),
+      api.getAV(user, token, sensor,searchIntervals["beginDate"] ?? "2022/11/10 00:00:01", searchIntervals["endDate"] ?? "2022/11/16 23:00:01")
     }));
 
     //_checkingAuth = api.authUser("dave", "supertactica");
@@ -51,16 +52,22 @@ class IndicatorChartState extends State<IndicatorChart> {
   @override
   void dispose() {
   super.dispose();
-  print("desaparece widget");
   _timer.cancel();
   /// release whatever you have consume
   }
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
+    return  Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Text(
+          dashboardState.indicators[widget.indicator]["beautyName"],
+          style: const TextStyle(height: 5, fontSize: 50, fontWeight: FontWeight.bold)
+        ),
+        Container(
                 margin: const EdgeInsets.only(top: 10),
-                width: 350,
+                width: 10000,
                 height: 300,
                 child: Chart(
                   data: dashboardState.indicators[widget.indicator]["data"],
@@ -105,8 +112,8 @@ class IndicatorChartState extends State<IndicatorChart> {
                     offset: const Offset(-20, -20),
                   ),
                   crosshair: CrosshairGuide(followPointer: [false, true]),
-                ),
-              );
+                )),
+              ]);
   }
 }
 

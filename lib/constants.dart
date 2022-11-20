@@ -31,9 +31,9 @@ const kPrimaryLightColor = Color(0xFFF1E6FF);
 
 const double defaultPadding = 16.0;
 
-//'pressure', 4474: 
-//'hum', 4475: 
-//'lux', 4476: 
-//'temp', 4477: 
-
-const indexIndicators = ["temp","battery","hum","lux","vol","more"];
+const int limitData = 15; /// ultimos x datos.
+const int updateSeconds = 30; /// Cada x segundos se actualiza cada grafica.
+const Map<String,String> searchIntervals = {
+  "beginDate":"2022/11/10 00:00:01",
+  "endDate":"2022/11/16 23:00:01"
+}; //intervalos de busqueda para las variables

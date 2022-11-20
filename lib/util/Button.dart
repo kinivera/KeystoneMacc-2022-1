@@ -17,7 +17,6 @@ class ButtonState extends State<Button> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        print('Diste click en ${dashboardState.indicators[widget.indicator]["name"]}');
         setState((){
           dashboardState.indicators[widget.indicator]["isSelected"]=!( dashboardState.indicators[widget.indicator]["isSelected"] as bool);
           if(dashboardState.indicators[widget.indicator]["isSelected"] as bool){

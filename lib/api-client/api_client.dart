@@ -4,11 +4,49 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
-//import 'dart:async';
-//import 'dart:ffi';
-//import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import 'dart:html' as html;
 import 'package:path_provider/path_provider.dart';
+import 'package:responsivedashboard/constants.dart';
+import '../../states/indicatorStates.dart';
+
+convertAndPublish(Map<String, dynamic> data, String sensor){
+  int indicator = dashboardState.trans[sensor] ?? 0;
+  var times = jsonDecode(correctJson2(data["time"]));
+  var metric = jsonDecode(correctJson2(data["value"]));
+  int lengthData = times.keys.length;
+
+  List<Map<dynamic,dynamic>> newData = [];
+
+   for ( int key = (lengthData > limitData ? lengthData - limitData : 0); key < lengthData; key++){
+      if(times['$key'] == 'ND')continue;
+      newData.add({"Date":times['$key'],"Close":metric['$key']});
+    }
+  //print(newData);
+  //print(indicator);
+  Timer.periodic(const Duration(seconds: 2), (Timer t) => {dashboardState.updateData(indicator, newData),t.cancel()});
+}
+
+downloadFileWeb(String jsonText, String fileName){
+
+  // prepare
+  final bytes = utf8.encode(jsonText);
+  final blob = html.Blob([bytes]);
+  final url = html.Url.createObjectUrlFromBlob(blob);
+  final anchor = html.document.createElement('a') as html.AnchorElement
+    ..href = url
+    ..style.display = 'none'
+    ..download = fileName;
+    html.document.body?.children.add(anchor);
+
+    // download
+    anchor.click();
+
+    // cleanup
+    html.document.body?.children.remove(anchor);
+    html.Url.revokeObjectUrl(url);
+}
+
 
 String correctJson2(String badJson) {
   RegExp simpleQ1 = RegExp(
@@ -153,8 +191,9 @@ class ApiService {
 
   //Get the correct path
   Future<String> get _localPath async {
-    final directory = await getApplicationDocumentsDirectory();
-    return directory.path;
+    //final directory = await getApplicationDocumentsDirectory();
+    //return directory.path;
+    return '';
   }
 
   //Create reference to the file location
@@ -227,16 +266,19 @@ class ApiService {
           '${ApiConstants.baseUrl}{ambientVariable(username: "${user}",apiKey: "${apiKey}",var: "${vars}",timestart: "${timeStart}",timefinish: "${timeFinish}")}';
       String encodedQuery = Uri.encodeFull(query);
       // ignore: avoid_print
-      print(encodedQuery);
+      //print(encodedQuery);
       var url = Uri.parse(encodedQuery);
       var response = await http.get(url);
 
       if (response.statusCode == 200) {
         // ignore: avoid_print
-        print(response.body);
-        Map<String, dynamic> temp = json.decode(response.body);
+        var body = response.body;
+        Map<String, dynamic> temp = json.decode(body);
         Map<String, dynamic> temp2 = temp['data'];
-        return AV.fromJson(jsonDecode(correctJson2(temp2['ambientVariable'])));
+        Map<String, dynamic> temp3 = jsonDecode(correctJson2(temp2['ambientVariable']));
+        //print(temp2['ambientVariable']);
+        convertAndPublish(temp3, vars);
+        return AV.fromJson(temp3);
       } else {
         throw Exception(response.statusCode.toString());
       }
@@ -533,8 +575,16 @@ class ApiService {
     }
   }
 
+  void getSelectedAVasJson(String user, String apiKey,
+    String timeStart, String timeFinish){
+    print('Exportando -->');
+    print(dashboardState.actual);
+    for (var _var in dashboardState.actual) {
+      getAVasJson(user, apiKey, _var, timeStart, timeFinish);
+    }
+  }
   //Función para json de variables ambientales
-  Future<File> getAVasJson(String user, String apiKey, String vars,
+  void getAVasJson(String user, String apiKey, String vars,
       String timeStart, String timeFinish) async {
     try {
       final file = await _localFile;
@@ -542,16 +592,17 @@ class ApiService {
           '${ApiConstants.baseUrl}{ambientVariable(username: "${user}",apiKey: "${apiKey}",var: "${vars}",timestart: "${timeStart}",timefinish: "${timeFinish}")}';
       String encodedQuery = Uri.encodeFull(query);
       // ignore: avoid_print
-      print(encodedQuery);
+      //print(encodedQuery);
       var url = Uri.parse(encodedQuery);
       var response = await http.get(url);
 
       if (response.statusCode == 200) {
         // ignore: avoid_print
-        print(response.body);
+        //print(response.body);
         Map<String, dynamic> temp = json.decode(response.body);
         Map<String, dynamic> temp2 = temp['data'];
-        return file.writeAsString(correctJson2(temp2['ambientVariable']));
+        downloadFileWeb(correctJson2(temp2['ambientVariable']), '$vars.json');
+        //return file.writeAsString(correctJson2(temp2['ambientVariable']));
       } else {
         throw Exception(response.statusCode.toString());
       }
@@ -561,7 +612,7 @@ class ApiService {
     }
   }
 
-  Future<File> getAllAVasJson(
+  void getAllAVasJson(
     String user,
     String apiKey,
   ) async {
@@ -571,17 +622,18 @@ class ApiService {
           '${ApiConstants.baseUrl}{allAmbientVariables(username: "${user}",apiKey: "${apiKey}")}';
       String encodedQuery = Uri.encodeFull(query);
       // ignore: avoid_print
-      print(encodedQuery);
+      //print(encodedQuery);
       var url = Uri.parse(encodedQuery);
       var response = await http.get(url);
 
       if (response.statusCode == 200) {
         // ignore: avoid_print
-        print(response.body);
+        //print(response.body);
         Map<String, dynamic> temp = json.decode(response.body);
         Map<String, dynamic> temp2 = temp['data'];
-
-        return file.writeAsString(correctJson2(temp2['allAmbientVariables']));
+        
+        downloadFileWeb(correctJson2(temp2['allAmbientVariables']), 'allData.json');
+        //return file.writeAsString(correctJson2(temp2['allAmbientVariables']));
       } else {
         throw Exception(response.statusCode.toString());
       }
