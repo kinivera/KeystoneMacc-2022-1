@@ -34,6 +34,6 @@ const double defaultPadding = 16.0;
 const int limitData = 15; /// ultimos x datos.
 const int updateSeconds = 30; /// Cada x segundos se actualiza cada grafica.
 const Map<String,String> searchIntervals = {
-  "beginDate":"2022/11/10 00:00:01",
-  "endDate":"2022/11/16 23:00:01"
+  "beginDate":"2012/11/10 00:00:01",
+  "endDate":"2023/11/16 23:00:01"
 }; //intervalos de busqueda para las variables
