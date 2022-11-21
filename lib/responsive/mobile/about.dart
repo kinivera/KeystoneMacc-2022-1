@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../Signup/components/sign_up_top_image.dart';
+import 'package:responsivedashboard/Welcome/components/welcome_image.dart';
 import '../../constants.dart';
 import '../../util/Menu.dart';
 
@@ -23,7 +23,7 @@ class _AboutMobileState extends State<AboutMobile> {
             padding: const EdgeInsets.all(30.0),
             child: Column(
               children: const <Widget>[
-                SignUpScreenTopImage(),
+                WelcomeImage(),
                 Center(
                   child: Text('''Sistema aplicacion-sensor, que permite conectar la informacion que proviene de los sensores
                  Escuela de Ingeniería, Ciencia y Tecnología - Universidad del Rosario

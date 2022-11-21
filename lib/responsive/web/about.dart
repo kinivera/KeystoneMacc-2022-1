@@ -1,8 +1,7 @@
 // ignore_for_file: unnecessary_const
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import '../../Signup/components/sign_up_top_image.dart';
+import 'package:responsivedashboard/Welcome/components/welcome_image.dart';
 import '../../constants.dart';
 import '../../util/Menu.dart';
 
@@ -26,7 +25,7 @@ class _AboutDesktopState extends State<AboutDesktop> {
             padding: const EdgeInsets.all(30.0),
             child: Column(
               children: const <Widget>[
-                const SignUpScreenTopImage(),
+                const WelcomeImage(),
                 Center(
                   child: Text('''Sistema aplicacion-sensor, que permite conectar la informacion que proviene de los sensores
                  Escuela de Ingeniería, Ciencia y Tecnología - Universidad del Rosario

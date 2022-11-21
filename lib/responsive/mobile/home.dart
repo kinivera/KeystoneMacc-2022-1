@@ -31,8 +31,7 @@ class _HomeMenuMobileState extends State<HomeMenuMobile> {
             () => SliverList(
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
-                  print(index);
-                  return IndicatorChart(mode: desktopMode, indicator: index);
+                  return IndicatorChart(mode: desktopMode, indicator: dashboardState.trans[dashboardState.actual[index]] ?? 0);
                 },
                 childCount: dashboardState.actual.length,
               ),
