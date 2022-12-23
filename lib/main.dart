@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'responsive/responsive_layout.dart';
 import 'Login/login_screen.dart';
 import 'Signup/signup_screen.dart';
@@ -16,8 +17,22 @@ import 'responsive/web/home.dart';
 import 'package:responsivedashboard/responsive/web/settings.dart';
 import 'package:responsivedashboard/responsive/web/about.dart';
 
-void main() {
-  runApp(const MyApp());
+//API
+import 'package:graphql_flutter/graphql_flutter.dart';
+import 'api-client/api-client.dart';
+
+
+
+void main() async{
+
+  // We're using HiveStore for persistence,
+  // so we need to initialize Hive.
+  await initHiveForFlutter();
+
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (_) => AppApiClient())],
+      child: MyApp(),),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -45,6 +60,10 @@ class MyApp extends StatelessWidget {
           mobileBody: HomeMenuMobile(),
           desktopBody: HomeMenuDesktop(),
         ),*/
+
+        //
+        //**** check 'indicatorStates.dart' and 'constants.dart '****
+        //
         '/home': (context) => const ResponsiveLayout(
           mobileBody: HomeMenuMobile(),
           desktopBody: HomeMenuDesktop(),
@@ -66,3 +85,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
+

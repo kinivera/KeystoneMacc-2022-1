@@ -1,11 +1,13 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
-import 'package:responsivedashboard/util/Button.dart';
-import '../../api-client/api_client.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:provider/provider.dart';
+import '../../api-client/api-client.dart';
 import '../../util/already_have_an_account_acheck.dart';
 import '../../../constants.dart';
 import '../../Signup/signup_screen.dart';
+
+//https://www.topcoder.com/thrive/articles/form-validation-in-flutter
+
 
 class LoginForm extends StatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -15,19 +17,21 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  TextEditingController _userController = new TextEditingController();
-  TextEditingController _pswdController = new TextEditingController();
+  TextEditingController _userController = TextEditingController();
+  TextEditingController _pswdController = TextEditingController();
+  final formGlobalKey = GlobalKey <FormState> ();
 
-  ApiService api = ApiService();
-
-late Future<AuthCheck> _checkingAuth;
 
   @override
   Widget build(BuildContext context) {
-   
+    AppApiClient client =  Provider.of<AppApiClient>(context);
+
     return Form(
+      key: formGlobalKey,
       child: Column(
         children: [
+
+          //username input field
           TextFormField(
             controller: _userController,
             keyboardType: TextInputType.text,
@@ -35,6 +39,10 @@ late Future<AuthCheck> _checkingAuth;
             cursorColor: kPrimaryColor,
             onChanged: (user){debugPrint(user);},
             onSaved: (user) {debugPrint(user);},
+            validator: (user){
+              if (isUserValid(user!)) return null;
+              else return 'User names should be between 4 and 60 characters.';
+            },
             decoration: InputDecoration(
               hintText: "Your username",
               prefixIcon: Padding(
@@ -42,8 +50,9 @@ late Future<AuthCheck> _checkingAuth;
                 child: Icon(Icons.person),
               ),
             ),
-        
           ),
+
+          //password input field
           Padding(
             padding: const EdgeInsets.symmetric(vertical: defaultPadding),
             child: TextFormField(
@@ -52,6 +61,15 @@ late Future<AuthCheck> _checkingAuth;
               obscureText: true,
               cursorColor: kPrimaryColor,
               onSaved: (pswd){},
+              validator: (pswd){
+
+                if (isPasswordValid(pswd!)){
+                  return null;
+                } else{
+                  return 'Passwords should have more than 7 characters.';
+                }
+
+              },
               decoration: InputDecoration(
                 hintText: "Your password",
                 prefixIcon: Padding(
@@ -59,32 +77,35 @@ late Future<AuthCheck> _checkingAuth;
                   child: Icon(Icons.lock),
                 ),
               ),
-    
             ),
           ),
+
           const SizedBox(height: defaultPadding),
-          Hero(
-            tag: "login_btn",
-            child: ElevatedButton(
-              onPressed: () {  
+
+          //submission field button
+          ElevatedButton(
+              onPressed: () async{
               final String user = _userController.text.trim();
               final String pswd = _pswdController.text.trim();
-                if(user.isEmpty){
-                  debugPrint('user is empty');
+
+              if (formGlobalKey.currentState!.validate()){
+                debugPrint("Valid User Input Data");
+
+                //authenticates with client
+                await client.authUser(user, pswd);
+
+                if (client.loggedIn){
+                  //stores the credentials in the phone ...
+                  Navigator.of(context).pushNamed('/home');
                 }else{
-                  if(pswd.isEmpty || pswd.length<8){
-                      debugPrint('password is empty');
-                  }else{
-                    api.authUserbyUsername(user, pswd);
-                    Navigator.of(context).pushNamed('/home');
-                  }
+                  print("NOT LOGGED IN");
                 }
-              },
-              child: Text(
-                "L O G I N",
-              ),
-            ),
-          ),
+
+              }
+
+            },
+              child: Text("L O G I N"),),
+
           const SizedBox(height: defaultPadding),
           AlreadyHaveAnAccountCheck(
             press: () {
@@ -103,7 +124,6 @@ late Future<AuthCheck> _checkingAuth;
     );
   }
 }
-
 
 
 

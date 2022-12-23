@@ -1,6 +1,6 @@
 import 'dart:core';
-import 'package:charts_flutter/flutter.dart';
 import 'package:flutter/material.dart';
+/*
 
 class IndicatorChart extends StatefulWidget{
   final String mode;
@@ -54,3 +54,5 @@ class ChartSampleData {
 
   ChartSampleData({this.x, this.yValue});
 }
+
+ */

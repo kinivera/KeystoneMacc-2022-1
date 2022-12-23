@@ -1,9 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '../../api-client/api_client.dart';
+import 'package:provider/provider.dart';
+
+import '../../api-client/api-client.dart';
 import '../../util/already_have_an_account_acheck.dart';
 import '../../../constants.dart';
 import '../../Login/login_screen.dart';
+
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({Key? key}) : super(key: key);
@@ -12,27 +15,37 @@ class SignUpForm extends StatefulWidget {
   State<SignUpForm> createState() => _SignUpFormState();
 }
 class _SignUpFormState extends State<SignUpForm> {
-  TextEditingController _userController = new TextEditingController();
-  TextEditingController _pswdController = new TextEditingController();
-  TextEditingController _emailController = new TextEditingController();
+  TextEditingController _userController = TextEditingController();
+  TextEditingController _pswdController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
 
-  ApiService api = ApiService();
+  final formGlobalKey = GlobalKey <FormState> ();
 
-late Future<AuthCheck> _checkingAuth;
-   
 
   @override
   
   Widget build(BuildContext context) {
+    AppApiClient client =  Provider.of<AppApiClient>(context);
+
     return Form(
+      key: formGlobalKey,
       child: Column(
         children: [
+
+          // Email Input Field
           TextFormField(
             controller: _emailController,
             keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.next,
             cursorColor: kPrimaryColor,
             onSaved: (email) {},
+            validator: (email){
+              if (isEmailValid(email!)){
+                return null;
+              }else{
+                return 'Invalid Email';
+              }
+            },
             decoration: InputDecoration(
               hintText: "Your email",
               prefixIcon: Padding(
@@ -41,6 +54,8 @@ late Future<AuthCheck> _checkingAuth;
               ),
             ),
           ),
+
+          // Username Input Field
           Padding(
             padding: const EdgeInsets.symmetric(vertical: defaultPadding),
             child: TextFormField(
@@ -48,6 +63,13 @@ late Future<AuthCheck> _checkingAuth;
               textInputAction: TextInputAction.next,
               cursorColor: kPrimaryColor,
               onSaved: (user){},
+              validator: (user){
+                if (isUserValid(user!)){
+                  return null;
+                }else{
+                  return 'Valid usernames have between 4 and 60 characters.';
+                }
+              },
               decoration: InputDecoration(
                 hintText: "Your username",
                 prefixIcon: Padding(
@@ -57,6 +79,8 @@ late Future<AuthCheck> _checkingAuth;
               ),
             ),
           ),
+
+          // Password Input Field
           Padding(
             padding: const EdgeInsets.symmetric(vertical: defaultPadding),
             child: TextFormField(
@@ -65,6 +89,13 @@ late Future<AuthCheck> _checkingAuth;
               obscureText: true,
               cursorColor: kPrimaryColor,
               onSaved: (pswd){},
+              validator: (pswd){
+                if (isPasswordValid(pswd!)){
+                  return null;
+                }else{
+                  return 'Password should be at least 8 characters long.';
+                }
+              },
               decoration: InputDecoration(
                 hintText: "Your password",
                 prefixIcon: Padding(
@@ -75,28 +106,30 @@ late Future<AuthCheck> _checkingAuth;
             ),
           ),
           const SizedBox(height: defaultPadding / 2),
-          ElevatedButton(
-            onPressed: () {
-              final String email = _emailController.text.trim();
-              final String user = _userController.text.trim();
-              final String pswd = _pswdController.text.trim();
 
-              if(email.isEmpty || !email.contains('@') ){
-                debugPrint('email is empty');
-              }else{
-                if(user.isEmpty){
-                  debugPrint('user is empty');
-                }else{
-                  if(pswd.isEmpty || pswd.length<8){
-                      debugPrint('password is empty');
-                  }else{
-                    api.addUser(user, email, pswd);
-                    Navigator.of(context).pushNamed('/Login');
+          // INPUT VALIDATION FIELD
+          ElevatedButton(
+              child: Text("S I G N  U P"),
+              onPressed: ()async {
+                      final String email = _emailController.text.trim();
+                      final String user = _userController.text.trim();
+                      final String pswd = _pswdController.text.trim();
+
+                      if (formGlobalKey.currentState!.validate()){
+                        debugPrint("Valid User Input Data");
+
+                        //authenticates with client
+                        await client.signIn(user, email, pswd);
+
+                        if (client.signedIn){
+                          //stores the credentials in the phone ...
+                          Navigator.of(context).pushNamed('/Login');
+                        }else{
+                          print("NOT SIGNED IN");
+                        }
+
+                      }
                   }
-                }
-              }
-            },
-            child: Text("S I G N  U P"),
           ),
           const SizedBox(height: defaultPadding),
           AlreadyHaveAnAccountCheck(

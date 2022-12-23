@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import '../constants.dart';
 
 class ButtonMenu extends StatelessWidget {
-  final String texto ;
-  final IconData icono ;
+  final String texto;
+  final IconData icono;
   final Function answer;
   const ButtonMenu({super.key, required this.icono, required this.texto, required this.answer});
 

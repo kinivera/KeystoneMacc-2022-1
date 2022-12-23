@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:responsivedashboard/constants.dart';
-import '../../states/indicatorStates.dart';
 import '../../util/Dropdown.dart';
 import '../../util/Menu.dart';
-import 'package:states_rebuilder/states_rebuilder.dart';
 
 
 class SettingsMobile extends StatefulWidget {

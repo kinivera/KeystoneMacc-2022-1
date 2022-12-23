@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
-import 'api-client/api_client.dart';
 
 // General constants
 const desktopMode = "Desktop";
@@ -19,7 +19,12 @@ const drawerTextColor = TextStyle(
 
 var topBar = AppBar(
   backgroundColor: menuColorBackgr,
-  title: const Text('Smart Sensor', style:drawerTextColor),
+  title:  const AutoSizeText("Maticas",
+                      minFontSize: 14,
+                      maxLines: 2,
+                      style: TextStyle(height: 0,
+                                       fontSize: 20,
+                                       fontWeight: FontWeight.w400) ,),
   centerTitle: false,
 );
 
@@ -33,7 +38,11 @@ const double defaultPadding = 16.0;
 
 const int limitData = 15; /// ultimos x datos.
 const int updateSeconds = 30; /// Cada x segundos se actualiza cada grafica.
+
+/*
 const Map<String,String> searchIntervals = {
   "beginDate":"2012/11/10 00:00:01",
   "endDate":"2023/11/16 23:00:01"
 }; //intervalos de busqueda para las variables
+
+ */
