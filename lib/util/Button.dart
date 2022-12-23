@@ -38,7 +38,7 @@ class ButtonState extends State<Button> {
           borderRadius: BorderRadius.circular(widget.mode == desktopMode ? 60.0 : 360.0),
           color: !(dashboardState.indicators[widget.indicator]["isSelected"] as bool) ? defaultBackgroundColorSecondary : menuColorBackgr
         ),
-        child: Image.asset("/images/${dashboardState.indicators[widget.indicator]["name"]}.png"),
+        child: Image.asset("assets/images/${dashboardState.indicators[widget.indicator]["name"]}.png"),
       )
     );
   }

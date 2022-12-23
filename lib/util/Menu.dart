@@ -26,7 +26,7 @@ class Menu extends StatelessWidget {
               decoration: BoxDecoration(
                       color: menuColorBackgr,
                       image: DecorationImage(
-                        image: AssetImage("/images/logoApp.png"))
+                        image: AssetImage("assets/images/logoApp.png"))
               )
               )
           ),
