@@ -1,10 +1,10 @@
 
 class CreateTablesStatements{
 
-  const String idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
-  const String varIdType = 'INTEGER NOT NULL';
-  const String realType = 'REAL NOT NULL';
-  const String textType = 'TEXT NOT NULL';
+  static const String idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
+  static const String varIdType = 'INTEGER NOT NULL';
+  static const String realType = 'REAL NOT NULL';
+  static const String textType = 'TEXT NOT NULL';
 
   String createMeasurementsTable(){
 
