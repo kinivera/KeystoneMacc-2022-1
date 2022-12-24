@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:provider/provider.dart';
-import '../../api-client/api-client.dart';
 import '../../util/already_have_an_account_acheck.dart';
 import '../../../constants.dart';
 import '../../Signup/signup_screen.dart';
+
+//API
+import 'package:provider/provider.dart';
+import '../../userDataProvider/api-client/api-client.dart';
 
 //https://www.topcoder.com/thrive/articles/form-validation-in-flutter
 

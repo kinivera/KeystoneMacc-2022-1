@@ -1,11 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../../api-client/api-client.dart';
 import '../../util/already_have_an_account_acheck.dart';
 import '../../../constants.dart';
 import '../../Login/login_screen.dart';
+
+//API
+import 'package:provider/provider.dart';
+import '../../userDataProvider/api-client/api-client.dart';
 
 
 class SignUpForm extends StatefulWidget {

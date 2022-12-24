@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'responsive/responsive_layout.dart';
 import 'Login/login_screen.dart';
 import 'Signup/signup_screen.dart';
@@ -18,8 +17,10 @@ import 'package:responsivedashboard/responsive/web/settings.dart';
 import 'package:responsivedashboard/responsive/web/about.dart';
 
 //API
+import 'package:provider/provider.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'api-client/api-client.dart';
+import 'package:responsivedashboard/userDataProvider/api-client/api-client.dart';
+import 'package:responsivedashboard/userDataProvider/storage/database.dart';
 
 
 
@@ -30,7 +31,9 @@ void main() async{
   await initHiveForFlutter();
 
   runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(create: (_) => AppApiClient())],
+    ChangeNotifierProvider(create: (_) => AppApiClient()),
+    ChangeNotifierProvider(create: (_) => MeasurementsDatabase()),
+  ],
       child: MyApp(),),
   );
 }
@@ -40,6 +43,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MeasurementsDatabase db =  Provider.of<MeasurementsDatabase>(context);
+    db.database;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.green),
