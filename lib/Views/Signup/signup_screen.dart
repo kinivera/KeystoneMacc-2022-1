@@ -1,43 +1,38 @@
 import 'package:flutter/material.dart';
-import '../responsive/responsive.dart';
+import 'components/sign_up_top_image.dart';
+import 'components/signup_form.dart';
 
+import 'package:responsivedashboard/constants.dart';
+import 'package:responsivedashboard/responsive/responsive.dart';
+import 'package:responsivedashboard/util/background.dart';
 
-import '../util/background.dart';
-import 'components/login_form.dart';
-import 'components/login_screen_top_image.dart';
-
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
-
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
-  
+class SignUpScreen extends StatelessWidget {
+  const SignUpScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Background(
       child: SingleChildScrollView(
         child: Responsive(
-          mobile: const MobileLoginScreen(),
+          mobile: const MobileSignupScreen(),
           desktop: Row(
             children: [
               const Expanded(
-                child: LoginScreenTopImage(),
+                child: SignUpScreenTopImage(),
               ),
               Expanded(
-                child: Row(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: const [
                     SizedBox(
                       width: 450,
-                      child: LoginForm(),
+                      child: SignUpForm(),
                     ),
+                    SizedBox(height: defaultPadding / 2),
+                    // SocalSignUp()
                   ],
                 ),
-              ),
+              )
             ],
           ),
         ),
@@ -46,8 +41,8 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 }
 
-class MobileLoginScreen extends StatelessWidget {
-  const MobileLoginScreen({
+class MobileSignupScreen extends StatelessWidget {
+  const MobileSignupScreen({
     Key? key,
   }) : super(key: key);
 
@@ -56,17 +51,18 @@ class MobileLoginScreen extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        const LoginScreenTopImage(),
+        const SignUpScreenTopImage(),
         Row(
           children: const [
             Spacer(),
             Expanded(
               flex: 8,
-              child: LoginForm(),
+              child: SignUpForm(),
             ),
             Spacer(),
           ],
         ),
+        // const SocalSignUp()
       ],
     );
   }

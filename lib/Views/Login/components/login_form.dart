@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import '../../util/already_have_an_account_acheck.dart';
 import '../../../constants.dart';
-import '../../Signup/signup_screen.dart';
+
+import 'package:responsivedashboard/Views/Signup/signup_screen.dart';
+import 'package:responsivedashboard/userDataProvider/data_provider.dart';
+import 'package:responsivedashboard/util/already_have_an_account_acheck.dart';
+
 
 //API
 import 'package:provider/provider.dart';
-import '../../userDataProvider/api-client/api-client.dart';
+import 'package:responsivedashboard/userDataProvider/api-client/api-client.dart';
 
 //https://www.topcoder.com/thrive/articles/form-validation-in-flutter
 
@@ -25,7 +28,8 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    AppApiClient client =  Provider.of<AppApiClient>(context);
+    //gets the APIClient instance from the data provider
+    AppApiClient client =  Provider.of<DataProvider>(context).apiClient;
 
     return Form(
       key: formGlobalKey,

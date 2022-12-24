@@ -11,12 +11,12 @@ import 'package:flutter/material.dart';
 
 //https://stackoverflow.com/questions/38933801/calling-an-async-method-from-a-constructor-in-dart
 
-class MeasurementsDatabase with ChangeNotifier{
+class ClientDatabase with ChangeNotifier{
     Database? _database;
     DBStatements  dbStatements = DBStatements();
 
     //constuctor
-    MeasurementsDatabase();
+    ClientDatabase();
 
 
     /*
@@ -25,7 +25,7 @@ class MeasurementsDatabase with ChangeNotifier{
     Future<Database> get database async{
       if (_database != null) return _database!;
 
-      _database = await _initDB('userMeasurementsDatabase.db');
+      _database = await _initDB('userClientDatabase.db');
       return _database!;
     }
 
@@ -78,16 +78,53 @@ class MeasurementsDatabase with ChangeNotifier{
 
     Future<Measurement> insertMeasurement(int varId, double value, String time) async {
         Database db = await database;
-        await db.execute(dbStatements.insertMeasurement(varId, value, time));
+        int rowId = await db.rawInsert(dbStatements.insertMeasurement(varId, value, time));
 
-        return Measurement(null, varId, value, time);
+        return Measurement(rowId, varId, value, time);
     }
 
     Future<Variable> insertVariable(int id, String name, String units, String desc)async{
         Database db = await database;
-        await db.execute(dbStatements.insertVariable(id, name, units, desc));
+        int rowId = await db.rawInsert(dbStatements.insertVariable(id, name, units, desc));
 
-        return Variable(id, name, units, desc);
+        return Variable(rowId, name, units, desc);
+    }
+
+    /*
+     *          READ OPERATIONS
+     *
+     */
+
+    Future<List<Measurement>?> getMeasurement(int varId)async{
+        Database db = await database;
+        List<Map<String, Object?>> map  = await db.query(measurementsTableName,
+            columns: [MeasurementFields.value, MeasurementFields.time],
+            where: '${MeasurementFields.variableId} = ?', whereArgs: [varId],);
+
+        List<Measurement> measurements = fromQueryResultToMeasurement(map);
+
+        return measurements;
+    }
+
+    /*
+     *          INTERNAL UTILS
+     *
+     */
+
+    List<Measurement> fromQueryResultToMeasurement(List<Map<String, Object?>> map){
+        List<Measurement> measurements = [];
+
+        for(int i = 0; i < map.length; i++){
+            int id = map[i][MeasurementFields.id] as int;
+            int varId = map[i][MeasurementFields.variableId] as int;
+            double value = map[i][MeasurementFields.value] as double;
+            String time = map[i][MeasurementFields.time] as String;
+
+            Measurement m = Measurement(id, varId, value, time);
+            measurements.add(m);
+        }
+
+        return measurements;
     }
 
 }

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:responsivedashboard/userDataProvider/data_provider.dart';
 import 'responsive/responsive_layout.dart';
-import 'Login/login_screen.dart';
-import 'Signup/signup_screen.dart';
-import 'Welcome/welcome_screen.dart';
+
+import 'Views/Login/login_screen.dart';
+import 'Views/Signup/signup_screen.dart';
+import 'Views/Welcome/welcome_screen.dart';
 
 // Mobile Views
 import 'responsive/mobile/example_routing.dart';
@@ -20,7 +22,6 @@ import 'package:responsivedashboard/responsive/web/about.dart';
 import 'package:provider/provider.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:responsivedashboard/userDataProvider/api-client/api-client.dart';
-import 'package:responsivedashboard/userDataProvider/storage/database.dart';
 
 
 
@@ -31,11 +32,12 @@ void main() async{
   await initHiveForFlutter();
 
   runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(create: (_) => AppApiClient()),
-    ChangeNotifierProvider(create: (_) => MeasurementsDatabase()),
+    //ChangeNotifierProvider(create: (_) => AppApiClient()),
+    ChangeNotifierProvider(create: (_) => DataProvider()),
   ],
       child: MyApp(),),
   );
+
 }
 
 class MyApp extends StatelessWidget {
@@ -43,8 +45,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MeasurementsDatabase db =  Provider.of<MeasurementsDatabase>(context);
-    db.database;
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.green),

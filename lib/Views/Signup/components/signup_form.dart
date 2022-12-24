@@ -1,13 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../../util/already_have_an_account_acheck.dart';
 import '../../../constants.dart';
-import '../../Login/login_screen.dart';
+import 'package:responsivedashboard/Views/Login/login_screen.dart';
+import 'package:responsivedashboard/util/already_have_an_account_acheck.dart';
 
 //API
 import 'package:provider/provider.dart';
-import '../../userDataProvider/api-client/api-client.dart';
+import 'package:responsivedashboard/userDataProvider/data_provider.dart';
+import 'package:responsivedashboard/userDataProvider/api-client/api-client.dart';
 
 
 class SignUpForm extends StatefulWidget {
@@ -27,7 +28,8 @@ class _SignUpFormState extends State<SignUpForm> {
   @override
   
   Widget build(BuildContext context) {
-    AppApiClient client =  Provider.of<AppApiClient>(context);
+    //gets the APIClient instance from the data provider
+    AppApiClient client =  Provider.of<DataProvider>(context).apiClient;
 
     return Form(
       key: formGlobalKey,

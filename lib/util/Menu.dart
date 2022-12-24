@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:responsivedashboard/userDataProvider/data_provider.dart';
 import '../constants.dart';
 import 'ButtonMenu.dart';
 
@@ -12,7 +13,7 @@ class Menu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AppApiClient client =  Provider.of<AppApiClient>(context);
+    AppApiClient client =  Provider.of<DataProvider>(context).apiClient;
 
     return Drawer(
       backgroundColor: menuColorBackgr,

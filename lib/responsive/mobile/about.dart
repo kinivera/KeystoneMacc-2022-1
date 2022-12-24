@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:responsivedashboard/Welcome/components/welcome_image.dart';
+import 'package:responsivedashboard/Views/Welcome/components/welcome_image.dart';
 import '../../constants.dart';
 import '../../util/Menu.dart';
 
