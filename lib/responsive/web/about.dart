@@ -19,7 +19,7 @@ class _AboutDesktopState extends State<AboutDesktop> {
     return Scaffold(
       backgroundColor: defaultBackgroundColor,
       appBar: topBar,
-      drawer: Menu(),
+      drawer: const Menu(),
       body: Center(
           child: Padding(
             padding: const EdgeInsets.all(30.0),

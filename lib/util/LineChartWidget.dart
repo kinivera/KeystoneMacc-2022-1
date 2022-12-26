@@ -17,7 +17,7 @@ class _CustomLineChartState extends State<CustomLineChart> {
     return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children:  <Widget>[
-                                    Container(
+                                     Container(
                                       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                                       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                                       width: 710,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:responsivedashboard/userDataProvider/data_provider.dart';
 import 'responsive/responsive_layout.dart';
 
 import 'Views/Login/login_screen.dart';
@@ -21,7 +20,8 @@ import 'package:responsivedashboard/responsive/web/about.dart';
 //API
 import 'package:provider/provider.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:responsivedashboard/userDataProvider/api-client/api-client.dart';
+import 'package:responsivedashboard/states/homeWidgetStateManager.dart';
+import 'package:responsivedashboard/userDataProvider/data_provider.dart';
 
 
 
@@ -32,10 +32,10 @@ void main() async{
   await initHiveForFlutter();
 
   runApp(MultiProvider(providers: [
-    //ChangeNotifierProvider(create: (_) => AppApiClient()),
     ChangeNotifierProvider(create: (_) => DataProvider()),
+    ChangeNotifierProvider(create: (_) => HomeAmbientVariableDashboard()),
   ],
-      child: MyApp(),),
+      child: const MyApp(),),
   );
 
 }

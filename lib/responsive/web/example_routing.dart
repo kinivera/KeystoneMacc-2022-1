@@ -22,7 +22,7 @@ class _ExampleRoutingDesktopState extends State<ExampleRoutingDesktop> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // open drawer
-            Menu(),
+            const Menu(),
 
             // first half of page
             Expanded(
@@ -48,7 +48,7 @@ class _ExampleRoutingDesktopState extends State<ExampleRoutingDesktop> {
           color: Colors.grey[400],
         ),
       ),
-    );;
+    );
                         },
                       ),
                     ),

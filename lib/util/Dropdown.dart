@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import '../constants.dart';
-import '../../states/indicatorStates.dart';
-
-import 'package:flutter/material.dart';
 
 const List<String> list = <String>['Minutes','Hours', 'Days','Actual-Week', 'Months', 'Years'];
 

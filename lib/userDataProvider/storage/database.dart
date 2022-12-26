@@ -1,3 +1,5 @@
+import 'dart:core';
+
 import 'package:sqflite_common/sqlite_api.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
@@ -106,6 +108,23 @@ class ClientDatabase with ChangeNotifier{
         return measurements;
     }
 
+    Future<List<Variable>?> getAllVariables()async{
+        Database db = await database;
+        List<Map<String, Object?>> map  = await db.query(variablesTableName,
+            columns: [VariableFields.id, VariableFields.name, VariableFields.units, VariableFields.desc]);
+
+        List<Variable>? variables =  fromQueryResultToVariable(map);
+        return variables;
+    }
+
+    Future<List<Variable>?> getDistinctVariables() async{
+        Database db = await database;
+        List<Map<String, Object?>> map  = await db.rawQuery(dbStatements.distinctVariables());
+
+        List<Variable>? variables =  fromQueryResultToVariable(map);
+        return variables;
+    }
+
     /*
      *          INTERNAL UTILS
      *
@@ -125,6 +144,22 @@ class ClientDatabase with ChangeNotifier{
         }
 
         return measurements;
+    }
+
+    List<Variable> fromQueryResultToVariable(List<Map<String, Object?>> map){
+        List<Variable> variables = [];
+
+        for(int i = 0; i < map.length; i++){
+            int id = map[i][VariableFields.id] as int;
+            String name = map[i][VariableFields.name] as String;
+            String units = map[i][VariableFields.units] as String;
+            String desc = map[i][VariableFields.desc] as String;
+
+            Variable v = Variable(id, name, units, desc);
+            variables.add(v);
+        }
+
+        return variables;
     }
 
 }

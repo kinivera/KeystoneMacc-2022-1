@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
@@ -18,9 +17,9 @@ class SignUpForm extends StatefulWidget {
   State<SignUpForm> createState() => _SignUpFormState();
 }
 class _SignUpFormState extends State<SignUpForm> {
-  TextEditingController _userController = TextEditingController();
-  TextEditingController _pswdController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
+  final TextEditingController _userController = TextEditingController();
+  final TextEditingController _pswdController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
 
   final formGlobalKey = GlobalKey <FormState> ();
 
@@ -50,10 +49,10 @@ class _SignUpFormState extends State<SignUpForm> {
                 return 'Invalid Email';
               }
             },
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: "Your email",
               prefixIcon: Padding(
-                padding: const EdgeInsets.all(defaultPadding),
+                padding: EdgeInsets.all(defaultPadding),
                 child: Icon(Icons.attach_email),
               ),
             ),
@@ -74,10 +73,10 @@ class _SignUpFormState extends State<SignUpForm> {
                   return 'Valid usernames have between 4 and 60 characters.';
                 }
               },
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: "Your username",
-                prefixIcon: Padding(
-                  padding: const EdgeInsets.all(defaultPadding),
+                prefixIcon:  Padding(
+                  padding:  EdgeInsets.all(defaultPadding),
                   child: Icon(Icons.person),
                 ),
               ),
@@ -100,10 +99,10 @@ class _SignUpFormState extends State<SignUpForm> {
                   return 'Password should be at least 8 characters long.';
                 }
               },
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: "Your password",
-                prefixIcon: Padding(
-                  padding: const EdgeInsets.all(defaultPadding),
+                prefixIcon:  Padding(
+                  padding:  EdgeInsets.all(defaultPadding),
                   child: Icon(Icons.lock),
                 ),
               ),
@@ -113,7 +112,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
           // INPUT VALIDATION FIELD
           ElevatedButton(
-              child: Text("S I G N  U P"),
+              child: const Text("S I G N  U P"),
               onPressed: ()async {
                       final String email = _emailController.text.trim();
                       final String user = _userController.text.trim();
@@ -129,7 +128,7 @@ class _SignUpFormState extends State<SignUpForm> {
                           //stores the credentials in the phone ...
                           Navigator.of(context).pushNamed('/Login');
                         }else{
-                          print("NOT SIGNED IN");
+                          debugPrint("NOT SIGNED IN");
                         }
 
                       }
@@ -143,7 +142,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return LoginScreen();
+                    return const LoginScreen();
                   },
                 ),
               );

@@ -1,15 +1,23 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
 import '../util/Button.dart';
-import '../../states/indicatorStates.dart';
 
-class GridButtons extends StatelessWidget {
+import 'package:provider/provider.dart';
+import 'package:responsivedashboard/states/homeWidgetStateManager.dart';
+
+class GridButtons extends StatefulWidget {
   final String mode;
   const GridButtons({super.key, required this.mode});
 
   @override
+  State<GridButtons> createState() => _GridButtonsState();
+}
+
+class _GridButtonsState extends State<GridButtons> {
+  @override
   Widget build(BuildContext context) {
-    return 
+    HomeAmbientVariableDashboard states =  Provider.of<HomeAmbientVariableDashboard>(context);
+    return
     SliverGrid(
         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
         maxCrossAxisExtent: 200.0,
@@ -19,8 +27,8 @@ class GridButtons extends StatelessWidget {
       ),
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {
-          return Button(mode: mode, indicator: index);
+          return Button(mode: widget.mode, indicator: index);
         },
-        childCount: dashboardState.indicators.length,
+        childCount: states.variableNumber, //dashboardState.indicators.length,
       ),
 );}}

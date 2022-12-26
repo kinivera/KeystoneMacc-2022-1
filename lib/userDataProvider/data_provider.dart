@@ -57,6 +57,33 @@ class DataProvider with ChangeNotifier{
     }
 
 
+    Future<List<Variable>?> getAllVariables() async{
+        List<Variable>? result = await db.getAllVariables();
+
+        if ((result == null) || (result.isEmpty)){
+            //requests the data to the Graphql API
+            List<Object?> response = await apiClient.getAllVariables();
+
+            await _fromAPIResponseToDBVariable(response);
+            result = await db.getAllVariables();
+        }
+
+        return result;
+    }
+
+    Future<List<Variable>?> getDistinctVariables() async{
+        List<Variable>? result = await db.getDistinctVariables();
+
+        if ((result == null) || (result.isEmpty)){
+            //requests the data to the Graphql API
+            List<Object?> response = await apiClient.getAllVariables();
+
+            await _fromAPIResponseToDBVariable(response);
+            result = await db.getDistinctVariables();
+        }
+
+        return result;
+    }
 
     /*
      *          SOME INTERNAL UTILS
@@ -64,15 +91,26 @@ class DataProvider with ChangeNotifier{
 
     Future<void> _fromAPIResponseToDBMeasurement(List<dynamic> response)async{
         for (int i = 0; i < response.length; i++){
-            int varId = response[i]?['variableId'];
-            double value = response[i]?['value'];
-            String time = response[i]?['time'];
+            int varId = int.parse(response[i]?['variableId']);
+            double value = response[i]?['value'] as double;
+            String time = response[i]?['time'] as String;
 
-            Measurement m = await db.insertMeasurement(varId, value, time);
+            await db.insertMeasurement(varId, value, time);
         }
     }
 
 
 
+    Future<void> _fromAPIResponseToDBVariable(List<dynamic> response) async{
+        for (int i = 0; i < response.length; i++){
+            debugPrint(response[i]?['id2']);
+            debugPrint(response[i]?['id2'].runtimeType.toString());
+            int id = int.parse(response[i]?['id2']);
+            String name = response[i]?['name'] as String;
+            String units = response[i]?['units'] as String;
+            String desc = response[i]?['desc'] as String;
 
+            await db.insertVariable(id, name, units, desc);
+        }
+    }
 }

@@ -41,7 +41,14 @@ class DBStatements{
       ''';
   }
 
+  /*
+   *        SELECT STATEMENTS
+   */
 
+    String distinctVariables(){
+      return '''SELECT ${VariableFields.id}, ${VariableFields.units}, ${VariableFields.desc},
+        ${VariableFields.name} FROM ${VariableFields.tableName} GROUP BY ${VariableFields.name}''';
+    }
 
   /*
    *        INSERT STATEMENTS
@@ -51,7 +58,7 @@ class DBStatements{
       return '''INSERT INTO ${MeasurementFields.tableName}(
       ${MeasurementFields.variableId}, 
       ${MeasurementFields.value},
-      ${MeasurementFields.time}) VALUES ($variableId, $value, '$time');
+      ${MeasurementFields.time}) VALUES ($variableId, $value, "$time");
       ''';
   }
 
@@ -60,7 +67,7 @@ class DBStatements{
         ${VariableFields.id}, 
         ${VariableFields.name},
         ${VariableFields.units},
-        ${VariableFields.desc}) VALUES ($id, $name, $units, $desc);
+        ${VariableFields.desc}) VALUES ($id, "$name", "$units", "$desc");
         ''';
   }
 
@@ -96,12 +103,18 @@ class MeasurementFields{
 
 
 class Measurement{
-  final int? id;
-  final int? variableId;
-  final double? value;
-  final String? time;
+  final int id;
+  final int variableId;
+  final double value;
+  final String time;
 
   const Measurement(this.id, this.variableId, this.value, this.time);
+
+  @override
+  String toString() {
+    String str = "<$id, $variableId, $value, '$time'>";
+    return str;
+  }
 }
 
 /*
@@ -121,10 +134,16 @@ class VariableFields{
 }
 
 class Variable{
-  final int? id;
-  final String? name;
-  final String? units;
-  final String? desc;
+  final int id;
+  final String name;
+  final String units;
+  final String desc;
 
   const Variable(this.id, this.name, this.units, this.desc);
+
+  @override
+  String toString() {
+    String str = "<$id, '$name', '$units', '$desc'>";
+    return str;
+  }
 }

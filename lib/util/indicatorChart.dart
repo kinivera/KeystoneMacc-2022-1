@@ -5,9 +5,11 @@ import 'dart:core';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
-import '../../states/indicatorStates.dart';
 import '../../constants.dart';
 import 'LineChartWidget.dart';
+import 'package:provider/provider.dart';
+import 'package:responsivedashboard/states/homeWidgetStateManager.dart';
+
 
 //this indicator chart is the one which is shown in the home page
 //and has two parts
@@ -39,14 +41,10 @@ class IndicatorChartState extends State<IndicatorChart> {
 
   @override
   void initState() {
-
     super.initState();
-    String sensor =  dashboardState.indicators[widget.indicator]["name"];
-
     _timer = Timer.periodic(const Duration(seconds:updateSeconds), ((Timer t) =>{
     }));
-
-  }
+}
 
   /// disappear
   @override
@@ -58,6 +56,8 @@ class IndicatorChartState extends State<IndicatorChart> {
 
   @override
   Widget build(BuildContext context) {
+    HomeAmbientVariableDashboard states =  Provider.of<HomeAmbientVariableDashboard>(context);
+
     return  Column(
 
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -68,13 +68,13 @@ class IndicatorChartState extends State<IndicatorChart> {
         //---------------------------------------------------------------------
 
         Container(
-          margin: EdgeInsets.symmetric(horizontal: 10),
+          margin: const EdgeInsets.symmetric(horizontal: 10),
           child: AutoSizeText(
-            dashboardState.indicators[widget.indicator]["beautyName"],
+            states.getVarName(widget.indicator),
             maxLines: 2,
             minFontSize: 12,
             maxFontSize: 45,
-            style: TextStyle(height: 5, fontSize: 40, fontWeight: FontWeight.bold),
+            style: const TextStyle(height: 5, fontSize: 40, fontWeight: FontWeight.bold),
           ),
         ),
 
@@ -84,7 +84,7 @@ class IndicatorChartState extends State<IndicatorChart> {
         //---------------------------------------------------------------------
 
         //        Data Chart
-        Center(child: CustomLineChart(),),
+        const Center(child: CustomLineChart(),),
       ]);
   }
 }

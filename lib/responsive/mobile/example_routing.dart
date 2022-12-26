@@ -16,7 +16,7 @@ class _ExampleRoutingMobileState extends State<ExampleRoutingMobile> {
     return Scaffold(
       backgroundColor: defaultBackgroundColor,
       appBar: topBar,
-      drawer: Menu(),
+      drawer: const Menu(),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(

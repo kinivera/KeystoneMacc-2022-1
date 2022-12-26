@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
 var dashboard = RM.inject(() => Dashboard());
@@ -66,6 +67,6 @@ class Dashboard {
       void updateData(int index, List<Map<dynamic,dynamic>> dataList ){
         indicators[index]["data"] = dataList.isEmpty ? initialStateMetrics: dataList;
         dashboard.notify();
-        print("dashboartd $index updated");
+        debugPrint("dashboartd $index updated");
       }
 }

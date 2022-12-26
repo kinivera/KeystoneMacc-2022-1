@@ -14,7 +14,7 @@ class Background extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0XFFA9BF5A),
+      backgroundColor: const Color(0XFFA9BF5A),
       resizeToAvoidBottomInset: false,
       body: Container(
         width: double.infinity,

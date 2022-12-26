@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import '../../../constants.dart';
 
 import 'package:responsivedashboard/Views/Signup/signup_screen.dart';
-import 'package:responsivedashboard/userDataProvider/data_provider.dart';
 import 'package:responsivedashboard/util/already_have_an_account_acheck.dart';
+import 'package:responsivedashboard/states/homeWidgetStateManager.dart';
 
 
 //API
 import 'package:provider/provider.dart';
+import 'package:responsivedashboard/userDataProvider/data_provider.dart';
 import 'package:responsivedashboard/userDataProvider/api-client/api-client.dart';
 
 //https://www.topcoder.com/thrive/articles/form-validation-in-flutter
@@ -21,8 +22,8 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  TextEditingController _userController = TextEditingController();
-  TextEditingController _pswdController = TextEditingController();
+  final TextEditingController _userController = TextEditingController();
+  final TextEditingController _pswdController = TextEditingController();
   final formGlobalKey = GlobalKey <FormState> ();
 
 
@@ -30,6 +31,7 @@ class _LoginFormState extends State<LoginForm> {
   Widget build(BuildContext context) {
     //gets the APIClient instance from the data provider
     AppApiClient client =  Provider.of<DataProvider>(context).apiClient;
+    HomeAmbientVariableDashboard states =  Provider.of<HomeAmbientVariableDashboard>(context);
 
     return Form(
       key: formGlobalKey,
@@ -45,13 +47,16 @@ class _LoginFormState extends State<LoginForm> {
             onChanged: (user){debugPrint(user);},
             onSaved: (user) {debugPrint(user);},
             validator: (user){
-              if (isUserValid(user!)) return null;
-              else return 'User names should be between 4 and 60 characters.';
+              if (isUserValid(user!)){
+                return null;
+              } else{
+                return 'User names should be between 4 and 60 characters.';
+              }
             },
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: "Your username",
               prefixIcon: Padding(
-                padding: const EdgeInsets.all(defaultPadding),
+                padding:  EdgeInsets.all(defaultPadding),
                 child: Icon(Icons.person),
               ),
             ),
@@ -75,10 +80,10 @@ class _LoginFormState extends State<LoginForm> {
                 }
 
               },
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: "Your password",
-                prefixIcon: Padding(
-                  padding: const EdgeInsets.all(defaultPadding),
+                prefixIcon:  Padding(
+                  padding:  EdgeInsets.all(defaultPadding),
                   child: Icon(Icons.lock),
                 ),
               ),
@@ -100,16 +105,18 @@ class _LoginFormState extends State<LoginForm> {
                 await client.authUser(user, pswd);
 
                 if (client.loggedIn){
+                  //initiates the state manager
+                  await states.init(context);
                   //stores the credentials in the phone ...
                   Navigator.of(context).pushNamed('/home');
                 }else{
-                  print("NOT LOGGED IN");
+                  debugPrint("NOT LOGGED IN");
                 }
 
               }
 
             },
-              child: Text("L O G I N"),),
+              child: const Text("L O G I N"),),
 
           const SizedBox(height: defaultPadding),
           AlreadyHaveAnAccountCheck(
@@ -118,7 +125,7 @@ class _LoginFormState extends State<LoginForm> {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return SignUpScreen();
+                    return const SignUpScreen();
                   },
                 ),
               );

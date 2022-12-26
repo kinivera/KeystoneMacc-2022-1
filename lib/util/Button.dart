@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../constants.dart';
-import '../../states/indicatorStates.dart';
+
+import 'package:provider/provider.dart';
+import 'package:responsivedashboard/states/homeWidgetStateManager.dart';
 
 class Button extends StatefulWidget{
   final String mode;
@@ -15,30 +17,29 @@ class ButtonState extends State<Button> {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: (){
-        setState((){
-          dashboardState.indicators[widget.indicator]["isSelected"]=!( dashboardState.indicators[widget.indicator]["isSelected"] as bool);
-          if(dashboardState.indicators[widget.indicator]["isSelected"] as bool){
-            dashboardState.removeIndicator(dashboardState.indicators[widget.indicator]["name"] as String);
+    HomeAmbientVariableDashboard states =  Provider.of<HomeAmbientVariableDashboard>(context);
 
-          }
-          else{
-            dashboardState.addIndicator(dashboardState.indicators[widget.indicator]["name"] as String);
-          }
-        });
-        print(dashboardState.actual);
+    return InkWell(
+      onTap: ()async{
+          setState((){
+            states.changeStateClick(widget.indicator);
+          });
         },
-      onHover:(hovered){
-        setState((){dashboardState.indicators[widget.indicator]["isSelected"]=!(dashboardState.indicators[widget.indicator]["isSelected"] as bool);});
+
+      onHover:(hovered)async{
+        setState((){
+          states.changeStateHover(widget.indicator);
+        });
       },
+
       child: Container(
         padding: const EdgeInsets.all(paddingBackgroundImages),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(widget.mode == desktopMode ? 60.0 : 360.0),
-          color: !(dashboardState.indicators[widget.indicator]["isSelected"] as bool) ? defaultBackgroundColorSecondary : menuColorBackgr
+          color: !(states.isClicked(widget.indicator) || states.isHovered(widget.indicator))
+                   ? defaultBackgroundColorSecondary : menuColorBackgr
         ),
-        child: Image.asset("assets/images/${dashboardState.indicators[widget.indicator]["name"]}.png"),
+        child: Image.asset("assets/icons/ambientVariableDashboard/${states.getVarName(widget.indicator)}.png"),
       )
     );
   }
