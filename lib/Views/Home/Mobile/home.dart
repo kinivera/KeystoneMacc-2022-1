@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:responsivedashboard/constants.dart';
-import 'package:responsivedashboard/util/gridButtons.dart';
-import '../../util/Menu.dart';
-import 'package:responsivedashboard/util/indicatorChart.dart';
+
+import 'package:responsivedashboard/Widgets/grid_buttons.dart';
+import 'package:responsivedashboard/Widgets/indicator_chart.dart';
+import 'package:responsivedashboard/Widgets/menu.dart';
 
 import 'package:provider/provider.dart';
-import 'package:responsivedashboard/states/homeWidgetStateManager.dart';
+import 'package:responsivedashboard/StateManagement/home_view_widgets_state_manager.dart';
 
 class HomeMenuMobile extends StatefulWidget {
   const HomeMenuMobile({Key? key}) : super(key: key);

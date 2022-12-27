@@ -1,27 +1,29 @@
 import 'package:flutter/material.dart';
-import 'responsive/responsive_layout.dart';
+import 'Views/responsive_layout.dart';
 
 import 'Views/Login/login_screen.dart';
 import 'Views/Signup/signup_screen.dart';
 import 'Views/Welcome/welcome_screen.dart';
 
 // Mobile Views
-import 'responsive/mobile/example_routing.dart';
-import 'responsive/mobile/home.dart';
-import 'package:responsivedashboard/responsive/mobile/settings.dart';
-import 'package:responsivedashboard/responsive/mobile/about.dart';
+import 'package:responsivedashboard/Views/Home/Mobile/home.dart';
+import 'package:responsivedashboard/Views/About/Mobile/about.dart';
+import 'package:responsivedashboard/Views/Settings/Mobile/settings.dart';
+import 'package:responsivedashboard/Views/ExampleRouting/Mobile/example_routing.dart';
 
 // Web Views
-import 'responsive/web/example_routing.dart';
-import 'responsive/web/home.dart';
-import 'package:responsivedashboard/responsive/web/settings.dart';
-import 'package:responsivedashboard/responsive/web/about.dart';
+import 'package:responsivedashboard/Views/Home/Web/home.dart';
+import 'package:responsivedashboard/Views/About/Web/about.dart';
+import 'package:responsivedashboard/Views/Settings/Web/settings.dart';
+import 'package:responsivedashboard/Views/ExampleRouting/Web/example_routing.dart';
 
-//API
+//API packages
 import 'package:provider/provider.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:responsivedashboard/states/homeWidgetStateManager.dart';
-import 'package:responsivedashboard/userDataProvider/data_provider.dart';
+import 'package:responsivedashboard/DataProvider/data_provider.dart';
+
+//State Management
+import 'package:responsivedashboard/StateManagement/home_view_widgets_state_manager.dart';
 
 
 

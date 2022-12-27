@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../constants.dart';
-import '../../util/my_tile.dart';
-import '../../util/Menu.dart';
+
+import 'package:responsivedashboard/constants.dart';
+import 'package:responsivedashboard/Widgets/my_tile.dart';
+import 'package:responsivedashboard/Widgets/menu.dart';
 
 class ExampleRoutingDesktop extends StatefulWidget {
   const ExampleRoutingDesktop({Key? key}) : super(key: key);

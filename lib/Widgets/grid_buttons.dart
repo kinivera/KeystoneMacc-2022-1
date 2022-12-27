@@ -1,9 +1,9 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
-import '../util/Button.dart';
+import 'package:responsivedashboard/Widgets/button.dart';
 
 import 'package:provider/provider.dart';
-import 'package:responsivedashboard/states/homeWidgetStateManager.dart';
+import 'package:responsivedashboard/StateManagement/home_view_widgets_state_manager.dart';
 
 class GridButtons extends StatefulWidget {
   final String mode;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:responsivedashboard/Views/Welcome/components/welcome_image.dart';
-import '../../constants.dart';
-import '../../util/Menu.dart';
+import '../../../constants.dart';
+import 'package:responsivedashboard/Widgets/menu.dart';
 
 
 class AboutMobile extends StatefulWidget {

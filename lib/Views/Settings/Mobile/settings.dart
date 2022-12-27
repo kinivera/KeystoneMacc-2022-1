@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import '../../constants.dart';
-import '../../util/Dropdown.dart';
-import '../../util/Menu.dart';
+import 'package:responsivedashboard/constants.dart';
 
-class SettingsDesktop extends StatefulWidget {
-  const SettingsDesktop({Key? key}) : super(key: key);
+import 'package:responsivedashboard/Widgets/dropdown.dart';
+import 'package:responsivedashboard/Widgets/menu.dart';
+
+class SettingsMobile extends StatefulWidget {
+  const SettingsMobile({Key? key}) : super(key: key);
 
   @override
-  State<SettingsDesktop> createState() => _SettingsDesktopState();
+  State<SettingsMobile> createState() => _SettingsMobileState();
 }
 
-class _SettingsDesktopState extends State<SettingsDesktop> {
+class _SettingsMobileState extends State<SettingsMobile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,3 +34,4 @@ class _SettingsDesktopState extends State<SettingsDesktop> {
     );
   }
 }
+

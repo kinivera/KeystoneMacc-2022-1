@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:responsivedashboard/userDataProvider/storage/model.dart';
 
 
 //API connection and Persistend database connection
-import 'api-client/api-client.dart';
-import 'storage/database.dart';
+import 'ApiClient/api_client.dart';
+import 'Storage/database.dart';
+import 'Storage/model.dart';
 
 
 

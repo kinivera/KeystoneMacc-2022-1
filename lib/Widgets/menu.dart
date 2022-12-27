@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:responsivedashboard/userDataProvider/data_provider.dart';
 import '../constants.dart';
-import 'ButtonMenu.dart';
+import 'button_menu.dart';
 
 //API connection
 import 'package:provider/provider.dart';
-import '../../userDataProvider/api-client/api-client.dart';
+import 'package:responsivedashboard/DataProvider/data_provider.dart';
+import 'package:responsivedashboard/DataProvider/ApiClient/api_client.dart';
 
 
 class Menu extends StatelessWidget {

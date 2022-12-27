@@ -3,8 +3,8 @@ import 'components/sign_up_top_image.dart';
 import 'components/signup_form.dart';
 
 import 'package:responsivedashboard/constants.dart';
-import 'package:responsivedashboard/responsive/responsive.dart';
-import 'package:responsivedashboard/util/background.dart';
+import 'package:responsivedashboard/Views/responsive.dart';
+import 'package:responsivedashboard/Widgets/background.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({Key? key}) : super(key: key);

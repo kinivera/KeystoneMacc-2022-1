@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import '../../../constants.dart';
 
 import 'package:responsivedashboard/Views/Signup/signup_screen.dart';
-import 'package:responsivedashboard/util/already_have_an_account_acheck.dart';
-import 'package:responsivedashboard/states/homeWidgetStateManager.dart';
+import 'package:responsivedashboard/Widgets/already_have_an_account_acheck.dart';
+import 'package:responsivedashboard/StateManagement/home_view_widgets_state_manager.dart';
 
 
 //API
 import 'package:provider/provider.dart';
-import 'package:responsivedashboard/userDataProvider/data_provider.dart';
-import 'package:responsivedashboard/userDataProvider/api-client/api-client.dart';
+import 'package:responsivedashboard/DataProvider/data_provider.dart';
+import 'package:responsivedashboard/DataProvider/ApiClient/api_client.dart';
 
 //https://www.topcoder.com/thrive/articles/form-validation-in-flutter
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../constants.dart';
 
 import 'package:provider/provider.dart';
-import 'package:responsivedashboard/states/homeWidgetStateManager.dart';
+import 'package:responsivedashboard/StateManagement/home_view_widgets_state_manager.dart';
 
 class Button extends StatefulWidget{
   final String mode;
