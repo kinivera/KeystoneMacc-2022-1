@@ -87,6 +87,20 @@ class HomeAmbientVariableDashboard with ChangeNotifier{
         }
     }
 
+    Variable? getVar(int nVar){
+        if(_allVariables.isNotEmpty){
+            Variable? variable = _allVariables[nVar];
+            if(variable == null){
+                return null;
+            }else{
+                return variable;
+            }
+        }else{
+            return null;
+        }
+
+    }
+
     String getVarName(int nVar){
        if (_allVariables.isNotEmpty){
            Variable? variable = _allVariables[nVar];

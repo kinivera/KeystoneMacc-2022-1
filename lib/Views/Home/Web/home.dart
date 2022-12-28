@@ -39,7 +39,7 @@ class _HomeMenuDesktopState extends State<HomeMenuDesktop> {
                 (BuildContext context, int index) {
                   return IndicatorChart(mode: desktopMode, indicator: index);
                 },
-                childCount: states.numberOfClickedVariables,
+                childCount: states.variableNumber,
               ),
             ),
 

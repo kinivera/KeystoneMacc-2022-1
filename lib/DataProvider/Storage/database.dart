@@ -44,7 +44,7 @@ class ClientDatabase with ChangeNotifier{
         String dbPath = join(appSuppDir.path, filename) ;
 
         Database db = await databaseFactory.openDatabase(dbPath,
-            options: OpenDatabaseOptions(version: 1, onCreate: _createDB) );
+            options: OpenDatabaseOptions(version: 1, onCreate: _createDB, onOpen: _openDB) );
 
         //by default sql lite does not come with foreign keys enabled
         db.execute(dbStatements.enableDatabaseForeignKeys());
@@ -55,6 +55,12 @@ class ClientDatabase with ChangeNotifier{
     /*
      *  Creates the database from scratch
      */
+
+    Future _openDB(Database db) async{
+        debugPrint("\nOpening database...");
+        db.execute(dbStatements.enableDatabaseForeignKeys());
+        debugPrint("Done!\n");
+    }
 
     Future _createDB(Database db, int version) async{
         debugPrint("\nCreating database...");
@@ -67,9 +73,15 @@ class ClientDatabase with ChangeNotifier{
     /*
      *  Close database
      */
-    Future close() async {
+    Future<void> close() async {
         final Database db = await database;
         db.close();
+    }
+
+    Future<void> logOut()async{
+        final Database db = await database;
+        db.delete(MeasurementFields.tableName);
+        db.delete(VariableFields.tableName);
     }
 
 
@@ -78,9 +90,9 @@ class ClientDatabase with ChangeNotifier{
      *
      */
 
-    Future<Measurement> insertMeasurement(int varId, double value, String time) async {
+    Future<Measurement> insertMeasurement(int id, int varId, double value, String time) async {
         Database db = await database;
-        int rowId = await db.rawInsert(dbStatements.insertMeasurement(varId, value, time));
+        int rowId = await db.rawInsert(dbStatements.insertMeasurement(id, varId, value, time));
 
         return Measurement(rowId, varId, value, time);
     }
@@ -100,7 +112,8 @@ class ClientDatabase with ChangeNotifier{
     Future<List<Measurement>?> getMeasurement(int varId)async{
         Database db = await database;
         List<Map<String, Object?>> map  = await db.query(measurementsTableName,
-            columns: [MeasurementFields.value, MeasurementFields.time],
+            columns: [MeasurementFields.id, MeasurementFields.variableId,
+                      MeasurementFields.value,  MeasurementFields.time],
             where: '${MeasurementFields.variableId} = ?', whereArgs: [varId],);
 
         List<Measurement> measurements = fromQueryResultToMeasurement(map);

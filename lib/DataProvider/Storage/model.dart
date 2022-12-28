@@ -54,11 +54,12 @@ class DBStatements{
    *        INSERT STATEMENTS
    */
 
-  String insertMeasurement(int variableId, double value, String time){
+  String insertMeasurement(int id, int variableId, double value, String time){
       return '''INSERT INTO ${MeasurementFields.tableName}(
+      ${MeasurementFields.id}, 
       ${MeasurementFields.variableId}, 
       ${MeasurementFields.value},
-      ${MeasurementFields.time}) VALUES ($variableId, $value, "$time");
+      ${MeasurementFields.time}) VALUES ($id, $variableId, $value, "$time");
       ''';
   }
 

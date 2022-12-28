@@ -23,8 +23,10 @@ class Queries{
   final String getMeasurements = r"""
     query measurements($apiKey: String!, $nMeasurements: Int!, $startTime: String!, $endTime: String!){
       measurements(apiKey: $apiKey, nmeasurements: $nMeasurements, startTime: $startTime, endTime: $endTime) {
+        id,
         variableId,
-        value
+        value, 
+        time
     }
   }""";
 

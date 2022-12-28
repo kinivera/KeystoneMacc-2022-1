@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:responsivedashboard/DataProvider/Storage/database.dart';
 import '../constants.dart';
 import 'button_menu.dart';
 
@@ -14,6 +15,7 @@ class Menu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppApiClient client =  Provider.of<DataProvider>(context).apiClient;
+    ClientDatabase db =  Provider.of<DataProvider>(context).db;
 
     return Drawer(
       backgroundColor: menuColorBackgr,
@@ -47,8 +49,9 @@ class Menu extends StatelessWidget {
             Navigator.of(context).pushNamed('/about');
           }),
 
-          ButtonMenu(icono: Icons.logout, texto:'L O G O U T', answer:(){
+          ButtonMenu(icono: Icons.logout, texto:'L O G O U T', answer:()async{
             client.logOut();
+            await db.logOut();
             Navigator.of(context).pushNamed('/');
           }),
         ],

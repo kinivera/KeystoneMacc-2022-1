@@ -8,12 +8,12 @@ import 'Storage/model.dart';
 
 
 
-class DataProvider with ChangeNotifier{
+class DataProvider with ChangeNotifier {
     ClientDatabase db = ClientDatabase();
     AppApiClient apiClient = AppApiClient();
 
-    Future<void> init()async{
-      await db.database;
+    Future<void> init() async {
+        await db.database;
     }
 
 
@@ -21,31 +21,40 @@ class DataProvider with ChangeNotifier{
      *    SOME GETTERS
      */
 
-    get loggedIn{
-      return apiClient.loggedIn;
+    get loggedIn {
+        return apiClient.loggedIn;
     }
 
-    get loading{
-      return apiClient.loading;
+    get loading {
+        return apiClient.loading;
     }
 
-    get signedIn{
-      return apiClient.signedIn;
+    get signedIn {
+        return apiClient.signedIn;
     }
 
-    get nowUtc{
-      return apiClient.nowUtc;
+    get nowUtc {
+        return apiClient.nowUtc;
     }
 
 
-    Future<List<Measurement>?> getMeasurement(int varId) async{
+    Future<List<Measurement>?> getMeasurement(int varId) async {
         List<Measurement>? result = await db.getMeasurement(varId);
 
         //the database does not have the requested information
-        if (result == null){
-
+        if (result == null) {
             //requests the data to the Graphql API until now
-            List<Object?> response = await apiClient.getMeasurements(endTime: nowUtc);
+            List<Object?> response = await apiClient.getMeasurements(
+                endTime: nowUtc);
+
+            //if there was a response then we store that information in the database
+            //and at the same time we can get our response
+            await _fromAPIResponseToDBMeasurement(response);
+            result = await db.getMeasurement(varId);
+        } else if (result.isEmpty) {
+            //requests the data to the Graphql API until now
+            List<Object?> response = await apiClient.getMeasurements(
+                endTime: nowUtc);
 
             //if there was a response then we store that information in the database
             //and at the same time we can get our response
@@ -53,14 +62,15 @@ class DataProvider with ChangeNotifier{
             result = await db.getMeasurement(varId);
         }
 
+
         return result;
     }
 
 
-    Future<List<Variable>?> getAllVariables() async{
+    Future<List<Variable>?> getAllVariables() async {
         List<Variable>? result = await db.getAllVariables();
 
-        if ((result == null) || (result.isEmpty)){
+        if ((result == null) || (result.isEmpty)) {
             //requests the data to the Graphql API
             List<Object?> response = await apiClient.getAllVariables();
 
@@ -71,10 +81,10 @@ class DataProvider with ChangeNotifier{
         return result;
     }
 
-    Future<List<Variable>?> getDistinctVariables() async{
+    Future<List<Variable>?> getDistinctVariables() async {
         List<Variable>? result = await db.getDistinctVariables();
 
-        if ((result == null) || (result.isEmpty)){
+        if ((result == null) || (result.isEmpty)) {
             //requests the data to the Graphql API
             List<Object?> response = await apiClient.getAllVariables();
 
@@ -89,20 +99,22 @@ class DataProvider with ChangeNotifier{
      *          SOME INTERNAL UTILS
      */
 
-    Future<void> _fromAPIResponseToDBMeasurement(List<dynamic> response)async{
-        for (int i = 0; i < response.length; i++){
-            int varId = int.parse(response[i]?['variableId']);
-            double value = response[i]?['value'] as double;
-            String time = response[i]?['time'] as String;
+    Future<void> _fromAPIResponseToDBMeasurement(List<dynamic> response) async {
+        for (int i = 0; i < response.length; i++) {
+            debugPrint("IDDDDDDDDDDD!!!!!!!!!!");
+            debugPrint(response[i]?["id"]);
+            int id = response[i]?[MeasurementFields.id];
+            int varId = response[i]?[MeasurementFields.variableId];
+            double value = response[i]?[MeasurementFields.value] as double;
+            String time = response[i]?[MeasurementFields.time] as String;
 
-            await db.insertMeasurement(varId, value, time);
+            await db.insertMeasurement(id, varId, value, time);
         }
     }
 
 
-
-    Future<void> _fromAPIResponseToDBVariable(List<dynamic> response) async{
-        for (int i = 0; i < response.length; i++){
+    Future<void> _fromAPIResponseToDBVariable(List<dynamic> response) async {
+        for (int i = 0; i < response.length; i++) {
             debugPrint(response[i]?['id2']);
             debugPrint(response[i]?['id2'].runtimeType.toString());
             int id = int.parse(response[i]?['id2']);
