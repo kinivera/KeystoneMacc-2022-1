@@ -195,6 +195,8 @@ class ClientDatabase with ChangeNotifier{
             measurements.add(m);
         }
 
+        //gives data in order from oldest to latest
+        measurements = List.from(measurements.reversed);
         return measurements;
     }
 

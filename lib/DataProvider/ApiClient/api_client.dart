@@ -279,7 +279,7 @@ class AppApiClient with ChangeNotifier{
 
         //got a result
         List? measurements = queryResult.data?['measurements'];
-        debugPrint("\n Data is:\n ${measurements.toString()}");
+        debugPrint("\n Data is ${measurements?.length} long :\n ${measurements.toString()}");
 
         if (measurements == null){
           return [];

@@ -52,23 +52,29 @@ class IndicatorChartState extends State<IndicatorChart> {
   late Variable _variable;
   late List<Measurement> _data;
 
+  //
+  late Timer _periodicUpdate;
+
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _periodicUpdate.cancel();
+    super.dispose();
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     _data = [];
     _variable = Variable(-1, "default variable", "arbitrary", "place holder.");
-    Timer.periodic(const Duration(seconds: 40), (timer) async{
-      await updateChartData();
-    });
+    _periodicUpdate = new Timer.periodic(const Duration(seconds: 40), (timer) async{
+                          await updateChartData();
+                          setState(() {});
+                      });
     super.initState();
   }
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-  }
 
 
 
@@ -78,10 +84,10 @@ class IndicatorChartState extends State<IndicatorChart> {
     _client = Provider.of<DataProvider>(context);
 
     Variable? gotedVar = _states.getVar(widget.indicator);
+
     if(gotedVar!= null){
       _variable = gotedVar;
     }
-
 
 
     return Visibility( visible: _states.isClicked(widget.indicator),
@@ -111,14 +117,33 @@ class IndicatorChartState extends State<IndicatorChart> {
           //---------------------------------------------------------------------
 
           //        Data Chart
-          Center(child: CustomLineChart(variable: _variable, data: _data),),
+          FutureBuilder(
+            future: updateChartData(),
+            builder: (BuildContext context, AsyncSnapshot<List<Measurement>> snapshot,) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                } else if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasError) {
+                    return const Text('Error');
+                  } else if (snapshot.hasData) {
+                    return Center(child: CustomLineChart(variable: _variable, data: snapshot.data!),);
+
+                  } else {
+                    return const Text('Empty data');
+                  }
+                } else {
+                  return Text('State: ${snapshot.connectionState}');
+                }
+            },
+          ),
 
         ]));
     }
 
-    Future<void> updateChartData() async{
-      _data = await _client.getMeasurement(_variable.id);
-    }
+  Future<List<Measurement>>? updateChartData() async{
+    List<Measurement> _data =  await _client.getMeasurement(_variable.id);
+    return _data;
+  }
 
 }
 

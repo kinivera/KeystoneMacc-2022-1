@@ -1,4 +1,4 @@
-import 'dart:async';
+import 'package:intl/intl.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +45,7 @@ class _CustomLineChartState extends State<CustomLineChart> {
 class LineChart extends StatefulWidget {
   final Variable variable;
   final List<Measurement> data;
+
   const LineChart({super.key, required this.variable, required this.data});
 
   @override
@@ -52,20 +53,53 @@ class LineChart extends StatefulWidget {
 }
 
 class _LineChartState extends State<LineChart> {
+  late List<Measurement> data;
+  late String plotName;
+  late DateFormat formatter;
+  late ZoomPanBehavior _zoomPanBehavior;
+  late TooltipBehavior _tooltipBehavior;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    plotName = "${widget.variable.name} \t (${widget.variable.units})";
+    formatter = DateFormat('yyyy-MM-dd hh:mm:ss');
+    _tooltipBehavior = TooltipBehavior(enable: true,
+      opacity: 0.4,
+      duration: 1);
+    _zoomPanBehavior = ZoomPanBehavior(enablePinching: true,
+      enablePanning: true,
+      enableMouseWheelZooming: true,
+      enableSelectionZooming: true,
+      selectionRectBorderColor: Colors.blueAccent,
+      selectionRectColor: Colors.grey,
+      maximumZoomLevel: 0.9
+    );
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
 
     return SfCartesianChart(
 
-        primaryXAxis: CategoryAxis(name: "Time"),
-        primaryYAxis: NumericAxis(name: widget.variable.units),
-        //legend: Legend(isVisible: true),
+        tooltipBehavior: _tooltipBehavior,
+        zoomPanBehavior: _zoomPanBehavior,
+        primaryXAxis: DateTimeAxis(name: "Time",
+            edgeLabelPlacement: EdgeLabelPlacement.shift,
+            dateFormat: formatter,
+            title: AxisTitle(text: "Time")),
 
-        series: <ChartSeries>[
-          ColumnSeries(dataSource: widget.data,
+        primaryYAxis: NumericAxis(name: widget.variable.units,
+          title: AxisTitle(text: plotName),),
+
+        series: <LineSeries>[
+          LineSeries(dataSource: widget.data,
               //each obj is a measurement from the list
               xValueMapper: (obj, indx)=>_xValueMapper(obj, indx),
               yValueMapper: (obj, indx)=>_yValueMapper(obj, indx),
+              markerSettings: const MarkerSettings(isVisible: true),
+              dataLabelSettings: const DataLabelSettings(isVisible: true),
+              enableTooltip: true,
             ),
         ],
         //borderWidth: 1,
@@ -75,7 +109,7 @@ class _LineChartState extends State<LineChart> {
 
   dynamic _xValueMapper(dynamic obj, int? indx){
     if (obj != null){
-      return obj.time;
+      return DateTime.parse(obj.time);
     }
     return 'time';
   }
