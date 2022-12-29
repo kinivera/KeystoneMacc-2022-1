@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:intl/intl.dart';
 
 /*
  *
@@ -50,14 +49,12 @@ class AppApiClient with ChangeNotifier{
 
   late GraphQLClient client;
   late Queries queries;
-  late String _nowUtc;
   late String _apiKey;
 
   Map<String, Object?> responses = {};
   bool _signedIn = false;
   bool _loggedIn = false;
   bool _loading = false;
-  final DateFormat formatter = DateFormat('yyyy-MM-dd hh:mm:ss');
 
   /*
    *          GETTERS
@@ -75,9 +72,6 @@ class AppApiClient with ChangeNotifier{
     return _signedIn;
   }
 
-  get nowUtc{
-    return _nowUtc;
-  }
 
   /*
    *          CONSTRUCTOR
@@ -131,27 +125,24 @@ class AppApiClient with ChangeNotifier{
 
         //loading
         if (queryResult.isLoading) {
-          debugPrint("is loading...");
+          debugPrint("Logging user in...");
           _loading = true;
           notifyListeners();
         }else{
-          debugPrint("is loaded...");
+          debugPrint("User logged in.");
           _loading = false;
           notifyListeners();
         }
 
         String? response = queryResult.data?['logIn'];
         debugPrint('got answer:');
-        debugPrint(response);
+        debugPrint("$response \n");
 
         if (response == null) {
           return ;
         }else{
           _loggedIn = true;
           _apiKey = response;
-          _nowUtc =  formatter.format(DateTime.now().toUtc()).toString();
-          debugPrint("DATEEEEE: $_nowUtc");
-          atLogIn();
         }
 
   }
@@ -178,13 +169,13 @@ class AppApiClient with ChangeNotifier{
 
         //loading
         if (queryResult.isLoading) {
-          debugPrint("is loading...");
+          debugPrint("Signing user in...");
           _loading = true;
-          notifyListeners();
+          //notifyListeners();
         }else{
-          debugPrint("is loaded...");
+          debugPrint("User signed in.");
           _loading = false;
-          notifyListeners();
+          //notifyListeners();
         }
 
         Map<String, dynamic>? response = queryResult.data?['signUp'];
@@ -197,8 +188,6 @@ class AppApiClient with ChangeNotifier{
           return;
         }else{
           _signedIn = true;
-          _nowUtc =  formatter.format(DateTime.now().toUtc()).toString();
-          debugPrint("DATEEEEE: $_nowUtc");
         }
   }
 
@@ -224,13 +213,13 @@ class AppApiClient with ChangeNotifier{
 
         //loading
         if (queryResult.isLoading) {
-          debugPrint("is loading...");
+          debugPrint("Loading variables from API...");
           _loading = true;
-          notifyListeners();
+          //notifyListeners();
         }else{
-          debugPrint("is loaded...");
+          debugPrint("Loaded variables from API.");
           _loading = false;
-          notifyListeners();
+          //notifyListeners();
         }
 
         //got a result
@@ -279,18 +268,18 @@ class AppApiClient with ChangeNotifier{
 
         //loading
         if (queryResult.isLoading) {
-          debugPrint("is loading...");
+          debugPrint("Getting measurements...");
           _loading = true;
-          notifyListeners();
+          //notifyListeners();
         }else{
-          debugPrint("is loaded...");
+          debugPrint("Got measurements.");
           _loading = false;
-          notifyListeners();
+          //notifyListeners();
         }
 
         //got a result
         List? measurements = queryResult.data?['measurements'];
-        debugPrint("\ngot measurements:\n ${measurements.toString()}");
+        debugPrint("\n Data is:\n ${measurements.toString()}");
 
         if (measurements == null){
           return [];
@@ -300,13 +289,6 @@ class AppApiClient with ChangeNotifier{
         }
 
   }
-
-  Future<void> atLogIn() async{
-        getAllVariables();
-        getMeasurements(endTime: _nowUtc);
-  }
-
-
 
 
 }

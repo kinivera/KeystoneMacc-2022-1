@@ -42,41 +42,40 @@ class IndicatorChart extends StatefulWidget{
 
 class IndicatorChartState extends State<IndicatorChart> {
 
+  // Variables for getting the state of the widget
   late HomeAmbientVariableDashboard _states;
-  late DataProvider _client;
-  late StreamController _dataStream;
 
+  // Variables for getting chart data
+  late DataProvider _client;
+
+  // Plot specific variables
   late Variable _variable;
-  late Timer _timer;
   late List<Measurement> _data;
+
 
   @override
   void initState() {
     // TODO: implement initState
     _data = [];
     _variable = Variable(-1, "default variable", "arbitrary", "place holder.");
-    _dataStream = StreamController<List<Measurement>>();
+    Timer.periodic(const Duration(seconds: 40), (timer) async{
+      await updateChartData();
+    });
     super.initState();
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
-    //_timer.cancel();
-    //_dataStream.close();
     super.dispose();
   }
+
 
 
   @override
   Widget build(BuildContext context) {
     _states = Provider.of<HomeAmbientVariableDashboard>(context);
     _client = Provider.of<DataProvider>(context);
-
-    //every minute it adds data to the stream
-    _timer = Timer.periodic(const Duration(seconds: 40), (timer) async {
-      _dataStream.add(await getData(_states, _client, widget.indicator));
-    });
 
     Variable? gotedVar = _states.getVar(widget.indicator);
     if(gotedVar!= null){
@@ -112,51 +111,15 @@ class IndicatorChartState extends State<IndicatorChart> {
           //---------------------------------------------------------------------
 
           //        Data Chart
-          Center(child:
-          StreamBuilder(
-              stream: _dataStream.stream,
-              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                bool noDataAtAll = ((!snapshot.hasData) && (_data.isEmpty));
-
-                if (noDataAtAll) {
-                  return Container(width: 50,
-                                   height: 50,
-                                   child: CircularProgressIndicator(),
-                                   margin: EdgeInsets.symmetric(horizontal: 5, vertical: 20),
-                                  );
-
-                } else {
-                  if (snapshot.data != null) {
-                    _data = snapshot.data;
-                  }
-                  return CustomLineChart(variable: _variable, data: snapshot.data);
-                }
-              }
-            ),
-          ),
+          Center(child: CustomLineChart(variable: _variable, data: _data),),
 
         ]));
     }
-}
 
-
-Future<List<Measurement>?> getData(HomeAmbientVariableDashboard states,
-                                   DataProvider client,
-                                   int indicator)async{
-
-  Variable? variable = states.getVar(indicator);
-  debugPrint(variable.toString());
-
-  List<Measurement> data = [];
-
-  if (variable != null){
-    debugPrint("Quering measurement ${variable.id}");
-    List<Measurement>? response = await client.getMeasurement(variable.id);
-    debugPrint("got ${response.toString()}");
-    if (response != null){
-      data = response;
+    Future<void> updateChartData() async{
+      _data = await _client.getMeasurement(_variable.id);
     }
-  }
 
-  return data;
 }
+
+

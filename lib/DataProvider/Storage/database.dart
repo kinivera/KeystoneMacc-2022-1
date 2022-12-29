@@ -13,6 +13,18 @@ import 'package:flutter/material.dart';
 
 //https://stackoverflow.com/questions/38933801/calling-an-async-method-from-a-constructor-in-dart
 
+class ConcreteDatabaseException extends DatabaseException{
+
+    ConcreteDatabaseException(String message) : super(message);
+
+    get result{
+    }
+
+    @override
+      int? getResultCode() {
+      }
+}
+
 class ClientDatabase with ChangeNotifier{
     Database? _database;
     DBStatements  dbStatements = DBStatements();
@@ -80,8 +92,11 @@ class ClientDatabase with ChangeNotifier{
 
     Future<void> logOut()async{
         final Database db = await database;
-        db.delete(MeasurementFields.tableName);
-        db.delete(VariableFields.tableName);
+        await db.delete(MeasurementFields.tableName);
+        await db.delete(VariableFields.tableName);
+
+        DatabaseFactory databaseFactory = databaseFactoryFfi;
+        await databaseFactory.deleteDatabase('userClientDatabase.db');
     }
 
 
@@ -90,11 +105,27 @@ class ClientDatabase with ChangeNotifier{
      *
      */
 
-    Future<Measurement> insertMeasurement(int id, int varId, double value, String time) async {
+    Future<Measurement> insertMeasurement(String id, int varId, double value, String time) async {
         Database db = await database;
-        int rowId = await db.rawInsert(dbStatements.insertMeasurement(id, varId, value, time));
 
-        return Measurement(rowId, varId, value, time);
+        try{
+            await db.rawInsert(dbStatements.insertMeasurement(id, varId, value, time));
+
+        }on DatabaseException catch (e){
+            String field = "${MeasurementFields.tableName}.${MeasurementFields.id}";
+            ConcreteDatabaseException ex = ConcreteDatabaseException(e.toString());
+
+            if (!ex.isUniqueConstraintError(field)){
+                throw 'Unexpected Error: ${e.toString()}';
+            }else{
+                debugPrint("Repeated measurement");
+            }
+
+        }catch (e){
+            throw e.toString();
+        }
+
+        return Measurement(id, varId, value, time);
     }
 
     Future<Variable> insertVariable(int id, String name, String units, String desc)async{
@@ -109,8 +140,9 @@ class ClientDatabase with ChangeNotifier{
      *
      */
 
-    Future<List<Measurement>?> getMeasurement(int varId)async{
+    Future<List<Measurement>> getMeasurement(int varId)async{
         Database db = await database;
+
         List<Map<String, Object?>> map  = await db.query(measurementsTableName,
             columns: [MeasurementFields.id, MeasurementFields.variableId,
                       MeasurementFields.value,  MeasurementFields.time],
@@ -121,21 +153,28 @@ class ClientDatabase with ChangeNotifier{
         return measurements;
     }
 
-    Future<List<Variable>?> getAllVariables()async{
+    Future<List<Variable>> getAllVariables()async{
         Database db = await database;
         List<Map<String, Object?>> map  = await db.query(variablesTableName,
             columns: [VariableFields.id, VariableFields.name, VariableFields.units, VariableFields.desc]);
 
-        List<Variable>? variables =  fromQueryResultToVariable(map);
+        List<Variable> variables =  fromQueryResultToVariable(map);
         return variables;
     }
 
-    Future<List<Variable>?> getDistinctVariables() async{
+    Future<List<Variable>> getDistinctVariables() async{
         Database db = await database;
         List<Map<String, Object?>> map  = await db.rawQuery(dbStatements.distinctVariables());
 
-        List<Variable>? variables =  fromQueryResultToVariable(map);
+        List<Variable> variables =  fromQueryResultToVariable(map);
         return variables;
+    }
+
+    Future<bool> hasVariables()async{
+        Database db = await database;
+        List<Map<String, Object?>> map = await db.query(VariableFields.tableName);
+
+        return map.isNotEmpty;
     }
 
     /*
@@ -147,7 +186,7 @@ class ClientDatabase with ChangeNotifier{
         List<Measurement> measurements = [];
 
         for(int i = 0; i < map.length; i++){
-            int id = map[i][MeasurementFields.id] as int;
+            String id = map[i][MeasurementFields.id] as String;
             int varId = map[i][MeasurementFields.variableId] as int;
             double value = map[i][MeasurementFields.value] as double;
             String time = map[i][MeasurementFields.time] as String;

@@ -30,7 +30,7 @@ class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     //gets the APIClient instance from the data provider
-    AppApiClient client =  Provider.of<DataProvider>(context).apiClient;
+    DataProvider dataProvider =  Provider.of<DataProvider>(context);
     HomeAmbientVariableDashboard states =  Provider.of<HomeAmbientVariableDashboard>(context);
 
     return Form(
@@ -102,9 +102,9 @@ class _LoginFormState extends State<LoginForm> {
                 debugPrint("Valid User Input Data");
 
                 //authenticates with client
-                await client.authUser(user, pswd);
+                await dataProvider.logIn(user, pswd);
 
-                if (client.loggedIn){
+                if (dataProvider.loggedIn){
                   //initiates the state manager
                   await states.init(context);
                   //stores the credentials in the phone ...

@@ -138,6 +138,7 @@ class HomeAmbientVariableDashboard with ChangeNotifier{
 
         List<Variable>? listOfVariables = await _dataProvider?.getDistinctVariables();
 
+        debugPrint("Filling state variables...");
         for (int i = 0; i < listOfVariables!.length; i++){
             _allVariables[i] = listOfVariables[i];
             _isClicked[i] = false;

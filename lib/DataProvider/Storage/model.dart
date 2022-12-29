@@ -7,7 +7,8 @@ const String variablesTableName = 'variables';
 
 class DBStatements{
 
-    static const String idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
+    static const String idTypeMeasurements = 'TEXT PRIMARY KEY';
+    static const String idTypeVarId = 'INTEGER PRIMARY KEY';
     static const String varIdType = 'INTEGER NOT NULL';
     static const String realType = 'REAL NOT NULL';
     static const String textType = 'TEXT NOT NULL';
@@ -23,7 +24,7 @@ class DBStatements{
 
   String createMeasurementsTable(){
       return ''' CREATE TABLE ${MeasurementFields.tableName}(
-      ${MeasurementFields.id} $idType,
+      ${MeasurementFields.id} $idTypeMeasurements,
       ${MeasurementFields.variableId} $varIdType,
       ${MeasurementFields.value} $realType,
       ${MeasurementFields.time} $textType,
@@ -33,7 +34,7 @@ class DBStatements{
 
   String createVariablesTable(){
       return ''' CREATE TABLE ${VariableFields.tableName}(
-      ${VariableFields.id} $idType, 
+      ${VariableFields.id} $idTypeVarId, 
       ${VariableFields.name} $textType, 
       ${VariableFields.units} $textType, 
       ${VariableFields.desc} $textType
@@ -54,12 +55,12 @@ class DBStatements{
    *        INSERT STATEMENTS
    */
 
-  String insertMeasurement(int id, int variableId, double value, String time){
+  String insertMeasurement(String id, int variableId, double value, String time){
       return '''INSERT INTO ${MeasurementFields.tableName}(
       ${MeasurementFields.id}, 
       ${MeasurementFields.variableId}, 
       ${MeasurementFields.value},
-      ${MeasurementFields.time}) VALUES ($id, $variableId, $value, "$time");
+      ${MeasurementFields.time}) VALUES ("$id", $variableId, $value, "$time");
       ''';
   }
 
@@ -104,7 +105,7 @@ class MeasurementFields{
 
 
 class Measurement{
-  final int id;
+  final String id;
   final int variableId;
   final double value;
   final String time;
