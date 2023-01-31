@@ -1,13 +1,15 @@
+import 'model.dart';
 import 'dart:core';
+import 'dart:io';
 
+import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common/sqlite_api.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import 'dart:io';
 
-import 'model.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 
@@ -17,8 +19,7 @@ class ConcreteDatabaseException extends DatabaseException{
 
     ConcreteDatabaseException(String message) : super(message);
 
-    get result{
-    }
+    get result{}
 
     @override
       int? getResultCode() {
@@ -26,8 +27,12 @@ class ConcreteDatabaseException extends DatabaseException{
 }
 
 class ClientDatabase with ChangeNotifier{
+    late String dbPath;
     Database? _database;
     DBStatements  dbStatements = DBStatements();
+
+    bool worksWithSqfLite = (GetPlatform.isAndroid || GetPlatform.isIOS || GetPlatform.isAndroid);
+    bool worksWithSqfLiteCommon = (GetPlatform.isWindows || GetPlatform.isLinux);
 
     //constuctor
     ClientDatabase();
@@ -47,21 +52,37 @@ class ClientDatabase with ChangeNotifier{
      *  Initializes the database
      */
 
+    Future<void> getDatabaseDir(String filename)async{
+
+        if (worksWithSqfLiteCommon){
+            Directory appSuppDir = await getApplicationSupportDirectory();
+            dbPath = join(appSuppDir.path, filename) ;
+        }else{
+            String databasesPath = await getDatabasesPath();
+            dbPath = join(databasesPath, filename);
+        }
+
+    }
+
     Future<Database> _initDB(String filename) async{
 
-        sqfliteFfiInit();
-        DatabaseFactory databaseFactory = databaseFactoryFfi;
+        await getDatabaseDir(filename);
 
-        Directory appSuppDir = await getApplicationSupportDirectory();
-        String dbPath = join(appSuppDir.path, filename) ;
+        if (worksWithSqfLiteCommon){
+            sqfliteFfiInit();
+            DatabaseFactory databaseFactory = databaseFactoryFfi;
 
-        Database db = await databaseFactory.openDatabase(dbPath,
-            options: OpenDatabaseOptions(version: 1, onCreate: _createDB, onOpen: _openDB) );
+            Database db = await databaseFactory.openDatabase(dbPath,
+                options: OpenDatabaseOptions(version: 1, onCreate: _createDB, onOpen: _openDB) );
 
-        //by default sql lite does not come with foreign keys enabled
-        db.execute(dbStatements.enableDatabaseForeignKeys());
+            //by default sql lite does not come with foreign keys enabled
+            db.execute(dbStatements.enableDatabaseForeignKeys());
 
-        return db;
+            return db;
+        }else{
+            Database db = await openDatabase(dbPath, version: 1, onCreate: _createDB, onOpen: _openDB);
+            return db;
+        }
     }
 
     /*
@@ -95,8 +116,13 @@ class ClientDatabase with ChangeNotifier{
         await db.delete(MeasurementFields.tableName);
         await db.delete(VariableFields.tableName);
 
-        DatabaseFactory databaseFactory = databaseFactoryFfi;
-        await databaseFactory.deleteDatabase('userClientDatabase.db');
+        if (worksWithSqfLiteCommon){
+            DatabaseFactory databaseFactory = databaseFactoryFfi;
+            //await databaseFactory.deleteDatabase('userClientDatabase.db');
+            await databaseFactory.deleteDatabase(dbPath);
+        }else{
+            await deleteDatabase(dbPath);
+        }
     }
 
 
