@@ -14,11 +14,11 @@ class Queries{
       QUERIES
    */
 
-  final String getAllVariables = """ query{variables {id,name,units,desc}}""";
   final String logIn = r"""
       query logIn($username: String!, $password: String!){
         logIn(username: $username, password: $password)
       }""";
+  final String getAllVariables = """ query{variables {id,name,units,desc}}""";
   final String getMeasurements = r"""
     query measurements($apiKey: String!, $nMeasurements: Int!, $startTime: String!, $endTime: String!){
       measurements(apiKey: $apiKey, nmeasurements: $nMeasurements, startTime: $startTime, endTime: $endTime) {
@@ -115,13 +115,15 @@ class AppApiClient with ChangeNotifier{
                                    'password': password}),
         );
 
-
         //some error while making the query or getting response
         if (queryResult.hasException) {
           debugPrint("got an exception on LOG IN: ");
           debugPrint(queryResult.hasException.toString());
           return;
+        }else{
+          debugPrint(queryResult.data.toString());
         }
+
 
         //loading
         if (queryResult.isLoading) {
@@ -165,6 +167,8 @@ class AppApiClient with ChangeNotifier{
           debugPrint("got an exception on SIGN IN: ");
           debugPrint(queryResult.hasException.toString());
           return;
+        }else{
+          debugPrint(queryResult.data.toString());
         }
 
         //loading
