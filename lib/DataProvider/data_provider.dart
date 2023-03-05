@@ -39,7 +39,7 @@ class DataProvider with ChangeNotifier {
      */
 
     get loggedIn {
-        return apiClient.loggedIn;
+        return true;// apiClient.loggedIn;
     }
 
     get loading {
