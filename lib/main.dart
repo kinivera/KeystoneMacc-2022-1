@@ -6,16 +6,16 @@ import 'Views/Signup/signup_screen.dart';
 import 'Views/Welcome/welcome_screen.dart';
 
 // Mobile Views
-import 'package:responsivedashboard/Views/Home/Mobile/home.dart';
-import 'package:responsivedashboard/Views/About/Mobile/about.dart';
-import 'package:responsivedashboard/Views/Settings/Mobile/settings.dart';
-import 'package:responsivedashboard/Views/ExampleRouting/Mobile/example_routing.dart';
+import '/Views/Home/Mobile/home.dart';
+import '/Views/About/Mobile/about.dart';
+import '/Views/Settings/Mobile/settings.dart';
+import '/Views/ExampleRouting/Mobile/example_routing.dart';
 
 // Web Views
-import 'package:responsivedashboard/Views/Home/Web/home.dart';
-import 'package:responsivedashboard/Views/About/Web/about.dart';
-import 'package:responsivedashboard/Views/Settings/Web/settings.dart';
-import 'package:responsivedashboard/Views/ExampleRouting/Web/example_routing.dart';
+import 'Views/Home/Web/home.dart';
+import 'Views/About/Web/about.dart';
+import 'Views/Settings/Web/settings.dart';
+import 'Views/ExampleRouting/Web/example_routing.dart';
 
 //API packages
 import 'package:provider/provider.dart';

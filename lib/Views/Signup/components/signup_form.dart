@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
-import '../../../constants.dart';
-import 'package:responsivedashboard/Views/Login/login_screen.dart';
-import 'package:responsivedashboard/Widgets/already_have_an_account_acheck.dart';
+import '/constants.dart';
+import '/Views/Login/login_screen.dart';
+import '/Utils/input_validation.dart';
+import '/Widgets/already_have_an_account_acheck.dart';
 
 //API
 import 'package:provider/provider.dart';
-import 'package:responsivedashboard/DataProvider/data_provider.dart';
-import 'package:responsivedashboard/DataProvider/ApiClient/api_client.dart';
+import '/DataProvider/data_provider.dart';
+import '/DataProvider/ApiClient/api_client.dart';
 
 
 class SignUpForm extends StatefulWidget {

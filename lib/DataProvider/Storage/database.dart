@@ -3,7 +3,6 @@ import 'dart:core';
 import 'dart:io';
 
 import 'package:sqflite/sqflite.dart';
-import 'package:sqflite_common/sqlite_api.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 import 'package:path/path.dart';
@@ -18,13 +17,13 @@ import 'package:flutter/material.dart';
 class ConcreteDatabaseException extends DatabaseException{
 
     ConcreteDatabaseException(String message) : super(message);
-
     get result{}
 
     @override
-      int? getResultCode() {
-      }
+    int? getResultCode(){}
+
 }
+
 
 class ClientDatabase with ChangeNotifier{
     late String dbPath;
@@ -37,7 +36,6 @@ class ClientDatabase with ChangeNotifier{
     //constuctor
     ClientDatabase();
 
-
     /*
      *  Calls/Builds the database
      */
@@ -47,6 +45,7 @@ class ClientDatabase with ChangeNotifier{
       _database = await _initDB('userClientDatabase.db');
       return _database!;
     }
+
 
     /*
      *  Initializes the database
@@ -79,10 +78,12 @@ class ClientDatabase with ChangeNotifier{
             db.execute(dbStatements.enableDatabaseForeignKeys());
 
             return db;
-        }else{
-            Database db = await openDatabase(dbPath, version: 1, onCreate: _createDB, onOpen: _openDB);
+        }else {
+            Database db = await openDatabase(
+                dbPath, version: 1, onCreate: _createDB, onOpen: _openDB);
             return db;
         }
+
     }
 
     /*
@@ -100,6 +101,8 @@ class ClientDatabase with ChangeNotifier{
         db.execute(dbStatements.enableDatabaseForeignKeys());
         db.execute(dbStatements.createVariablesTable());
         db.execute(dbStatements.createMeasurementsTable());
+        db.execute(dbStatements.createZonesTable());
+        //db.execute(dbStatements.());
         debugPrint("Done!\n");
     }
 
