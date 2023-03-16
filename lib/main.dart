@@ -4,6 +4,7 @@ import 'Views/responsive_layout.dart';
 import 'Views/Login/login_screen.dart';
 import 'Views/Signup/signup_screen.dart';
 import 'Views/Welcome/welcome_screen.dart';
+import 'Views/General_About/general_about.dart';
 
 // Mobile Views
 import 'package:responsivedashboard/Views/Home/Mobile/home.dart';
@@ -87,6 +88,10 @@ class MyApp extends StatelessWidget {
         '/about': (context) => const ResponsiveLayout(
           mobileBody: AboutMobile(),
           desktopBody: AboutDesktop(),
+        ),
+        '/general_about': (context) => const ResponsiveLayout(
+          mobileBody: AboutScreen(),
+          desktopBody: AboutScreen(),
         )
       },
 
