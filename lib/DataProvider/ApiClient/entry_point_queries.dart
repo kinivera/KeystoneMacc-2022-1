@@ -1,6 +1,6 @@
 
 class Queries{
-  static const String url = "";
+  static const String url = "perroshptasasociados.xyz";
 
   const Queries();
 

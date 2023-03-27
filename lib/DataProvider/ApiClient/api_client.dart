@@ -1,3 +1,4 @@
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
 import '/DataProvider/ApiClient/entry_point_queries.dart';

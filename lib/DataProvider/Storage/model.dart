@@ -1,7 +1,6 @@
 /*
  *      STATEMENTS FOR CREATING ALL TABLES IN THE DATABASE
  */
-import 'dart:ffi';
 
 const String measurementsTableName = 'measurements';
 const String variablesTableName = 'variables';
@@ -36,7 +35,7 @@ class DBStatements{
 
   String createMeasurementsTable(){
       return '''CREATE TABLE ${MeasurementFields.tableName}(
-      ${MeasurementFields.id} ${txt + pk},
+      ${MeasurementFields.id} ${integer + pk},
       ${MeasurementFields.variableId} ${integer + nn},
       ${MeasurementFields.value} ${real + nn},
       ${MeasurementFields.time} ${txt + nn},
@@ -57,7 +56,7 @@ class DBStatements{
     String createZonesTable(){
       return ''' CREATE TABLE ${ZonesFields.tableName}(
       ${ZonesFields.id} ${integer + pk}, 
-      ${ZonesFields.idOrg} ${integer + pk}, 
+      ${ZonesFields.idOrg} ${integer + nn}, 
       ${ZonesFields.name} ${txt + nn}, 
       ${ZonesFields.coordinates} ${txt + nn}
       );
@@ -245,8 +244,8 @@ class ConditionsFields{
 class Conditions{
   final int id;
   final String idVar;
-  final Double min;
-  final Double max;
+  final double min;
+  final double max;
 
   const Conditions(this.id, this.idVar, this.min, this.max);
 

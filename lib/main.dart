@@ -19,19 +19,15 @@ import 'Views/ExampleRouting/Web/example_routing.dart';
 
 //API packages
 import 'package:provider/provider.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:responsivedashboard/DataProvider/data_provider.dart';
+import 'DataProvider/data_provider.dart';
 
 //State Management
-import 'package:responsivedashboard/StateManagement/home_view_widgets_state_manager.dart';
+import 'StateManagement/home_view_widgets_state_manager.dart';
 
 
 
 void main() async{
 
-  // We're using HiveStore for persistence,
-  // so we need to initialize Hive.
-  await initHiveForFlutter();
 
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => DataProvider()),
