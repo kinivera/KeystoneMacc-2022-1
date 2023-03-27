@@ -16,6 +16,7 @@ import 'package:responsivedashboard/Views/ExampleRouting/Mobile/example_routing.
 import 'package:responsivedashboard/Views/Home/Web/home.dart';
 import 'package:responsivedashboard/Views/About/Web/about.dart';
 import 'package:responsivedashboard/Views/Settings/Web/settings.dart';
+import 'Views/Settings/Web/settings_prueba.dart'; //prueba
 import 'package:responsivedashboard/Views/ExampleRouting/Web/example_routing.dart';
 
 //API packages
@@ -83,7 +84,7 @@ class MyApp extends StatelessWidget {
         ),
         '/settings': (context) => const ResponsiveLayout(
           mobileBody: SettingsMobile(),
-          desktopBody: SettingsDesktop(),
+          desktopBody: SettingsDesktop2(),
         ),
         '/about': (context) => const ResponsiveLayout(
           mobileBody: AboutMobile(),
