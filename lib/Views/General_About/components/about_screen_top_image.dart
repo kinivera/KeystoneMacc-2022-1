@@ -25,6 +25,6 @@ class AboutTopImage extends StatelessWidget {
         ),
         const SizedBox(height: defaultPadding * 2),
       ],
-    );
+    );  
   }
 }
