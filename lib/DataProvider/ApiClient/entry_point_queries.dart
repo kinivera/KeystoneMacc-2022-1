@@ -11,6 +11,4 @@ class Queries{
   final String logIn  = "${url}/user/login";
   final String signIn = "${url}/user/new";
   final String newOrg = "${url}/orgs/new";
-
-
 }
