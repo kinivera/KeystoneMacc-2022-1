@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:responsivedashboard/DataProvider/data_provider.dart';
-import 'package:responsivedashboard/DataProvider/Storage/model.dart';
+import 'package:responsivedashboard/DataProvider/Storage/models.dart';
 
 class HomeAmbientVariableDashboard with ChangeNotifier{
 

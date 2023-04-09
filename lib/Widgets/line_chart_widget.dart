@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import 'package:responsivedashboard/DataProvider/Storage/model.dart';
+import 'package:responsivedashboard/DataProvider/Storage/models.dart';
 
 class CustomLineChart extends StatefulWidget {
   final Variable variable;

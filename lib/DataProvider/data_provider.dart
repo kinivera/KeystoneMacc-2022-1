@@ -1,12 +1,13 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:responsivedashboard/DataProvider/Storage/models.dart';
 
 
 //API connection and Persistend database connection
 import 'ApiClient/api_client.dart';
 import 'Storage/database.dart';
-import 'Storage/model.dart';
+import 'Storage/db_statements.dart';
 
 
 
@@ -58,16 +59,19 @@ class DataProvider with ChangeNotifier {
      */
 
     Future<List<Measurement>> getMeasurement(int varId) async {
-        return await [];
+        List<Measurement> placeholder = [];
+        return await placeholder;
     }
 
 
     Future<List<Variable>> getAllVariables() async {
-        return await [];
+        List<Variable> placeholder = [];
+        return await placeholder;
     }
 
     Future<List<Variable>> getDistinctVariables() async {
-        return await [];
+        List<Variable> placeholder = [];
+        return await placeholder;
     }
 
     /*

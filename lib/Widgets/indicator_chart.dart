@@ -8,7 +8,7 @@ import 'dart:core';
 
 import 'package:responsivedashboard/constants.dart';
 import 'package:responsivedashboard/DataProvider/data_provider.dart';
-import 'package:responsivedashboard/DataProvider/Storage/model.dart';
+import 'package:responsivedashboard/DataProvider/Storage/models.dart';
 import 'package:responsivedashboard/StateManagement/home_view_widgets_state_manager.dart';
 
 import 'line_chart_widget.dart';
