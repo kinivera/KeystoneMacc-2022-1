@@ -1,59 +1,57 @@
 
-const String measurementsTableName = 'measurements';
-const String variablesTableName = 'variables';
-const String conditionsTableName = 'conditions';
-const String zonesTableName = 'zones';
+const String cropsTableName         = 'crops';
+const String variablesTableName     = 'variables';
+const String conditionsTableName    = 'conditions';
+const String measurementsTableName  = 'measurements';
 
 //------------------------------------------------------------------------------
 /*
  *
- *      Measurement Fields and Definition
+ *      Crop Fields and Definition
  *
  */
 
-class MeasurementFields{
-  static const String tableName = measurementsTableName;
+
+class CropFields{
+  static const String tableName = cropsTableName;
 
   //define column names
   static const String id = "_id";
-  static const String variableId = "variableId";
-  static const String value = "value";
-  static const String time = "time";
+  static const String name = "name";
+  static const String latitude = "latitude";
+  static const String longitude = "longitude";
 }
 
-//Measurement object
+class Crop{
+  final int id;
+  final String name;
+  final double latitude;
+  final double longitude;
 
-class Measurement{
-  final String id;
-  final int variableId;
-  final double value;
-  final String time;
+  const Crop(this.id, this.name, this.latitude, this.longitude);
 
-  const Measurement(this.id, this.variableId, this.value, this.time);
+  // Map constructor for the Variable class.
+  Crop.fromMap(Map<String, dynamic> map):
+        id = map['_id'],
+        name = map['name'],
+        latitude = map['latitude'],
+        longitude = map['longitude'];
 
   @override
   String toString() {
-    String str = "Measurement{$id, $variableId, $value, '$time'}";
+    String str = "Variable{$id, '$name', '$latitude', '$longitude'}";
     return str;
   }
 
-  // Convert a Measurement into a Map.
+  // Convert a Variable into a Map.
   Map<String, dynamic> toMap() {
     return {
       '_id': id,
-      'variableId': variableId,
-      'value': value,
-      'time': time
+      'name': name,
+      'latitude': latitude,
+      'longitude': longitude
     };
   }
-
-  // Map constructor for the Measurement class.
-  Measurement.fromMap(Map<String, dynamic> map):
-        id = map['_id'],
-        variableId = map['variableId'],
-        value = map['value'],
-        time = map['time'];
-
 }
 
 
@@ -84,6 +82,13 @@ class Variable{
 
   const Variable(this.id, this.name, this.units, this.desc);
 
+  // Map constructor for the Variable class.
+  Variable.fromMap(Map<String, dynamic> map):
+        id = map['_id'],
+        name = map['name'],
+        units = map['units'],
+        desc = map['desc'];
+
   @override
   String toString() {
     String str = "Variable{$id, '$name', '$units', '$desc'}";
@@ -99,13 +104,6 @@ class Variable{
       'desc': desc
     };
   }
-
-  // Map constructor for the Variable class.
-  Variable.fromMap(Map<String, dynamic> map):
-        id = map['_id'],
-        name = map['name'],
-        units = map['units'],
-        desc = map['desc'];
 }
 
 
@@ -121,7 +119,8 @@ class ConditionsFields{
   static const String tableName = conditionsTableName;
 
   //define column names
-  static const String id = "id_crop";
+  static const String id = "_id";
+  static const String idCrop = "id_crop";
   static const String idVar = "id_variable";
   static const String min = "min";
   static const String max = "max";
@@ -131,86 +130,92 @@ class ConditionsFields{
 
 class Conditions{
   final int id;
+  final int idCrop;
   final String idVar;
   final double min;
   final double max;
 
-  const Conditions(this.id, this.idVar, this.min, this.max);
+  const Conditions(this.id, this.idCrop, this.idVar, this.min, this.max);
 
-  @override
-  String toString() {
-    String str = "Conditions{$id, '$idVar', $min, $max}";
-    return str;
-  }
+  // Map constructor for the Conditions class.
+  Conditions.fromMap(Map<String, dynamic> map):
+        id = map['_id'],
+        idCrop = map['idCrop'],
+        idVar = map['idVar'],
+        min = map['min'],
+        max = map['max'];
 
   // Convert a Variable into a Map.
   Map<String, dynamic> toMap() {
     return {
-      'id_crop': id,
+      '_id': id,
+      'id_crop': idCrop,
       'id_variable': idVar,
       'min': min,
       'max': max
     };
   }
 
-  // Map constructor for the Conditions class.
-  Conditions.fromMap(Map<String, dynamic> map):
-        id = map['_id'],
-        idVar = map['idVar'],
-        min = map['min'],
-        max = map['max'];
-
+  @override
+  String toString() {
+    String str = "Conditions{$id, '$idVar', $min, $max}";
+    return str;
+  }
 }
+
+
 
 //------------------------------------------------------------------------------
 /*
  *
- *      Zone Fields and Definition
+ *      Measurement Fields and Definition
  *
  */
 
-
-class ZonesFields{
-  static const String tableName = zonesTableName;
+class MeasurementFields{
+  static const String tableName = measurementsTableName;
 
   //define column names
   static const String id = "_id";
-  static const String idOrg = "id_org";
-  static const String name = "name";
-  static const String coordinates = "coordinates";
+  static const String idCrop = "idCrop";
+  static const String variableId = "variableId";
+  static const String value = "value";
+  static const String time = "time";
 }
 
-//Conditions object
-class Zones{
-  final int id;
-  final String idOrg;
-  final String name;
-  final String coordinates;
+//Measurement object
 
-  const Zones(this.id, this.idOrg, this.name, this.coordinates);
+class Measurement{
+  final int id;
+  final int idCrop;
+  final int variableId;
+  final double value;
+  final String time;
+
+  const Measurement(this.id, this.idCrop, this.variableId, this.value, this.time);
+
+  // Map constructor for the Measurement class.
+  Measurement.fromMap(Map<String, dynamic> map):
+        id = map['_id'],
+        idCrop = map['idCrop'],
+        variableId = map['variableId'],
+        value = map['value'],
+        time = map['time'];
 
   @override
   String toString() {
-    String str = "Zones{$id, '$idOrg', $name, $coordinates}";
+    String str = "Measurement{$id, $idCrop, $variableId, $value, '$time'}";
     return str;
   }
 
-  // Convert a Variable into a Map.
+  // Convert a Measurement into a Map.
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
-      'id_org': idOrg,
-      'name': name,
-      'coordinates': coordinates
+      '_id': id,
+      'idCrop': idCrop,
+      'variableId': variableId,
+      'value': value,
+      'time': time
     };
   }
-
-  // Map constructor for the Zones class.
-  Zones.fromMap(Map<String, dynamic> map):
-        id = map['_id'],
-        idOrg = map['idOrg'],
-        name = map['name'],
-        coordinates = map['coordinates'];
-
 }
-

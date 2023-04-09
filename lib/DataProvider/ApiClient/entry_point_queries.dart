@@ -1,6 +1,6 @@
 
 class Queries{
-  static const String url = "perroshptasasociados.xyz";
+  static const String url = "maticas.org";
 
   const Queries();
 
@@ -8,14 +8,9 @@ class Queries{
       QUERIES
    */
 
-  final String logIn = r"""""";
-  final String getAllVariables = """""";
-  final String getMeasurements = r"""""";
+  final String logIn  = "${url}/user/login";
+  final String signIn = "${url}/user/new";
+  final String newOrg = "${url}/orgs/new";
 
-  /*
-      MUTATIONS
-   */
-
-  final String signUp = r"""""";
 
 }
