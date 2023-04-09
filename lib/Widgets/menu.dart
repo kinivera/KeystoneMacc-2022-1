@@ -50,8 +50,6 @@ class Menu extends StatelessWidget {
           }),
 
           ButtonMenu(icono: Icons.logout, texto:'L O G O U T', answer:()async{
-            client.logOut();
-            await db.logOut();
             Navigator.of(context).pushNamed('/');
           }),
         ],
