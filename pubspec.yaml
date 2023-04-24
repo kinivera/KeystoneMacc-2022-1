@@ -48,6 +48,8 @@ dependencies:
   flutter_svg: ^1.1.6
   http: ^0.13.5
   path_provider: ^2.0.11
+  
+  flutter_local_notifications: ^6.0.0
 
 
 dev_dependencies:

@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-const List<String> list = <String>['Minutes','Hours', 'Days','Actual-Week', 'Months', 'Years'];
+const List<String> list = <String>['Zona A','Zona B', 'Zona C'];
 
-class DropdownButtonExample extends StatefulWidget {
-  const DropdownButtonExample({super.key});
+class DropdownButtonZona extends StatefulWidget {
+  const DropdownButtonZona({super.key});
 
   @override
-  State<DropdownButtonExample> createState() => _DropdownButtonExampleState();
+  State<DropdownButtonZona> createState() => _DropdownButtonZonaState();
 }
 
-class _DropdownButtonExampleState extends State<DropdownButtonExample> {
+class _DropdownButtonZonaState extends State<DropdownButtonZona> {
   String dropdownValue = list.first;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,) {
     return DropdownButton<String>(
       value: dropdownValue,
       icon: const Icon(Icons.arrow_drop_down),

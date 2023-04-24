@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:responsivedashboard/constants.dart';
 import 'package:responsivedashboard/Widgets/menu.dart';
-import 'package:responsivedashboard/Widgets/dropdown.dart';
+import 'package:responsivedashboard/Widgets/dropdownzona.dart';
+import 'package:responsivedashboard/Widgets/remainder_test.dart';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -22,21 +23,9 @@ class _SettingsDesktop2State extends State<SettingsDesktop2> {
   String _forumText = "";
   
   
-  DateTime selectedDate = DateTime.now();
+  //DateTime selectedDate = DateTime.now();
 
-  Future<DateTime> _selectDate(BuildContext context) async {
-  final DateTime picked = await showDatePicker(
-      context: context,
-      initialDate: selectedDate,
-      firstDate: DateTime(2015, 8),
-      lastDate: DateTime(2101),
-    );
-    if (picked != null && picked != selectedDate) {
-      setState(() {
-        selectedDate = picked;
-      });
-    }
-  } 
+  
   @override
     Widget build(BuildContext context) {
     return Scaffold(
@@ -75,6 +64,7 @@ class _SettingsDesktop2State extends State<SettingsDesktop2> {
                         },
                       child: Text('ADD PERSON'),
                 ),
+                Text(''),
                 ElevatedButton(
                       style:   ElevatedButton.styleFrom(
                         primary: Colors.green,
@@ -87,17 +77,21 @@ class _SettingsDesktop2State extends State<SettingsDesktop2> {
                       child: Text('CONFIGURE INTERVALS'),
                 ),
                 Text(''),
+                
                 ElevatedButton(
-                      style:   ElevatedButton.styleFrom(
-                        primary: Colors.green,
-                        textStyle: const TextStyle(
-                            color: Colors.white, fontSize: 15, fontStyle: FontStyle.normal),
-                      ),
-                      onPressed: ()  {
-                        showRemainderSetUP(context);
-                      },
-                      child: Text('REMINDERS'),
-                ),
+                       style:   ElevatedButton.styleFrom(
+                         primary: Colors.green,
+                         textStyle: const TextStyle(
+                             color: Colors.white, fontSize: 15, fontStyle: FontStyle.normal),
+                       ),
+                       onPressed: ()  {
+                         //showRemainderSetUP(context);
+                         //print('REMINDERS');
+                         showSetupRemainder(context);
+                         
+                       },
+                       child: Text('REMINDERS'),
+                 ),
                 Text(''),
 
               ],
@@ -168,7 +162,7 @@ class _SettingsDesktop2State extends State<SettingsDesktop2> {
               labelText: 'Rol'
             ),
           ),
-          DropdownButtonExample(),
+          DropdownButtonZona(),
           ElevatedButton(
             child: Text('Add'),
             onPressed: () {
@@ -189,31 +183,13 @@ class _SettingsDesktop2State extends State<SettingsDesktop2> {
     ); 
   }
 
-  void showRemainderSetUP(BuildContext context){
-    Widget reminderSetup= Container (
+  void showSetupRemainder(BuildContext context){
+    Widget setupRemainderForm = Container (
       padding: EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          ElevatedButton(
-            onPressed: () {
-              await _selectDate(context);
-            },
-            child: Text(
-              'Select Date',
-              style: TextStyle(
-                color: Colors.blue,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          ElevatedButton(
-            child: Text('Add'),
-            onPressed: () {
-              Navigator.pop(context);
-            }, 
-          ),
-          Text('Selected date: ${DateFormat('yyyy-MM-dd').format(selectedDate)}',),
+          NotificationButton(),
         ],
       ),
     );
@@ -221,12 +197,15 @@ class _SettingsDesktop2State extends State<SettingsDesktop2> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Set-Up Reminder'),
-          content: reminderSetup,
+          title: Text('Set-up Remainder'),
+          content: setupRemainderForm,
         );
       },
     ); 
   }
+
+
+
 
 }
 
