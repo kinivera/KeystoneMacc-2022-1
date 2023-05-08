@@ -16,10 +16,10 @@ class GridButtons extends StatefulWidget {
 class _GridButtonsState extends State<GridButtons> {
   @override
   Widget build(BuildContext context) {
-    HomeAmbientVariableDashboard states =  Provider.of<HomeAmbientVariableDashboard>(context);
-    return
-    SliverGrid(
-        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+    HomeAmbientVariableDashboard states =
+        Provider.of<HomeAmbientVariableDashboard>(context);
+    return SliverGrid(
+      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
         maxCrossAxisExtent: 200.0,
         mainAxisSpacing: 30.0,
         crossAxisSpacing: 30.0,
@@ -31,4 +31,6 @@ class _GridButtonsState extends State<GridButtons> {
         },
         childCount: states.variableNumber, //dashboardState.indicators.length,
       ),
-);}}
+    );
+  }
+}

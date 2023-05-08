@@ -27,21 +27,20 @@ import 'package:responsivedashboard/DataProvider/data_provider.dart';
 //State Management
 import 'package:responsivedashboard/StateManagement/home_view_widgets_state_manager.dart';
 
-
-
-void main() async{
-
+void main() async {
   // We're using HiveStore for persistence,
   // so we need to initialize Hive.
   await initHiveForFlutter();
 
-  runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(create: (_) => DataProvider()),
-    ChangeNotifierProvider(create: (_) => HomeAmbientVariableDashboard()),
-  ],
-      child: const MyApp(),),
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => DataProvider()),
+        ChangeNotifierProvider(create: (_) => HomeAmbientVariableDashboard()),
+      ],
+      child: const MyApp(),
+    ),
   );
-
 }
 
 class MyApp extends StatelessWidget {
@@ -49,24 +48,23 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.green),
       routes: {
         '/': (context) => const ResponsiveLayout(
-          mobileBody: WelcomeScreen(),
-          desktopBody: WelcomeScreen(),
-        ),
+              mobileBody: WelcomeScreen(),
+              desktopBody: WelcomeScreen(),
+            ),
         '/Login': (context) => const ResponsiveLayout(
-          mobileBody: LoginScreen(),
-          desktopBody: LoginScreen(),
-        ),
+              mobileBody: LoginScreen(),
+              desktopBody: LoginScreen(),
+            ),
         '/Signup': (context) => const ResponsiveLayout(
-          mobileBody: SignUpScreen(),
-          desktopBody: SignUpScreen(),
-        ),
-       /* '/': (context) => const ResponsiveLayout(
+              mobileBody: SignUpScreen(),
+              desktopBody: SignUpScreen(),
+            ),
+        /* '/': (context) => const ResponsiveLayout(
           mobileBody: HomeMenuMobile(),
           desktopBody: HomeMenuDesktop(),
         ),*/
@@ -75,30 +73,26 @@ class MyApp extends StatelessWidget {
         //**** check 'indicatorStates.dart' and 'constants.dart '****
         //
         '/home': (context) => const ResponsiveLayout(
-          mobileBody: HomeMenuMobile(),
-          desktopBody: HomeMenuDesktop(),
-        ),
+              mobileBody: HomeMenuMobile(),
+              desktopBody: HomeMenuDesktop(),
+            ),
         '/ex-rout': (context) => const ResponsiveLayout(
-          mobileBody: ExampleRoutingMobile(),
-          desktopBody: ExampleRoutingDesktop(),
-        ),
+              mobileBody: ExampleRoutingMobile(),
+              desktopBody: ExampleRoutingDesktop(),
+            ),
         '/settings': (context) => const ResponsiveLayout(
-          mobileBody: SettingsMobile(),
-          desktopBody: SettingsDesktop2(),
-        ),
+              mobileBody: SettingsMobile(),
+              desktopBody: SettingsDesktop2(),
+            ),
         '/about': (context) => const ResponsiveLayout(
-          mobileBody: AboutMobile(),
-          desktopBody: AboutDesktop(),
-        ),
+              mobileBody: AboutMobile(),
+              desktopBody: AboutDesktop(),
+            ),
         '/general_about': (context) => const ResponsiveLayout(
-          mobileBody: AboutScreen(),
-          desktopBody: AboutScreen(),
-        )
+              mobileBody: AboutScreen(),
+              desktopBody: AboutScreen(),
+            )
       },
-
     );
   }
 }
-
-
-
