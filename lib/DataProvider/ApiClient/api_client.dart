@@ -1,7 +1,8 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-
-import '/DataProvider/ApiClient/entry_point_queries.dart';
+import '/DataProvider/ApiClient/api_constants.dart';
 
 
 /*
@@ -12,10 +13,9 @@ import '/DataProvider/ApiClient/entry_point_queries.dart';
 
 class AppApiClient with ChangeNotifier {
 
-  late Queries queries;
+  ApiConstants queries = const ApiConstants();
   late String _apiKey;
 
-  Map<String, Object?> responses = {};
   bool _signedIn = false;
   bool _loggedIn = false;
   bool _loading = false;
@@ -40,11 +40,7 @@ class AppApiClient with ChangeNotifier {
   /*
    *          CONSTRUCTOR
    */
-
-  AppApiClient() {
-    //instance of the class which contains the string queries
-    queries = const Queries();
-  }
+  AppApiClient();
 
 
   /*
@@ -63,8 +59,10 @@ class AppApiClient with ChangeNotifier {
   /*
       User Log In
    */
-  Future<void> authUser(String username, String password) async {
-    await null;
+  Future<void> logIn(String username, String password) async {
+    Uri url = Uri.parse(ApiConstants.baseUrl + ApiConstants.logIn);
+    await ask(url);
+
     return;
   }
 
@@ -98,6 +96,30 @@ class AppApiClient with ChangeNotifier {
                                          endTime = ""}) async {
       await null;
       return [];
+  }
+
+
+  /*
+   *
+   *         UTILS
+   *
+   */
+
+  Future<dynamic> ask(Uri url)async{
+    try{
+      http.Response response =  await http.get(url);
+
+      if (response.statusCode == 200) {
+        dynamic decodedResponse = jsonDecode(response.body);
+        return decodedResponse;
+      }else{
+        return null;
+      }
+
+    }catch (e){
+      debugPrint(e.toString());
+      return null;
+    }
   }
 
 }

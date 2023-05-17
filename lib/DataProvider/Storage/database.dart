@@ -137,34 +137,35 @@ class ClientDatabase with ChangeNotifier{
      *
      */
 
-    Future<Measurement> insertMeasurement(String id, int varId, double value, String time) async {
+    Future<Measurement> insertMeasurement(int id,
+                                              int cropId,
+                                              int varId,
+                                              double value,
+                                              String time) async {
         Database db = await database;
+        Measurement m = Measurement(id, cropId, varId, value, time);
 
         try{
-            await db.rawInsert(dbStatements.insertMeasurement(id, varId, value, time));
-
-        }on DatabaseException catch (e){
-            String field = "${MeasurementFields.tableName}.${MeasurementFields.id}";
-            ConcreteDatabaseException ex = ConcreteDatabaseException(e.toString());
-
-            if (!ex.isUniqueConstraintError(field)){
-                throw 'Unexpected Error: ${e.toString()}';
-            }else{
-                debugPrint("Repeated measurement");
-            }
+            await db.insert(MeasurementFields.tableName, m.toMap());
 
         }catch (e){
+            debugPrint('Unexpected Error: ${e.toString()}');
             throw e.toString();
         }
 
-        return Measurement(id, varId, value, time);
+        return m;
     }
 
-    Future<Variable> insertVariable(int id, String name, String units, String desc)async{
-        Database db = await database;
-        int rowId = await db.rawInsert(dbStatements.insertVariable(id, name, units, desc));
+    Future<Variable> insertVariable(int id,
+                                    String name,
+                                    String units,
+                                    String desc)  async  {
 
-        return Variable(rowId, name, units, desc);
+        Database db = await database;
+        Variable v  = Variable(id, name, units, desc);
+
+        await db.insert(VariableFields.tableName, v.toMap());
+        return v;
     }
 
     /*
@@ -218,13 +219,8 @@ class ClientDatabase with ChangeNotifier{
         List<Measurement> measurements = [];
 
         for(int i = 0; i < map.length; i++){
-            String id = map[i][MeasurementFields.id] as String;
-            int varId = map[i][MeasurementFields.variableId] as int;
-            double value = map[i][MeasurementFields.value] as double;
-            String time = map[i][MeasurementFields.time] as String;
-
-            Measurement m = Measurement(id, varId, value, time);
-            measurements.add(m);
+            Measurement measurement = Measurement.fromMap(map[i]);
+            measurements.add(measurement);
         }
 
         //gives data in order from oldest to latest

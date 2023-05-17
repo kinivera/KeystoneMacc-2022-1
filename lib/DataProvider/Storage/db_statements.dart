@@ -52,11 +52,11 @@ class DBStatements{
   }
 
     String createZonesTable(){
-      return ''' CREATE TABLE ${ZonesFields.tableName}(
-      ${ZonesFields.id} ${integer + pk}, 
-      ${ZonesFields.idOrg} ${integer + nn}, 
-      ${ZonesFields.name} ${txt + nn}, 
-      ${ZonesFields.coordinates} ${txt + nn}
+      return ''' CREATE TABLE ${CropFields.tableName}(
+      ${CropFields.id} ${integer + pk}, 
+      ${CropFields.idOrg} ${integer + nn}, 
+      ${CropFields.latitude} ${txt + nn}, 
+      ${CropFields.longitude} ${txt + nn}
       );
       ''';
     }
@@ -85,12 +85,13 @@ class DBStatements{
    *        INSERT STATEMENTS
    */
 
-  String insertMeasurement(String id, int variableId, double value, String time){
+  String insertMeasurement(int id, int varId, int variableId, double value, String time){
       return '''INSERT INTO ${MeasurementFields.tableName}(
       ${MeasurementFields.id}, 
+      ${MeasurementFields.idCrop}, 
       ${MeasurementFields.variableId}, 
       ${MeasurementFields.value},
-      ${MeasurementFields.time}) VALUES ("$id", $variableId, $value, "$time");
+      ${MeasurementFields.time}) VALUES ($id, $varId, $variableId, $value, "$time");
       ''';
   }
 
@@ -103,12 +104,13 @@ class DBStatements{
         ''';
   }
 
-  String insertZone(int id, int idOrg, String name, String coordinates){
-    return '''INSERT INTO ${ZonesFields.tableName}(
-        ${ZonesFields.id}, 
-        ${ZonesFields.idOrg},
-        ${ZonesFields.name},
-        ${ZonesFields.coordinates}) VALUES ($id, $idOrg, "$name", "$coordinates");
+  String insertCrop(int id, int idOrg, String name, double latitude, double longitude){
+    return '''INSERT INTO ${CropFields.tableName}(
+        ${CropFields.id}, 
+        ${CropFields.idOrg},
+        ${CropFields.name},
+        ${CropFields.latitude}, 
+        ${CropFields.longitude}) VALUES ($id, $idOrg, "$name", $latitude, $longitude);
         ''';
   }
 

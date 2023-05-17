@@ -17,6 +17,7 @@ class CropFields{
 
   //define column names
   static const String id = "_id";
+  static const String idOrg = "id_org";
   static const String name = "name";
   static const String latitude = "latitude";
   static const String longitude = "longitude";
@@ -24,15 +25,17 @@ class CropFields{
 
 class Crop{
   final int id;
+  final int idOrg;
   final String name;
   final double latitude;
   final double longitude;
 
-  const Crop(this.id, this.name, this.latitude, this.longitude);
+  const Crop(this.id, this.idOrg, this.name, this.latitude, this.longitude);
 
   // Map constructor for the Variable class.
   Crop.fromMap(Map<String, dynamic> map):
         id = map['_id'],
+        idOrg = map['idOrg'],
         name = map['name'],
         latitude = map['latitude'],
         longitude = map['longitude'];
