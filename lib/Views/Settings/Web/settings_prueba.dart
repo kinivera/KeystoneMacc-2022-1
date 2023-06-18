@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:responsivedashboard/Widgets/conditions_table.dart';
 
 import 'package:responsivedashboard/constants.dart';
 import 'package:responsivedashboard/Widgets/menu.dart';
@@ -25,18 +26,22 @@ class _SettingsDesktop2State extends State<SettingsDesktop2> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: defaultBackgroundColor,
       appBar: topBar,
       drawer: const Menu(),
       body: Center(
+
         child: Padding(
-          padding: const EdgeInsets.all(30.0),
+          padding: const EdgeInsets.all(60.0),
           child: Column(
             children: <Widget>[
-              const Text(''),
+
+              const SizedBox(height: 16.0),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
+                  fixedSize: const Size(500, 40),
                   primary: Colors.green,
                   textStyle: const TextStyle(
                       color: Colors.white,
@@ -47,11 +52,13 @@ class _SettingsDesktop2State extends State<SettingsDesktop2> {
                   // Show the registration form
                   showRegistrationForm(context);
                 },
-                child: const Text('CREATE ORGANIZATION'),
+                child: const Text('Create Organization'),
               ),
-              const Text(''),
+
+              const SizedBox(height: 16.0),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
+                  fixedSize: const Size(500, 40),
                   primary: Colors.green,
                   textStyle: const TextStyle(
                       color: Colors.white,
@@ -61,11 +68,14 @@ class _SettingsDesktop2State extends State<SettingsDesktop2> {
                 onPressed: () {
                   showAddPersonForm(context);
                 },
-                child: const Text('ADD PERSON'),
+                child: const Text('Add Person'),
               ),
-              const Text(''),
+
+
+              const SizedBox(height: 16.0),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
+                  fixedSize: const Size(500, 40),
                   primary: Colors.green,
                   textStyle: const TextStyle(
                       color: Colors.white,
@@ -77,21 +87,20 @@ class _SettingsDesktop2State extends State<SettingsDesktop2> {
                   //print('REMINDERS');
                   showSetupRemainder(context);
                 },
-                child: const Text('REMINDERS'),
+                child: const Text('Reminders'),
               ),
-              const Text(''),
-              MaterialButton(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18.0),
+
+              const SizedBox(height: 16.0),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  fixedSize: const Size(500, 40),
+                  primary: Colors.green,
+                  textStyle: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontStyle: FontStyle.normal),
                 ),
-                elevation: 30,
-                minWidth: 200,
-                color: Theme.of(context).primaryColor,
-                height: 60,
-                child: Text(
-                  "Configure Intervals",
-                  style: TextStyle(color: Colors.white, fontSize: 20),
-                ),
+                child: const Text("Configure Intervals", style: TextStyle(color: Colors.white, fontSize: 16),),
                 onPressed: () {
                   setState(() {
                     ver1 = false;
@@ -99,6 +108,7 @@ class _SettingsDesktop2State extends State<SettingsDesktop2> {
                   });
                 },
               ),
+
               Visibility(
                   visible: ver1,
                   maintainSize: true,
@@ -151,174 +161,8 @@ class _SettingsDesktop2State extends State<SettingsDesktop2> {
                   maintainSize: true,
                   maintainAnimation: true,
                   maintainState: true,
-                  child: DataTable(
-                    sortColumnIndex: 2,
-                    sortAscending: false,
-                    columns: [
-                      DataColumn(label: Text("Variable")),
-                      DataColumn(label: Text("Zone")),
-                      DataColumn(label: Text("Min"), numeric: true),
-                      DataColumn(label: Text("Max"), numeric: true),
-                    ],
-                    rows: [
-                      DataRow(selected: true, cells: [
-                        DataCell(Text("Temperature")),
-                        DataCell(Text("Teslab")),
-                        DataCell(
-                            TextFormField(
-                              initialValue: '0',
-                              keyboardType: TextInputType.number,
-                              onFieldSubmitted: (val) {
-                                setState(() {
-                                  //you can do anything you want
-                                });
-                              },
-                            ),
-                            showEditIcon: true),
-                        DataCell(
-                            TextFormField(
-                              initialValue: '0',
-                              keyboardType: TextInputType.number,
-                              onFieldSubmitted: (val) {
-                                setState(() {
-                                  //you can do anything you want
-                                });
-                              },
-                            ),
-                            showEditIcon: true),
-                      ]),
-                      DataRow(cells: [
-                        DataCell(Text("PH")),
-                        DataCell(Text("Teslab")),
-                        DataCell(
-                            TextFormField(
-                              initialValue: '0',
-                              keyboardType: TextInputType.number,
-                              onFieldSubmitted: (val) {
-                                setState(() {
-                                  //you can do anything you want
-                                });
-                              },
-                            ),
-                            showEditIcon: true),
-                        DataCell(
-                            TextFormField(
-                              initialValue: '0',
-                              keyboardType: TextInputType.number,
-                              onFieldSubmitted: (val) {
-                                setState(() {
-                                  //you can do anything you want
-                                });
-                              },
-                            ),
-                            showEditIcon: true)
-                      ]),
-                      DataRow(selected: true, cells: [
-                        DataCell(Text("Water temperature")),
-                        DataCell(Text("Teslab")),
-                        DataCell(
-                            TextFormField(
-                              initialValue: '0',
-                              keyboardType: TextInputType.number,
-                              onFieldSubmitted: (val) {
-                                setState(() {
-                                  //you can do anything you want
-                                });
-                              },
-                            ),
-                            showEditIcon: true),
-                        DataCell(
-                            TextFormField(
-                              initialValue: '0',
-                              keyboardType: TextInputType.number,
-                              onFieldSubmitted: (val) {
-                                setState(() {
-                                  //you can do anything you want
-                                });
-                              },
-                            ),
-                            showEditIcon: true),
-                      ]),
-                      DataRow(cells: [
-                        DataCell(Text("Preassure")),
-                        DataCell(Text("Teslab")),
-                        DataCell(
-                            TextFormField(
-                              initialValue: '0',
-                              keyboardType: TextInputType.number,
-                              onFieldSubmitted: (val) {
-                                setState(() {
-                                  //you can do anything you want
-                                });
-                              },
-                            ),
-                            showEditIcon: true),
-                        DataCell(
-                            TextFormField(
-                              initialValue: '0',
-                              keyboardType: TextInputType.number,
-                              onFieldSubmitted: (val) {
-                                setState(() {
-                                  //you can do anything you want
-                                });
-                              },
-                            ),
-                            showEditIcon: true),
-                      ]),
-                      DataRow(selected: true, cells: [
-                        DataCell(Text("Light")),
-                        DataCell(Text("Teslab")),
-                        DataCell(
-                            TextFormField(
-                              initialValue: '0',
-                              keyboardType: TextInputType.number,
-                              onFieldSubmitted: (val) {
-                                setState(() {
-                                  //you can do anything you want
-                                });
-                              },
-                            ),
-                            showEditIcon: true),
-                        DataCell(
-                            TextFormField(
-                              initialValue: '0',
-                              keyboardType: TextInputType.number,
-                              onFieldSubmitted: (val) {
-                                setState(() {
-                                  //you can do anything you want
-                                });
-                              },
-                            ),
-                            showEditIcon: true),
-                      ]),
-                      DataRow(cells: [
-                        DataCell(Text("Electroconductivity")),
-                        DataCell(Text("Teslab")),
-                        DataCell(
-                            TextFormField(
-                              initialValue: '0',
-                              keyboardType: TextInputType.number,
-                              onFieldSubmitted: (val) {
-                                setState(() {
-                                  //you can do anything you want
-                                });
-                              },
-                            ),
-                            showEditIcon: true),
-                        DataCell(
-                            TextFormField(
-                              initialValue: '0',
-                              keyboardType: TextInputType.number,
-                              onFieldSubmitted: (val) {
-                                setState(() {
-                                  //you can do anything you want
-                                });
-                              },
-                            ),
-                            showEditIcon: true)
-                      ]),
-                    ],
-                  )),
+                  child: ConditionsTable(),
+              ),
             ],
           ),
         ),

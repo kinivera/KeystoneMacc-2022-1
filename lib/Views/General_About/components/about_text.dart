@@ -22,30 +22,33 @@ class AboutText extends StatefulWidget {
 }
 
 class _AboutTextState extends State<AboutText> {
-  final TextEditingController _userController = TextEditingController();
-  final TextEditingController _pswdController = TextEditingController();
-  final formGlobalKey = GlobalKey <FormState> ();
 
+  static const TextStyle titleStyle = const TextStyle(fontSize: 25);
+  static const normalStyle = const TextStyle(fontSize: 16);
 
   @override
   Widget build(BuildContext context) {
-    //gets the APIClient instance from the data provider
-    DataProvider dataProvider =  Provider.of<DataProvider>(context);
-    HomeAmbientVariableDashboard states =  Provider.of<HomeAmbientVariableDashboard>(context);
-    print("en about general");
-    return Form(
-      key: formGlobalKey,
-      child: Column(
+
+    return  const Column(
         children: [
 
           //About text!
-          Text("Maticas es un sistema de cultivos hidropónicos automatizados, basados en código abierto y hardware de acceso abierto, que busca contribuir a la generación de una revolución agroindustrial en Colombia y en el mundo, desde la agricultura de precisión a través de la hidroponía.",
-          textAlign: TextAlign.center),
+          Text("""Why? 💗""", style: titleStyle),
+          SizedBox(height: 10,),
+          Text("""We seek to contribute to the development of an agro-industrial revolution in Colombia that extends to the world, that makes life better for the farmer and for us, that allows us to eat better food, of better quality at a better price; where we can all share with others and receive from others their innovations, ready to implement.""", style: normalStyle,),
+          SizedBox(height: 40,),
 
-          
+          Text("""How? 🤷🏽‍""", style: titleStyle,),
+          SizedBox(height: 10,),
+          Text("""We achieve this through open source, open access hardware, community software development. So feel free to clone and implement, expand or modify, this helps us in our mission to make agriculture open for everyone and easier to automate.""", style: normalStyle,),
+          SizedBox(height: 40,),
+
+          Text("""What? 📊""", style: titleStyle,),
+          SizedBox(height: 10,),
+          Text("""Maticas funds and materializes its cause through the sale and development of automated, open source hydroponic growing systems and open access hardware. And of course with donations.""", style: normalStyle,),
+
         ],
-      ),
-    );
+      );
   }
 }
 

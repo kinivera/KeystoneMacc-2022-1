@@ -6,16 +6,17 @@ class MyPopupMenuButton extends StatefulWidget {
 }
 
 class _MyPopupMenuButtonState extends State<MyPopupMenuButton> {
-  String _selectedOption;
+  late String _selectedOption;
 
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton(
       onSelected: (value) {
         setState(() {
-          _selectedOption = value;
+          _selectedOption = value as String;
         });
       },
+
       itemBuilder: (BuildContext context) => <PopupMenuEntry>[
         PopupMenuItem(
           value: 'Option 1',

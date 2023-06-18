@@ -1,42 +1,65 @@
+import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
+
 import 'package:flutter/material.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
 
 /*
  *
- *            STRING QUERIES DEFINITION
+ *            PATHS DEFINITION
  *
  */
 
-class Queries{
-  const Queries();
+class Paths{
+  const Paths();
 
-  /*
-      QUERIES
-   */
+  static String baseUrl = "http://0.0.0.0:8000/api/";
 
-  final String logIn = r"""
-      query logIn($username: String!, $password: String!){
-        logIn(username: $username, password: $password)
-      }""";
-  final String getAllVariables = """ query{variables {id,name,units,desc}}""";
-  final String getMeasurements = r"""
-    query measurements($apiKey: String!, $nMeasurements: Int!, $startTime: String!, $endTime: String!){
-      measurements(apiKey: $apiKey, nmeasurements: $nMeasurements, startTime: $startTime, endTime: $endTime) {
-        id,
-        variableId,
-        value, 
-        time
-    }
-  }""";
+  /*---------------ORG RELATED-----------------------*/
+  static String orgCreate   = 'org/new/';
+  static String orgDetails  = 'org/';
+  static String orgModify   = 'org/mod/';
+  static String orgDelete   = 'org/del/';
 
-  /*
-      MUTATIONS
-   */
+  /*---------------CROP RELATED-----------------------*/
+  static String cropCreate = 'crop/new/';
+  static String cropDetail = 'crop/';
+  static String cropModify = 'crop/mod/';
+  static String cropDel    = 'crop/del/';
 
-  final String signUp = r"""
-      mutation signUp($username: String!, $email: String!, $password: String!){
-        signUp(username: $username, email: $email, password: $password) {ok}
-      }""";
+  /*---------------ACTUATOR RELATED-----------------------*/
+  static String actuatorCreate = 'actuator/new/';
+  static String actuatorDetail = 'actuator/';
+  static String actuatorModify = 'actuator/mod/';
+  static String actuatorDel    = 'actuator/del/';
+
+  /*---------------ACTUATOR RELATED-----------------------*/
+  static String actuatorTypeCreate = 'actuatortype/new/';
+  static String actuatorTypeDetail = 'actuatortype/';
+  static String actuatorTypeModify = 'actuatortype/mod/';
+  static String actuatorTypeDel    = 'actuatortype/del/';
+
+  /*---------------CONDITION RELATED-----------------------*/
+  static String conditionCreate = 'condition/new/';
+  static String conditionDetail = 'condition/';
+  static String conditionModify = 'condition/mod/';
+  static String conditionDel    = 'condition/del/';
+
+  /*---------------MEASUREMENT RELATED-----------------------*/
+  static String measurementCreate = 'measurement/new/';
+  static String measurementDetail = 'measurement/';
+  static String measurementModify = 'measurement/mod/';
+  static String measurementDel    = 'measurement/del/';
+
+  /*---------------VARIABLE RELATED-----------------------*/
+  static String variableCreate = 'variable/new/';
+  static String variableDetail = 'variable/';
+  static String variableModify = 'variable/mod/';
+  static String variableDel    = 'variable/del/';
+
+  /*---------------USER RELATED-----------------------*/
+  static String userCreate = 'user/new/';
+  static String userLogin  = 'user/login/';
+  static String tokenAuth  = 'user/token_auth/';
 }
 
 /*
@@ -47,14 +70,12 @@ class Queries{
 
 class AppApiClient with ChangeNotifier{
 
-  late GraphQLClient client;
-  late Queries queries;
   late String _apiKey;
 
-  Map<String, Object?> responses = {};
   bool _signedIn = false;
   bool _loggedIn = false;
   bool _loading = false;
+
 
   /*
    *          GETTERS
@@ -77,19 +98,7 @@ class AppApiClient with ChangeNotifier{
    *          CONSTRUCTOR
    */
 
-  AppApiClient(){
-    //creates the graphql client
-    HttpLink link = HttpLink("http://127.0.0.1:5000/graphql");
-    client = GraphQLClient(link: link,
-                           cache: GraphQLCache(
-                                                store: HiveStore(),
-                                              )
-                          );
-
-    //instance of the class which contains the string queries
-    queries = const Queries();
-  }
-
+  AppApiClient();
 
   /*
    *
@@ -98,54 +107,26 @@ class AppApiClient with ChangeNotifier{
    */
 
   void logOut(){
+    _apiKey = '';
     _loggedIn = false;
     _signedIn = false;
-    _loading = false;
-    _apiKey = '';
   }
 
   /*
       User Log In
    */
   Future<void> authUser(String username, String password)async{
+    String requestURL = Paths.baseUrl + Paths.userLogin;
+    Uri url = Uri.parse(requestURL);
 
-        QueryResult queryResult = await client.query(
-          QueryOptions(document: gql(queries.logIn),
-                       variables: {'username': username,
-                                   'password': password}),
-        );
+    Response r = await http.post(url, body: {'username': username, 'password': password});
 
-        //some error while making the query or getting response
-        if (queryResult.hasException) {
-          debugPrint("got an exception on LOG IN: ");
-          debugPrint(queryResult.hasException.toString());
-          return;
-        }else{
-          debugPrint(queryResult.data.toString());
-        }
-
-
-        //loading
-        if (queryResult.isLoading) {
-          debugPrint("Logging user in...");
-          _loading = true;
-          notifyListeners();
-        }else{
-          debugPrint("User logged in.");
-          _loading = false;
-          notifyListeners();
-        }
-
-        String? response = queryResult.data?['logIn'];
-        debugPrint('got answer:');
-        debugPrint("$response \n");
-
-        if (response == null) {
-          return ;
-        }else{
-          _loggedIn = true;
-          _apiKey = response;
-        }
+    if ((r.statusCode == 200) ){
+      _loggedIn = true;
+      print(r.body);
+    }else{
+      print("reques failed ${r.statusCode}");
+    }
 
   }
 
@@ -154,45 +135,22 @@ class AppApiClient with ChangeNotifier{
    */
 
   Future<void> signIn(String username, String email, String password)async{
-        QueryResult queryResult = await client.query(
-          QueryOptions(document: gql(queries.signUp),
-              variables: {'username': username,
-                          'email': email,
-                          'password': password}),
-        );
 
+    String requestURL = Paths.baseUrl + Paths.userCreate;
+    Uri url = Uri.parse(requestURL);
 
-        //some error while making the query or getting response
-        if (queryResult.hasException) {
-          debugPrint("got an exception on SIGN IN: ");
-          debugPrint(queryResult.hasException.toString());
-          return;
-        }else{
-          debugPrint(queryResult.data.toString());
-        }
+    Response r = await http.post(url, body: {'username': username,
+                                             'password': password,
+                                             'email': email,
+                                             'first_name': username,
+                                             'last_name': username});
 
-        //loading
-        if (queryResult.isLoading) {
-          debugPrint("Signing user in...");
-          _loading = true;
-          //notifyListeners();
-        }else{
-          debugPrint("User signed in.");
-          _loading = false;
-          //notifyListeners();
-        }
-
-        Map<String, dynamic>? response = queryResult.data?['signUp'];
-        debugPrint('got answer:');
-        debugPrint(response.toString());
-
-        if (response == null){
-          return;
-        }else if(response['ok'] == 'true') {
-          return;
-        }else{
-          _signedIn = true;
-        }
+    if ((r.statusCode == 200) || (r.statusCode == 201)){
+      _signedIn = true;
+      print(r.body);
+    }else{
+      print("request failed ${r.statusCode}");
+    }
   }
 
   /*
@@ -205,47 +163,7 @@ class AppApiClient with ChangeNotifier{
       Get all ambient variables available
    */
   Future<List<Object?>> getAllVariables() async{
-    QueryResult queryResult = await client.query(
-        QueryOptions(document: gql(queries.getAllVariables)));
-
-        //some error while making the query or getting response
-        if (queryResult.hasException) {
-          debugPrint("got an exception: ");
-          debugPrint(queryResult.hasException.toString());
-          return [];
-        }
-
-        //loading
-        if (queryResult.isLoading) {
-          debugPrint("Loading variables from API...");
-          _loading = true;
-          //notifyListeners();
-        }else{
-          debugPrint("Loaded variables from API.");
-          _loading = false;
-          //notifyListeners();
-        }
-
-        //got a result
-        List? variables = queryResult.data?['variables'];
-
-        if (variables == null) {
-              return [];
-            }else{
-
-              // the IDs coming from the response are text, but
-              // We want to have them also as numeric IDs, so we add
-              // that field to each individual response
-              for(int i = 0; i < variables.length; i++){
-                variables[i]!['id2'] = "$i";
-                variables[i]!['state'] = false;
-              }
-
-              debugPrint('\ngot variables: ');
-              debugPrint(variables.toString());
-              responses['variables'] = variables;
-              return variables;
-            }
+    return await [];
   }
 
   /*
@@ -254,44 +172,7 @@ class AppApiClient with ChangeNotifier{
   Future<List<Object?>> getMeasurements({nMeasurements = 100,
                                          startTime = "",
                                          endTime = ""}) async{
-
-        QueryResult queryResult = await client.query(
-                                  QueryOptions(document: gql(queries.getMeasurements),
-                                  variables: {'apiKey': _apiKey,
-                                              'nMeasurements': nMeasurements,
-                                              'startTime': startTime,
-                                              'endTime': endTime}));
-
-        //some error while making the query or getting response
-        if (queryResult.hasException) {
-          debugPrint("\ngot an exception *- at getMeasurements -*: ");
-          debugPrint(queryResult.hasException.toString());
-          debugPrint(queryResult.toString());
-          return [];
-        }
-
-        //loading
-        if (queryResult.isLoading) {
-          debugPrint("Getting measurements...");
-          _loading = true;
-          //notifyListeners();
-        }else{
-          debugPrint("Got measurements.");
-          _loading = false;
-          //notifyListeners();
-        }
-
-        //got a result
-        List? measurements = queryResult.data?['measurements'];
-        debugPrint("\n Data is ${measurements?.length} long :\n ${measurements.toString()}");
-
-        if (measurements == null){
-          return [];
-        }else{
-          responses['measurements'] = measurements;
-          return measurements;
-        }
-
+    return await [];
   }
 
 

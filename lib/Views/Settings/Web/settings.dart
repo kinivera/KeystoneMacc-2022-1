@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:responsivedashboard/constants.dart';
 import 'package:responsivedashboard/Widgets/menu.dart';
-import 'package:responsivedashboard/Widgets/dropdown.dart';
+import 'package:responsivedashboard/Widgets/conditions_table.dart';
+
 
 class SettingsDesktop extends StatefulWidget {
   const SettingsDesktop({Key? key}) : super(key: key);
@@ -15,6 +16,7 @@ class _SettingsDesktopState extends State<SettingsDesktop> {
   bool ver1 = false;
   bool ver2 = false;
   @override
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: defaultBackgroundColor,
@@ -25,6 +27,7 @@ class _SettingsDesktopState extends State<SettingsDesktop> {
           padding: const EdgeInsets.all(30.0),
           child: Column(
             children: <Widget>[
+
               MaterialButton(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18.0),
@@ -44,6 +47,7 @@ class _SettingsDesktopState extends State<SettingsDesktop> {
                   });
                 },
               ),
+
               MaterialButton(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18.0),
@@ -63,6 +67,7 @@ class _SettingsDesktopState extends State<SettingsDesktop> {
                   });
                 },
               ),
+
               Visibility(
                   visible: ver1,
                   maintainSize: true,
@@ -110,179 +115,15 @@ class _SettingsDesktopState extends State<SettingsDesktop> {
                       )
                     ],
                   )),
+
               Visibility(
                   visible: ver2,
                   maintainSize: true,
                   maintainAnimation: true,
                   maintainState: true,
-                  child: DataTable(
-                    sortColumnIndex: 2,
-                    sortAscending: false,
-                    columns: [
-                      DataColumn(label: Text("Variable")),
-                      DataColumn(label: Text("Zone")),
-                      DataColumn(label: Text("Min"), numeric: true),
-                      DataColumn(label: Text("Max"), numeric: true),
-                    ],
-                    rows: [
-                      DataRow(selected: true, cells: [
-                        DataCell(Text("Temperature")),
-                        DataCell(Text("Teslab")),
-                        DataCell(
-                            TextFormField(
-                              initialValue: '0',
-                              keyboardType: TextInputType.number,
-                              onFieldSubmitted: (val) {
-                                setState(() {
-                                  //you can do anything you want
-                                });
-                              },
-                            ),
-                            showEditIcon: true),
-                        DataCell(
-                            TextFormField(
-                              initialValue: '0',
-                              keyboardType: TextInputType.number,
-                              onFieldSubmitted: (val) {
-                                setState(() {
-                                  //you can do anything you want
-                                });
-                              },
-                            ),
-                            showEditIcon: true),
-                      ]),
-                      DataRow(cells: [
-                        DataCell(Text("PH")),
-                        DataCell(Text("Teslab")),
-                        DataCell(
-                            TextFormField(
-                              initialValue: '0',
-                              keyboardType: TextInputType.number,
-                              onFieldSubmitted: (val) {
-                                setState(() {
-                                  //you can do anything you want
-                                });
-                              },
-                            ),
-                            showEditIcon: true),
-                        DataCell(
-                            TextFormField(
-                              initialValue: '0',
-                              keyboardType: TextInputType.number,
-                              onFieldSubmitted: (val) {
-                                setState(() {
-                                  //you can do anything you want
-                                });
-                              },
-                            ),
-                            showEditIcon: true)
-                      ]),
-                      DataRow(selected: true, cells: [
-                        DataCell(Text("Water temperature")),
-                        DataCell(Text("Teslab")),
-                        DataCell(
-                            TextFormField(
-                              initialValue: '0',
-                              keyboardType: TextInputType.number,
-                              onFieldSubmitted: (val) {
-                                setState(() {
-                                  //you can do anything you want
-                                });
-                              },
-                            ),
-                            showEditIcon: true),
-                        DataCell(
-                            TextFormField(
-                              initialValue: '0',
-                              keyboardType: TextInputType.number,
-                              onFieldSubmitted: (val) {
-                                setState(() {
-                                  //you can do anything you want
-                                });
-                              },
-                            ),
-                            showEditIcon: true),
-                      ]),
-                      DataRow(cells: [
-                        DataCell(Text("Preassure")),
-                        DataCell(Text("Teslab")),
-                        DataCell(
-                            TextFormField(
-                              initialValue: '0',
-                              keyboardType: TextInputType.number,
-                              onFieldSubmitted: (val) {
-                                setState(() {
-                                  //you can do anything you want
-                                });
-                              },
-                            ),
-                            showEditIcon: true),
-                        DataCell(
-                            TextFormField(
-                              initialValue: '0',
-                              keyboardType: TextInputType.number,
-                              onFieldSubmitted: (val) {
-                                setState(() {
-                                  //you can do anything you want
-                                });
-                              },
-                            ),
-                            showEditIcon: true),
-                      ]),
-                      DataRow(selected: true, cells: [
-                        DataCell(Text("Light")),
-                        DataCell(Text("Teslab")),
-                        DataCell(
-                            TextFormField(
-                              initialValue: '0',
-                              keyboardType: TextInputType.number,
-                              onFieldSubmitted: (val) {
-                                setState(() {
-                                  //you can do anything you want
-                                });
-                              },
-                            ),
-                            showEditIcon: true),
-                        DataCell(
-                            TextFormField(
-                              initialValue: '0',
-                              keyboardType: TextInputType.number,
-                              onFieldSubmitted: (val) {
-                                setState(() {
-                                  //you can do anything you want
-                                });
-                              },
-                            ),
-                            showEditIcon: true),
-                      ]),
-                      DataRow(cells: [
-                        DataCell(Text("Electroconductivity")),
-                        DataCell(Text("Teslab")),
-                        DataCell(
-                            TextFormField(
-                              initialValue: '0',
-                              keyboardType: TextInputType.number,
-                              onFieldSubmitted: (val) {
-                                setState(() {
-                                  //you can do anything you want
-                                });
-                              },
-                            ),
-                            showEditIcon: true),
-                        DataCell(
-                            TextFormField(
-                              initialValue: '0',
-                              keyboardType: TextInputType.number,
-                              onFieldSubmitted: (val) {
-                                setState(() {
-                                  //you can do anything you want
-                                });
-                              },
-                            ),
-                            showEditIcon: true)
-                      ]),
-                    ],
-                  ))
+                  child: ConditionsTable()
+                  )
+
             ],
           ),
         ),
