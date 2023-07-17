@@ -1,45 +1,27 @@
 import 'package:flutter/material.dart';
-import 'Views/responsive_layout.dart';
+import 'package:responsivedashboard/User/bloc/bloc_user.dart';
 
-import 'Views/Login/login_screen.dart';
-import 'Views/Signup/signup_screen.dart';
-import 'Views/Welcome/welcome_screen.dart';
-import 'Views/General_About/general_about.dart';
-
-// Mobile Views
-import 'package:responsivedashboard/Views/Home/Mobile/home.dart';
-import 'package:responsivedashboard/Views/About/Mobile/about.dart';
-import 'package:responsivedashboard/Views/Settings/Mobile/settings.dart';
-import 'package:responsivedashboard/Views/ExampleRouting/Mobile/example_routing.dart';
-
-// Web Views
-import 'package:responsivedashboard/Views/Home/Web/home.dart';
-import 'package:responsivedashboard/Views/About/Web/about.dart';
-import 'package:responsivedashboard/Views/Settings/Web/settings.dart';
-import 'Views/Settings/Web/settings_prueba.dart'; //prueba
-import 'package:responsivedashboard/Views/ExampleRouting/Web/example_routing.dart';
-
-//API packages
+//Provider
 import 'package:provider/provider.dart';
-import 'package:responsivedashboard/DataProvider/data_provider.dart';
 
-//State Management
-import 'package:responsivedashboard/StateManagement/home_view_widgets_state_manager.dart';
+//Views
+import 'package:responsivedashboard/User/ui/screens/login_screen.dart';
+import 'package:responsivedashboard/User/ui/screens/signup_screen.dart';
+import 'package:responsivedashboard/User/ui/screens/welcome_screen.dart';
+import 'package:responsivedashboard/Maticas/ui/screens/general_about_screen.dart';
 
 void main() async {
   // We're using HiveStore for persistence,
   // so we need to initialize Hive.
   //await initHiveForFlutter();
 
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => DataProvider()),
-        ChangeNotifierProvider(create: (_) => HomeAmbientVariableDashboard()),
-      ],
-      child: const MyApp(),
-    ),
-  );
+  // use provider to make available the blocs to the entire app
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => UserBloc()),
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -51,26 +33,15 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.green),
       routes: {
-        '/': (context) => const ResponsiveLayout(
-              mobileBody: WelcomeScreen(),
-              desktopBody: WelcomeScreen(),
-            ),
-        '/Login': (context) => const ResponsiveLayout(
-              mobileBody: LoginScreen(),
-              desktopBody: LoginScreen(),
-            ),
-        '/Signup': (context) => const ResponsiveLayout(
-              mobileBody: SignUpScreen(),
-              desktopBody: SignUpScreen(),
-            ),
-        /* '/': (context) => const ResponsiveLayout(
-          mobileBody: HomeMenuMobile(),
-          desktopBody: HomeMenuDesktop(),
-        ),*/
+        '/': (context) => const WelcomeScreen(),
+        '/Login': (context) => const LoginScreen(),
+        '/Signup': (context) => const SignUpScreen(),
+        '/about': (context) => const AboutScreen(),
 
         //
         //**** check 'indicatorStates.dart' and 'constants.dart '****
         //
+        /*
         '/home': (context) => const ResponsiveLayout(
               mobileBody: HomeMenuMobile(),
               desktopBody: HomeMenuDesktop(),
@@ -81,16 +52,9 @@ class MyApp extends StatelessWidget {
             ),
         '/settings': (context) => const ResponsiveLayout(
               mobileBody: SettingsMobile(),
-              desktopBody: SettingsDesktop2(),
+              desktopBody: SettingsDesktop(),
             ),
-        '/about': (context) => const ResponsiveLayout(
-              mobileBody: AboutMobile(),
-              desktopBody: AboutDesktop(),
-            ),
-        '/general_about': (context) => const ResponsiveLayout(
-              mobileBody: AboutScreen(),
-              desktopBody: AboutScreen(),
-            )
+            */
       },
     );
   }
