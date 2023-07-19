@@ -127,11 +127,11 @@ class _SignUpFormState extends State<SignUpForm> {
                         debugPrint("Valid User Input Data");
 
                         //authenticates with client
-                        //await client.signIn(user, email, pswd);
+                        bool result = await userBloc.signup(user, email, pswd);
 
-                        if (true) {
+                        if (result) {
                           //stores the credentials in the phone ...
-                          //Navigator.of(context).pushNamed('/Login');
+                          Navigator.of(context).pushNamed('/Login');
                         } else {
                           debugPrint("NOT SIGNED IN");
                         }

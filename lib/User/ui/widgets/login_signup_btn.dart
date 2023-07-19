@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../utils/constants.dart';
 import 'package:responsivedashboard/User/ui/screens/login_screen.dart';
 import 'package:responsivedashboard/User/ui/screens/signup_screen.dart';
-import 'package:responsivedashboard/Maticas/ui/screens/general_about_screen.dart';
+import 'package:responsivedashboard/Org/ui/screens/general_about_screen.dart';
 
 class LoginAndSignupBtn extends StatefulWidget {
   const LoginAndSignupBtn({Key? key}) : super(key: key);

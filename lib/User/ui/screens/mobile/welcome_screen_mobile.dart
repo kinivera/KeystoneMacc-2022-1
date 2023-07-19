@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:responsivedashboard/CommonWidgets/welcome_image.dart';
+import 'package:responsivedashboard/utils/widgets/welcome_image.dart';
 import 'package:responsivedashboard/User/ui/widgets/login_signup_btn.dart';
 import 'package:responsivedashboard/utils/constants.dart';
 

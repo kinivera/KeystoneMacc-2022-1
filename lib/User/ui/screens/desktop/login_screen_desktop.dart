@@ -18,16 +18,14 @@ class LoginScreenDesktop extends StatelessWidget {
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 50),
-          child: Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 450,
-                  child: LoginForm(),
-                ),
-              ],
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 450,
+                child: LoginForm(),
+              ),
+            ],
           ),
         ),
         SizedBox(

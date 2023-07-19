@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:responsivedashboard/utils/responsive_layout.dart';
-import 'package:responsivedashboard/CommonWidgets/background.dart';
+import 'package:responsivedashboard/utils/widgets/background.dart';
 
 import 'package:responsivedashboard/User/ui/screens/mobile/login_screen_mobile.dart';
 import 'package:responsivedashboard/User/ui/screens/desktop/login_screen_desktop.dart';

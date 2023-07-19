@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
-
 // General constants
 const desktopMode = "Desktop";
 const mobileMode = "Mobile";
@@ -9,22 +8,19 @@ const mobileMode = "Mobile";
 // Colores
 const defaultBackgroundColor = Color(0XFFFFFFFF);
 const defaultBackgroundColorSecondary = Color(0XFF627583);
-const menuColorText =  defaultBackgroundColorSecondary;
+const menuColorText = defaultBackgroundColorSecondary;
 const menuColorBackgr = Color(0XFFA9BF5A);
 const paddingBackgroundImages = 30.0;
-const drawerTextColor = TextStyle(
-  color: menuColorText
-);
-
+const drawerTextColor = TextStyle(color: menuColorText);
 
 var topBar = AppBar(
   backgroundColor: menuColorBackgr,
-  title:  const AutoSizeText("Maticas",
-                      minFontSize: 14,
-                      maxLines: 2,
-                      style: TextStyle(height: 0,
-                                       fontSize: 20,
-                                       fontWeight: FontWeight.w400) ,),
+  title: const AutoSizeText(
+    "Maticas",
+    minFontSize: 14,
+    maxLines: 2,
+    style: TextStyle(height: 0, fontSize: 20, fontWeight: FontWeight.w400),
+  ),
   centerTitle: false,
 );
 
@@ -36,7 +32,9 @@ const kPrimaryLightColor = Color(0xFFF1E6FF);
 
 const double defaultPadding = 16.0;
 
-const int limitData = 15; /// ultimos x datos.
+const int limitData = 15;
+
+/// ultimos x datos.
 const int updateSeconds = 30; /// Cada x segundos se actualiza cada grafica.
 
 /*

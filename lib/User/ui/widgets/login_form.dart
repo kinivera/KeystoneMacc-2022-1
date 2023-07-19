@@ -42,7 +42,6 @@ class _LoginFormState extends State<LoginForm> {
               debugPrint(user);
             },
             onSaved: (user) {
-              userBloc.setUsername(user!);
               debugPrint(user);
             },
             validator: (user) {
@@ -103,18 +102,14 @@ class _LoginFormState extends State<LoginForm> {
                 debugPrint("Valid User Input Data");
 
                 //authenticates with client
-                //await dataProvider.logIn(user, pswd);
+                bool result = await userBloc.login(user, pswd);
 
-                /*
-                if (dataProvider.loggedIn) {
-                  //initiates the state manager
-                  await states.init(context);
+                if (result) {
                   //stores the credentials in the phone ...
-                  Navigator.of(context).pushNamed('/home');
+                  Navigator.of(context).pushNamed('/Home');
                 } else {
                   debugPrint("NOT LOGGED IN");
                 }
-                */
               }
             },
             child: const Text("L O G I N"),
